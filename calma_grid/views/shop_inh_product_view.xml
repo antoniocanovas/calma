@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <data>
         <template id="website_sale_products_inh" inherit_id="website_sale.products" customize_show="True" name="website_sale_products_inh">
             <xpath expr='//table[@width="100%"]' position='replace'>
                 <table width="100%" >
@@ -10,7 +9,6 @@
                                     <t t-foreach="tr_product" t-as="td_product">
                                         <t t-if="td_product">
                                             <t t-set="product" t-value="td_product['product']"/>
-                                            <!-- <td t-att-colspan="td_product['x'] != 1 and td_product['x']" t-att-rowspan="td_product['y'] != 1 and td_product['y']" t-attf-class="oe_product oe_grid oe-height-#{td_product['y']*2} #{ td_product['class'] }" >-->
                                             <td>
                                                 <table>
                                                     <td>
@@ -23,8 +21,6 @@
 
                                                 </table>
                                             </td>
-
-
                                         </t>
                                         <td t-if="not td_product" class="oe-height-2"/>
                                     </t>
@@ -32,16 +28,11 @@
                           </tbody>
                         </table>
             </xpath>
-
-
         </template>
 
         <template id="website_sale_products_item_inh" inherit_id="website_sale.products_item" customize_show="True" name="website_sale_products_item_inh">
             <xpath expr='//div[@itemscope="itemscope"]' position='replace'>
                 <div itemscope="itemscope" itemtype="http://schema.org/Product">
-
-
-
                 <div class="oe_product_image">
 
                     <a itemprop="url" t-att-href="product_href">
@@ -50,9 +41,6 @@
                             <a align="center" role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
                         </h3>
                    <span t-field="product.image" t-options="{'widget': 'image', 'class':'Image_class'}"/>
-
-                   <!-- <span t-field="product.image" t-options="{'widget': 'image', 'resize': '2400x1600' }" />-->
-                <!--<span t-field="product.image" t-options="{'widget': 'image', 'resize': None if product_image_big else '50x50'}"/>-->
                     </a>
 
                 </div>
@@ -65,9 +53,7 @@
                     </div>
                 </t>
                 <section>
-
                 <div>
-
                     <div class="pricing-box-container">
                     	<div class="pricing-box text-center">
 
@@ -110,7 +96,7 @@
 		                            </table>
 
 		                            
-                                            <!--<button class="btn-primary" t-att-href="product_href">Invertir</button>-->
+                            <button class="btn-primary" t-att-href="product_href">Invertir</button>
 	                    </div>
                     </div>
                 </div>
@@ -118,6 +104,4 @@
         </div>
             </xpath>
         </template>
-
-    </data>
 </odoo>
