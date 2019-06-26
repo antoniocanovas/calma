@@ -2,7 +2,7 @@
     <data>
        <template id="assets_frontend" name="resources_calma" inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">
-                <link href="/Marketpay_sync/static/src/css/calma_style.css" rel="stylesheet" type="text/css"/>
+                <link href="/calma_grid/static/src/css/calma_style.css" rel="stylesheet" type="text/css"/>
             </xpath>
         </template>
     </data>
