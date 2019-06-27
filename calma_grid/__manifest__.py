@@ -3,6 +3,7 @@
     'summary': """
         Conjunto de cambios visuales para los productos, grid, ....""",
     'author': "Pedro Guirao",
+    'license': 'AGPL-3',
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
     'version': '12.0.1.0.0',
