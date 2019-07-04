@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
 
     <template id="marketpay_acquirer_button">
@@ -18,6 +17,5 @@
             </button>
         </form>
     </template>
-
 
 </odoo>
