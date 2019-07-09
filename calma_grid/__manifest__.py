@@ -1,5 +1,5 @@
 {
-    'name': "Calma_grid",
+    'name': "calma_grid",
     'summary': """
         Conjunto de cambios visuales para los productos, grid, ....""",
     'author': "Pedro Guirao",
