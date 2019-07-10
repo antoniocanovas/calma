@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
 
     <record id="acquirer_form_marketpay" model="ir.ui.view">
@@ -12,13 +11,8 @@
                     <field name="x_marketpay_key" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
                     <field name="x_marketpay_secret" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
                     <field name="x_marketpay_domain" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
-                   <!--<field name="x_marketpay_url_ok" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
-                    <field name="x_marketpay_url_ko" attrs="{'required': [('provider', '=', 'marketpay')]}"/>-->
                     <field name="x_marketpay_fee" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
                 </group>
-               <!-- <group attrs="{'invisible': [('provider', '!=', 'redsys')]}">
-                    <field name="send_quotation"/>
-                </group>-->
             </xpath>
         </field>
     </record>
@@ -34,21 +28,4 @@
         </field>
     </record>
 
-
-
-    <!--<record id="sale_order_form_payin" model="ir.ui.view">
-        <field name="name">sale.order.form.payin</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr='//group[@name="payment_term_id"]' position='after'>
-
-                    <field name="pay_in_id" />
-
-
-            </xpath>
-        </field>
-    </record>-->
-
 </odoo>
-

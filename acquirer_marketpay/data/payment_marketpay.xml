@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo noupdate="1">
 
     <record id="payment_acquirer_marketpay" model="payment.acquirer">
@@ -14,7 +13,6 @@
         <field name="x_marketpay_secret">kFNm3CQU-ynHaM5g4OZ4MsSxOqmM85j4lgOVLkCgQYY=</field>
         <field name="x_marketpay_domain">https://api-sandbox.marketpay.io</field>
         <field name="x_marketpay_fee">0</field>
-
         <field name="description" type="html">
             <p>
                 A payment gateway to accept online payments via credit cards.
