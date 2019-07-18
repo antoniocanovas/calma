@@ -2,27 +2,16 @@
 
 
 <odoo>
-  <record id="view_company_marketpay" model="ir.ui.view">
-    <field name="name">Marketpay company controller</field>
-    <field name="model">res.company</field>
-     <field name="type">form</field>
+    <record id="view_company_marketpay" model="ir.ui.view">
+        <field name="name">Marketpay company controller</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
-        <field name="currency_id" position="after">
-
-                  <field name="marketpayuser_id" readonly="1"/>
-
-
-
-        </field>
+            <field name="currency_id" position="after">
+                <field name="marketpayuser_id" readonly="1"/>
+                <button string="Generate Marketpay values" type="object" name="marketpay_validate" class="oe_highlight"/>
+            </field>
         </field>
     </record>
-
-
-
-
-
 </odoo>
-
-
-

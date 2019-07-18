@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_opciones_crowd_tree" model="ir.ui.view">
+
+            <field name="name">view.opciones_crowd.tree</field>
+            <field name="model">crowfunding_opciones</field>
+            <field name="arch" type="xml">
+                <tree string="Opciones">
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="nota"/>
+                    <field name="icon"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_x_rgpd_legales_form" model="ir.ui.view">
+
+            <field name="name">view.opciones_crowd.form</field>
+            <field name="model">crowfunding_opciones</field>
+            <field name="arch" type="xml">
+                <form string="Opciones">
+                    <group col="1">
+                        <field name="name"/>
+                        <field name="tipo"/>
+                        <field name="nota"/>
+                        <field name="icon"/>
+                        <separator/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_opciones_crowd">
+            <field name="name">opciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crowfunding_opciones</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Opciones Crowdfunding"
+                  id="opciones_crowdfunding_menu_category"
+                  parent="website.menu_website_configuration" action="action_opciones_crowd"
+                  sequence="100"/>
+    </data>
+</odoo>
