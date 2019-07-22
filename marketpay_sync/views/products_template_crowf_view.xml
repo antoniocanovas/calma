@@ -1,81 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-
     <record id="products_template_inh" model="ir.ui.view">
         <field name="name">products.template.inh</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-        <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">
-            <!--<xpath expr="//form/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">-->
-            <notebook name="studio_notebook_crowf">
-                <page name="studio_page_crowf" string="Crowdfunding">
-                    <group name="studio_group_crowf">
-                       <group name="studio_group_crowf_left">
-                            <field name="zona"/>
-                            <field name="crfd"/>
-                            <field name="tipo_inversion"/>
-                            <field name="riesgo_inversion"/>
-                            <field name="pais"/>
-                            <field name="financiacion_bancaria"/>
-                            <field name="premium"/>
+            <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]" position="after">
+                <notebook name="studio_notebook_crowf">
+                    <page name="studio_page_crowf" string="Crowdfunding">
+                        <group name="studio_group_crowf">
+                            <group name="studio_group_crowf_left">
+                                <field name="zona"/>
+                                <field name="crfd"/>
+                                <field name="tipo_inversion"/>
+                                <field name="riesgo_inversion"/>
+                                <field name="pais"/>
+                                <field name="financiacion_bancaria"/>
+                                <field name="premium"/>
+                            </group>
+                            <group name="studio_group_crowf_right">
+                                <field name="objetivo_crowfunding"/>
+                                <field name="invertido"/>
+                                <field name="porcentaje_crowfunding"/>
+                                <field name="inversores"/>
+                                <field name="plazo_inversion"/>
+                                <field name="mapa"/>
+                            </group>
                         </group>
-                        <group name="studio_group_crowf_right">
-                            <field name="objetivo_crowfunding"/>
-                            <field name="invertido"/>
-                            <field name="porcentaje_crowfunding"/>
-                            <field name="inversores"/>
-                            <field name="plazo_inversion"/>
-                            <field name="mapa"/>
+                        <group name="studio_group_crowf_rentabilidad">
+                            <group name="studio_group_crowf_rentabilidad_left">
+                                <field name="rentabilidad_anual"/>
+                                <field name="rentabilidad_total"/>
+                            </group>
+                            <group name="studio_group_crowf_rentabilidad_right">
+                                <field name="tir_historico"/>
+                                <field name="rentabilidad_real"/>
+                            </group>
                         </group>
-                    </group>
-
-
-
-                    <group name="studio_group_crowf_rentabilidad">
-                       <group name="studio_group_crowf_rentabilidad_left">
-                           <field name="rentabilidad_anual"/>
-                           <field name="rentabilidad_total"/>
+                        <group name="studio_group_crowf_marketpay">
+                            <field name="project_wallet"/>
                         </group>
-                        <group name="studio_group_crowf_rentabilidad_right">
-                           <field name="tir_historico"/>
-                           <field name="rentabilidad_real"/>
-                        </group>
-                    </group>
-
-
-
-                     <group name="studio_group_crowf_marketpay">
-                         <field name="project_wallet"/>
-                     </group>
-
-                </page>
+                    </page>
                 </notebook>
-
-
-
             </xpath>
         </field>
     </record>
-
-
-    <!--<record id="products_template_inh_inversores" model="ir.ui.view">
-        <field name="name">products.template.inh.inv</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_only_form_view"/>
-        <field name="arch" type="xml">
-        <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]" position="inside">
-            <page name="inversores" string="Inversores">
-                 <group name="studio_group_eXiGF">
-                    <group name="studio_group_eXiGF_left"/>
-                     <group name="studio_group_eXiGF_right"/>
-                 </group>
-            </page>>
-        </xpath>
-        </field>
-    </record> -->
-
 
 
     <record id="products_template_inh_crowfunding" model="ir.ui.view">
@@ -83,14 +53,9 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-        <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]/group[@name='group_general']/field[@name='categ_id']" position="after">
-
-            <field name="crowdfunding"/>
-
+            <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]/group[@name='group_general']/field[@name='categ_id']" position="after">
+                <field name="crowdfunding"/>
             </xpath>
         </field>
     </record>
-
-
-
 </odoo>
