@@ -1,5 +1,5 @@
 {
-    'name': "marketpay_sync",
+    'name': "Marketpay Sync",
     'summary': """
         Sync partner, company, wallets""",
     'author': "Pedro Guirao",
@@ -7,16 +7,17 @@
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
     'version': '12.0.1.0.0',
-    'depends': ['base','sale','sale_management','website_sale',
-                'website_wallet','contacts'],
+    'depends': [
+        'sale_management',
+        'website_sale',
+        'website_wallet',
+    ],
     'data': [
         'security/ir.model.access.csv',
-        'views/products_template_crowf_view.xml',
-        'views/company_marketpay_view.xml',
-        'views/partner_marketpay_view.xml',
-        'views/portal_templates_inh.xml',
-        'views/opciones_crowd_view.xml',
+        'views/res_company_views.xml',
+        'views/res_partner_views.xml',
+        'views/templates.xml',
+        'views/crowdfunding_options_views.xml',
     ],
     'installable': True,
-    'application': True,
 }
