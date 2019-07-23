@@ -6,16 +6,16 @@
     'license': 'AGPL-3',
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'depends': [
+        'marketpay_sync',
         'sale_management',
         'website_sale',
-        'contacts',
     ],
     'data': [
-        'views/shop_inh_product_view.xml',
+        'views/product_template_views.xml',
+        'views/website_templates.xml',
         'views/templates.xml',
     ],
     'installable': True,
-    'application': True,
 }
