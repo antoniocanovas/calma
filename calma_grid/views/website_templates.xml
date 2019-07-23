@@ -34,7 +34,6 @@
         <xpath expr='//div[@itemscope="itemscope"]' position='replace'>
             <div itemscope="itemscope" itemtype="http://schema.org/Product">
                 <div class="oe_product_image">
-
                     <a itemprop="url" t-att-href="product_href">
                         <h3 align="center">
                             <a align="center" itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name"/>
@@ -42,7 +41,6 @@
                         </h3>
                         <span t-field="product.image" t-options="{'widget': 'image', 'class':'Image_class'}"/>
                     </a>
-
                 </div>
                 <t t-if="show_publish">
                     <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
@@ -56,7 +54,6 @@
                     <div>
                         <div class="pricing-box-container">
                             <div class="pricing-box text-center">
-
                                 <p class="price"><span t-esc="product.porcentaje_crowfunding" /><sub>%</sub></p>
                                 <table class="table_border">
                                     <tr>
@@ -71,13 +68,12 @@
                                         <td colspan="2" align="center">
                                             <p>TIR histórica interés fijo: <strong><span t-esc="product.tir_historico"><sub>%</sub></span></strong></p>
                                         </td>
-
                                     </tr>
                                     <tr>
-                                        <td   align="center">
+                                        <td  align="center">
                                             <p><span t-esc="product.rentabilidad_anual"/>% <br/> Rentabilidad Anual</p>
                                         </td>
-                                        <td   align="center">
+                                        <td  align="center">
                                             <p><span t-esc="product.rentabilidad_total"/>% <br/> Rentabilidad Total</p>
                                         </td>
                                     </tr>
@@ -85,7 +81,6 @@
                                         <td colspan="2" align="center">
                                             <p> <span t-esc="product.inversores"/> inversores</p>
                                         </td>
-
                                     </tr>
                                     <tr>
                                         <td colspan="2" align="center">
@@ -94,8 +89,6 @@
 
                                     </tr>
                                 </table>
-
-
                                 <button class="btn-primary" t-att-href="product_href">Invertir</button>
                             </div>
                         </div>

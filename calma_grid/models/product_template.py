@@ -18,7 +18,7 @@ class ProductTemplate(models.Model):
         string='Alcance CRFD',
     )
     tipo_inversion = fields.Many2one(
-        comodel_name='crowdfunding.oprions',
+        comodel_name='crowdfunding.options',
         domain=('crowdfunding_type', '=', 'inversion'),
     )
     riesgo_inversion = fields.Many2one(
@@ -55,7 +55,7 @@ class ProductTemplate(models.Model):
     mapa = fields.Binary()
     rentabilidad_real = fields.Char()
 
-    @api.depends('invertido')
+    @api.depends('invertido', 'objetivo_crowdfunding')
     def _compute_porcentaje_crowdfunding(self):
         for record in self:
             if record.objetivo_crowdfunding:
