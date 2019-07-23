@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
+
     <template id="website_sale_products_inh_add_to_cart"
                   inherit_id="website_sale.product" customize_show="True"
                   name="website_sale_products_inh_add_to_cart">
@@ -68,10 +68,8 @@
                         </td>
                         <td class='td-product_name'>
                             <div>
-
                                 <strong>Si confirmas obtendras una
                                     rentabilidad del </strong>
-
                             </div>
                             <t t-call="website_sale.cart_line_description_following_lines">
                                 <t t-set="div_class" t-value="'d-none d-md-block'"/>
@@ -93,10 +91,8 @@
                         </td>
                         <td class='td-product_name'>
                             <div>
-
                                 <strong
                                         t-field="line.product_id.rentabilidad_total">%</strong>
-
                             </div>
                             <t t-call="website_sale.cart_line_description_following_lines">
                                 <t t-set="div_class" t-value="'d-none d-md-block'"/>
@@ -124,7 +120,6 @@
               name="Header Shop My Cart Link Calma">
         <xpath expr="//header//ul[@id='top_menu']/li[@id='my_cart']"
                position="replace">
-
         </xpath>
     </template>
 
@@ -147,14 +142,10 @@
                                 </div>
                             </t>
                         </div>
-
                         <div class="col-12 col-xl order-xl-1 oe_cart">
                             <t t-call="calma_grid.website_sale_inh_cart_lines"/>
-
                             <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_payment_1"/>
-
                             <div id="payment_method" class="mt-3" t-if="(acquirers or tokens) and website_sale_order.amount_total">
-
                                   <div class="row" id="wallet_boxes">
                                       <div class="col-lg-8 col-sm-9 mt8 mb16" t-if="website_sale_order and not website_sale_order.wallet_txn_id and website_sale_order.partner_wallet_balance">
                                         <h3>Pay using Wallet</h3>
@@ -162,9 +153,7 @@
                                             <b><h4>Wallet Balance:
                                             <span class="badge">
                                                 <span class="oe_currency_value">
-
                                                     <t t-esc="website_sale_order.partner_wallet_balance" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: website.currency_id}"/>
-
                                                 </span>
                                             </span>
                                             </h4> </b></p>
@@ -188,8 +177,6 @@
                 <div class="oe_structure" id="oe_structure_website_sale_payment_2"/>
             </div>
         </xpath>
-
     </template>
-
 
 </odoo>

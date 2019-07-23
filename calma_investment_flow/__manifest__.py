@@ -6,13 +6,13 @@
     'license': 'AGPL-3',
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
-    'version': '12.0.1.0.0',
+    'version': '12.0.2.0.0',
     'depends': [
         'sale_management',
         'website_sale',
     ],
     'data': [
-        'views/template_inh_cart.xml',
+        'views/website_templates.xml',
     ],
     'installable': True,
 }
