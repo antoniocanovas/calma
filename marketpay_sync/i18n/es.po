@@ -1,0 +1,632 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* marketpay_sync
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-23 13:59+0000\n"
+"PO-Revision-Date: 2019-07-23 16:11+0200\n"
+"Last-Translator: cubells <vicent@vcubells.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "<strong>Dirección</strong>"
+msgstr "<strong>Dirección</strong>"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "<strong>IBAN</strong>"
+msgstr "<strong>IBAN</strong>"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "<strong>Titular</strong>"
+msgstr "<strong>Titular</strong>"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,help:marketpay_sync.field_res_company__x_nombreprovincia_id
+#: model:ir.model.fields,help:marketpay_sync.field_res_partner__x_nombreprovincia_id
+#: model:ir.model.fields,help:marketpay_sync.field_res_users__x_nombreprovincia_id
+msgid "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
+msgstr "División administrativa de un país. Por ejemplo Comunidad Autónoma, Provincia, Ayuntamiento"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__crfd
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__crfd
+msgid "Alcance CRFD"
+msgstr "Alcance CRFD"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.make_investor
+msgid "Alta Inversor"
+msgstr "Alta Inversor"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid ""
+"Anverso\n"
+"                                    DNI"
+msgstr ""
+"Anverso\n"
+"                                    DNI"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Añadir Cuenta Bancaria"
+msgstr "Añadir Cuenta Bancaria"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "City"
+msgstr "Ciudad"
+
+#. module: marketpay_sync
+#: model:ir.model,name:marketpay_sync.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Company Name"
+msgstr "Nombre de la compañía"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid ""
+"Confirm\n"
+"                                <span class=\"fa fa-long-arrow-right\"/>"
+msgstr ""
+"Confirmar\n"
+"                                <span class=\"fa fa-long-arrow-right\"/>"
+
+#. module: marketpay_sync
+#: model:ir.model,name:marketpay_sync.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Country"
+msgstr "País"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Country..."
+msgstr "País..."
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.products_template_inh
+msgid "Crowdfunding"
+msgstr "Crowdfunding"
+
+#. module: marketpay_sync
+#: model:ir.model,name:marketpay_sync.model_crowdfunding_options
+msgid "Crowdfunding Options"
+msgstr "Opciones del crowdfunding"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__crowdfunding_type
+msgid "Crowdfunding Type"
+msgstr "Tipo de crowdfunding"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Cuentas Bancarias"
+msgstr "Cuentas Bancarias"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_ccc
+msgid "Cuentas bancarias"
+msgstr "Cuentas bancarias"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__x_codigopais_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_codigopais_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_codigopais_id
+msgid "Código País"
+msgstr "Código País"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__x_nombreprovincia_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_nombreprovincia_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_nombreprovincia_id
+msgid "Código Región"
+msgstr "Código Región"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_dni_front
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_dni_front
+msgid "DNI Anverso"
+msgstr "DNI Anverso"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_dni_back
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_dni_back
+msgid "DNI Reverso"
+msgstr "DNI Reverso"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_partner_marketpay_data
+msgid "DNI Validado"
+msgstr "DNI Validado"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Dirección"
+msgstr "Dirección"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:103
+#: code:addons/marketpay_sync/models/res_partner.py:216
+#, python-format
+msgid "El campo C.P es obligatorio"
+msgstr "El campo C.P es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:220
+#, python-format
+msgid "El campo DNI Anverso es obligatorio"
+msgstr "El campo DNI Anverso es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:222
+#, python-format
+msgid "El campo DNI Reverso es obligatorio"
+msgstr "El campo DNI Reverso es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:204
+#, python-format
+msgid "El campo Nombre es obligatorio"
+msgstr "El campo Nombre es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:101
+#: code:addons/marketpay_sync/models/res_partner.py:214
+#, python-format
+msgid "El campo calle es obligatorio"
+msgstr "El campo calle es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:99
+#: code:addons/marketpay_sync/models/res_partner.py:212
+#, python-format
+msgid "El campo ciudad es obligatorio"
+msgstr "El campo ciudad es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:97
+#: code:addons/marketpay_sync/models/res_partner.py:210
+#, python-format
+msgid "El campo mail es obligatorio"
+msgstr "El campo mail es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:93
+#: code:addons/marketpay_sync/models/res_partner.py:206
+#, python-format
+msgid "El campo pais es obligatorio"
+msgstr "El campo pais es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:95
+#: code:addons/marketpay_sync/models/res_partner.py:208
+#, python-format
+msgid "El campo provincia es obligatorio"
+msgstr "El campo provincia es obligatorio"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:218
+#, python-format
+msgid "El campo vat es obligatorio"
+msgstr "El campo vat es obligatorio"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Email"
+msgstr "Email"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:139
+#, python-format
+msgid "Error al Registrar Usuario, por favor intentelo de nuevo mÃ¡s tarde"
+msgstr "Error al Registrar Usuario, por favor intentelo de nuevo más tarde"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:155
+#, python-format
+msgid "Error al Registrar Wallet, por favor intentelo de nuevo mÃ¡s tarde"
+msgstr "Error al Registrar Wallet, por favor intentelo de nuevo más tarde"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:85
+#, python-format
+msgid "Error al sincronizar el DNI, por favor intentelo de nuevo mÃ¡s tarde"
+msgstr "Error al sincronizar el DNI, por favor intentelo de nuevo más tarde"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:72
+#, python-format
+msgid "Error al sincronizar el DNI. Por favor intentelo de nuevo mÃ¡s tarde"
+msgstr "Error al sincronizar el DNI. Por favor intentelo de nuevo más tarde"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_partner.py:112
+#, python-format
+msgid "Error al validar Usuario, por favor intentelo de nuevo mÃ¡s tarde"
+msgstr "Error al validar Usuario, por favor intentelo de nuevo más tarde"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_inversor
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_inversor
+msgid "Es Inversor"
+msgstr "Es Inversor"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__crowdfunding
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__crowdfunding
+msgid "Es crowdfunding"
+msgstr "Es crowdfunding"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__financiacion_bancaria
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__financiacion_bancaria
+msgid "Financiacion Bancaria"
+msgstr "Financiacion Bancaria"
+
+#. module: marketpay_sync
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Financiación"
+msgstr "Financiación"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_company_marketpay
+msgid "Generate Marketpay values"
+msgstr "Generar los valores de Marketpay "
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__id
+msgid "ID"
+msgstr "ID"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: marketpay_sync
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Inversión"
+msgstr "Inversión"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__inversores
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__inversores
+msgid "Inversores"
+msgstr "Inversores"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__invertido
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__invertido
+msgid "Invertido"
+msgstr "Invertido"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__mapa
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__mapa
+msgid "Mapa"
+msgstr "Mapa"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_company_marketpay
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_partner_marketpay_data
+msgid "MarketPay"
+msgstr "MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_domain
+msgid "Marketpay Domain"
+msgstr "Dominio Marketpay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpayuser_id
+msgid "Marketpay ID"
+msgstr "ID de MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_key
+msgid "Marketpay Key"
+msgstr "Clave de MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_secret
+msgid "Marketpay Secret"
+msgstr "Secreto de MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_marketpayuser_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_marketpayuser_id
+msgid "Marketpay User"
+msgstr "Usuario de MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_marketpaywallet_id
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_marketpaywallet_id
+msgid "Marketpay Wallet"
+msgstr "Wallet de MarketPay"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_name_dni_back
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_name_dni_front
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_name_dni_back
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_name_dni_front
+msgid "Nombre Archivo"
+msgstr "Nombre Archivo"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__note
+msgid "Note"
+msgstr "Nota"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Número de cuenta"
+msgstr "Número de cuenta"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__objetivo_crowdfunding
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__objetivo_crowdfunding
+msgid "Objetivo Crowdfunding"
+msgstr "Objetivo Crowdfunding"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_options_crowd_tree
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_x_rgpd_legales_form
+msgid "Opciones"
+msgstr "Opciones"
+
+#. module: marketpay_sync
+#: model:ir.ui.menu,name:marketpay_sync.options_crowdfunding_menu_category
+msgid "Opciones Crowdfunding"
+msgstr "Opciones Crowdfunding"
+
+#. module: marketpay_sync
+#: model:ir.actions.act_window,name:marketpay_sync.action_options_crowd
+msgid "Options"
+msgstr "Opciones"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__pais
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__pais
+msgid "Pais"
+msgstr "País"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Pay with"
+msgstr "Paga con"
+
+#. module: marketpay_sync
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "País"
+msgstr "País"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__plazo_inversion
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__plazo_inversion
+msgid "Plazo Inversion"
+msgstr "Plazo Inversion"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__porcentaje_crowdfunding
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__porcentaje_crowdfunding
+msgid "Porcentaje Crowdfunding"
+msgstr "Porcentaje Crowdfunding"
+
+#. module: marketpay_sync
+#: selection:crowdfunding.options,crowdfunding_type:0
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__premium
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__premium
+msgid "Premium"
+msgstr "Premium"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/product_template.py:70
+#, python-format
+msgid "Primero debe crear una compaÃ±Ã­a con MarketpayId"
+msgstr "Primero debe crear una compañí­a con MarketpayId"
+
+#. module: marketpay_sync
+#: model:ir.model,name:marketpay_sync.model_product_template
+msgid "Product Template"
+msgstr "Plantilla"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__rentabilidad_anual
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__rentabilidad_anual
+msgid "Rentabilidad Anual"
+msgstr "Rentabilidad Anual"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__rentabilidad_real
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__rentabilidad_real
+msgid "Rentabilidad Real"
+msgstr "Rentabilidad Real"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__rentabilidad_total
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__rentabilidad_total
+msgid "Rentabilidad Total"
+msgstr "Rentabilidad Total"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid ""
+"Reverso\n"
+"                                    DNI"
+msgstr ""
+"Reverso\n"
+"                                    DNI"
+
+#. module: marketpay_sync
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Riesgo"
+msgstr "Riesgo"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__riesgo_inversion
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__riesgo_inversion
+msgid "Riesgo Inversion"
+msgstr "Riesgo Inversion"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "State / Province"
+msgstr "Provincia"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Stored Card ("
+msgstr "Tarjeta guardada ("
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Street"
+msgstr "Calle"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__tir_historico
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__tir_historico
+msgid "TIR Histórico"
+msgstr "TIR Histórico"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,help:marketpay_sync.field_res_company__x_codigopais_id
+#: model:ir.model.fields,help:marketpay_sync.field_res_partner__x_codigopais_id
+#: model:ir.model.fields,help:marketpay_sync.field_res_users__x_codigopais_id
+msgid ""
+"The ISO country code in two chars. \n"
+"You can use this field for quick search."
+msgstr ""
+"El código ISO de país en 2 caracteres. \n"
+"Puede usar este campo para una búsqueda rápida."
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__tipo_inversion
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__tipo_inversion
+msgid "Tipo Inversion"
+msgstr "Tipo Inversion"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+msgid "Titular"
+msgstr "Titular"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__token_url
+msgid "Token Url"
+msgstr "Token Url"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "VAT Number"
+msgstr "NIF"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_dni_preview
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_dni_preview
+msgid "Vista Previa"
+msgstr "Vista Previa"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.hide_wallet
+msgid "Wallet Balance:"
+msgstr "Balance del Wallet:"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.Hide_transactions
+msgid "Wallet Transaction History"
+msgstr "Historial de transacciones del Wallet"
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__project_wallet
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__project_wallet
+msgid "Wallet de Proyecto"
+msgstr "Wallet de Proyecto"
+
+#. module: marketpay_sync
+#: code:addons/marketpay_sync/models/res_company.py:43
+#, python-format
+msgid "You must set MarketPay's key and secret in company form."
+msgstr "Debe definir la clave y el secreto de MarketPay en el formulario de la compañía."
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Your Name"
+msgstr "Nombre"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "Zip / Postal Code"
+msgstr "C.P."
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_product__zona
+#: model:ir.model.fields,field_description:marketpay_sync.field_product_template__zona
+msgid "Zona"
+msgstr "Zona"
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
+msgid "select..."
+msgstr "Seleccionar..."
