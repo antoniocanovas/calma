@@ -41,8 +41,8 @@ class ResCompany(models.Model):
         if not marketpay_key or not marketpay_secret:
             raise ValidationError(
                 _("You must set MarketPay's key and secret in company form."))
-        return "Basic %s" % base64.b64encode('%s:%s' % (
-            marketpay_key, marketpay_secret)).decode('ascii')
+        secret = '%s:%s' % (marketpay_key, marketpay_secret)
+        return "Basic %s" % base64.b64encode(secret.encode()).decode('ascii')
 
     @api.multi
     def _get_wallet(self):
