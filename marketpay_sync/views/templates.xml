@@ -47,7 +47,7 @@
         </xpath>
     </template>
 
-    <template id="portal_my_details_inh" inherit_id="portal.portal_my_details" customize_show="True" name="portal_my_details_inh">
+    <template id="marketpay_sync.portal_my_details_inh" inherit_id="portal.portal_my_details" customize_show="True" name="portal_my_details_inh" priority="9999">
         <xpath expr='//form' position='replace'>
             <form action="/my/account" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
