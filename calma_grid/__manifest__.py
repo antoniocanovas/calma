@@ -8,11 +8,12 @@
     'category': 'Tools',
     'version': '12.0.1.3.0',
     'depends': [
-        'marketpay_sync',
         'sale_management',
         'website_sale',
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'views/crowdfunding_options_views.xml',
         'views/product_template_views.xml',
         'views/website_templates.xml',
         'views/templates.xml',
