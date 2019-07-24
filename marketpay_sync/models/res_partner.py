@@ -44,14 +44,6 @@ class ResPartner(models.Model):
     x_name_dni_back = fields.Char(
         string='Nombre Archivo',
     )
-    x_dni_preview = fields.Binary(
-        string='Vista Previa',
-        compute='_compute_dni_preview',
-    )
-
-    @api.depends('x_dni_front')
-    def _compute_dni_preview(self):
-        self.x_dni_preview = self.x_dni_front
 
     @api.multi
     def _kyc_docs(self):

@@ -49,7 +49,7 @@
 
     <template id="portal_my_details_inh" inherit_id="portal.portal_my_details" customize_show="True" name="portal_my_details_inh">
         <xpath expr='//form' position='replace'>
-            <form action="/my/account" method="post">
+            <form action="/my/account" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                 <div class="row o_portal_details">
                     <div class="col-lg-8">
@@ -122,28 +122,18 @@
                                     </t>
                                 </select>
                             </div>
-
                             <div t-attf-class="form-group col-xl-6">
                                 <label class="col-form-label"
                                        for="x_dni_front">Anverso
                                     DNI</label>
-                                <input type="file" name="x_dni_front"
-                                       accept="*"
-                                       t-attf-class="form-control"
-                                       t-att-value="x_dni_front or partner.x_dni_front"/>
+                                <input type="file" name="x_dni_front" class="file" multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
                             </div>
-
-
                             <div t-attf-class="form-group col-xl-6">
                                 <label class="col-form-label"
                                        for="x_dni_back">Reverso
                                     DNI</label>
-                                <input type="file" name="x_dni_back"
-                                       widget="image"
-                                       accept="image/*" t-attf-class="form-control"
-                                       t-att-value="x_dni_back or partner.x_dni_back"/>
+                                <input type="file" name="x_dni_back" class="file" multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
                             </div>
-
                             <input type="hidden" name="redirect" t-att-value="redirect"/>
                         </div>
                         <div class="clearfix">
