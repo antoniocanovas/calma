@@ -16,11 +16,11 @@
                             <group name="studio_group_crowf_left">
                                 <field name="zona"/>
                                 <field name="crfd"/>
-                                <field name="tipo_inversion"/>
-                                <field name="riesgo_inversion"/>
-                                <field name="pais"/>
-                                <field name="financiacion_bancaria"/>
-                                <field name="premium"/>
+                                <field name="tipo_inversion" context="{'default_crowdfunding_type':'inversion'}"/>
+                                <field name="riesgo_inversion" context="{'default_crowdfunding_type':'riesgo'}"/>
+                                <field name="pais" context="{'default_crowdfunding_type':'pais'}"/>
+                                <field name="financiacion_bancaria" context="{'default_crowdfunding_type':'financiacion'}"/>
+                                <field name="premium" context="{'default_crowdfunding_type':'premium'}"/>
                             </group>
                             <group name="studio_group_crowf_right">
                                 <field name="objetivo_crowdfunding"/>
