@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import logging
 import pprint
@@ -113,6 +112,8 @@ class WebsiteWallet(http.Controller):
         PT = request.env['payment.transaction'].sudo()
         PM = request.env['payment.token'].sudo()
 
+        print("1")
+
         if post.get('amount') == '':
             return request.redirect("/wallet/add/money")
 
@@ -125,17 +126,19 @@ class WebsiteWallet(http.Controller):
         #add_amount = "%.2f" % float(post.get('amount'))
 
         add_amount = float(post.get('amount'))
-
+        print("2")
         acquirer_id = post.get('payment_acquirer') and int(post.get('payment_acquirer'))
         acquirer = PA.search([('id', '=', acquirer_id)])
-
+        print("3")
         tx = PT.search([
             ('is_wallet_transaction', '=', True), ('wallet_type', '=', 'credit'),
             ('partner_id', '=', partner.id), ('state', '=', 'draft')], limit=1)
         if tx:
+            print("4")
             tx.amount = add_amount
             tx.acquirer_id = acquirer.id
         else:
+            print("5")
             tx = PT.create({
                 'acquirer_id': acquirer.id,
                 'type': 'form',
@@ -145,9 +148,12 @@ class WebsiteWallet(http.Controller):
                 'partner_country_id': partner.country_id.id,
                 'is_wallet_transaction': True,
                 'wallet_type': 'credit',
-                'reference': request.env['payment.transaction'].get_next_wallet_reference(),
-            })
+                'reference': request.env[
+                    'payment.transaction'].sudo().get_next_wallet_reference(
 
+                ),
+            })
+        print("3")
         acquirers = request.env['payment.acquirer'].sudo().search([
             ('website_published', '=', True), ('is_wallet_acquirer', '=', True)])
 
