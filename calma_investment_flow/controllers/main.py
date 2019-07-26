@@ -57,6 +57,6 @@ class CustomWebsiteSale(WebsiteSale):
         print(sale_order_id)
         if sale_order_id:
             order = request.env['sale.order'].sudo().browse(sale_order_id)
-            return request.render("calma_grid.confirmation", {'order': order})
+            return request.render("calma_grid.calma_sale_confirmation", {'order': order})
         else:
             return request.redirect('/shop')
