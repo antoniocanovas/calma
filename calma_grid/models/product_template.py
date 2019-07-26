@@ -6,6 +6,8 @@ import json
 import swagger_client
 from swagger_client.rest import ApiException
 
+from .crowdfunding_options import OPTIONS
+
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
@@ -19,23 +21,23 @@ class ProductTemplate(models.Model):
     )
     tipo_inversion = fields.Many2one(
         comodel_name='crowdfunding.options',
-        domain=('crowdfunding_type', '=', 'inversion'),
+        domain=[('crowdfunding_type', '=', OPTIONS[0][0])],
     )
     riesgo_inversion = fields.Many2one(
         comodel_name='crowdfunding.options',
-        domain=('crowdfunding_type', '=', 'riesgo'),
+        domain=[('crowdfunding_type', '=', OPTIONS[1][0])],
     )
     pais = fields.Many2one(
         comodel_name='crowdfunding.options',
-        domain=('crowdfunding_type', '=', 'pais'),
+        domain=[('crowdfunding_type', '=', OPTIONS[2][0])],
     )
     financiacion_bancaria = fields.Many2one(
         comodel_name='crowdfunding.options',
-        domain=('crowdfunding_type', '=', 'financiacion'),
+        domain=[('crowdfunding_type', '=', OPTIONS[3][0])],
     )
     premium = fields.Many2one(
         comodel_name='crowdfunding.options',
-        domain=('crowdfunding_type', '=', 'premium'),
+        domain=[('crowdfunding_type', '=', OPTIONS[4][0])],
     )
     objetivo_crowdfunding = fields.Float()
     invertido = fields.Float()
