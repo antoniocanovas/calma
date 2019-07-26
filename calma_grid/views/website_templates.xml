@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
+    <template id="calma_sale_confirmation"
+              inherit_id="website_sale.confirmation"
+              customize_show="True" name="calma_sale_confirmation">
+        <xpath expr='//div[@id="wrap"]' position='replace'>
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <h1><span>Order</span> <em t-field="order.name" /> <t t-if="order.state == 'sale'"><span>Confirmed</span></t></h1>
+
+                    <div class="row">
+                        <div class="col-12 col-xl">
+                            <div class="oe_cart">
+                                <t t-set="payment_tx_id" t-value="order.get_portal_last_transaction()"/>
+                                <t t-if="payment_tx_id.state == 'done'">
+                                    <div class="thanks_msg">
+                                        <h2>Thank you for your order.
+                                            <a role="button" class="btn btn-primary d-none d-md-inline-block" href="/shop/print" target="_blank" aria-label="Print" title="Print"><i class="fa fa-print"></i> Print</a>
+                                        </h2>
+                                    </div>
+                                </t>
+                                <t t-if="request.env['ir.config_parameter'].sudo().get_param('auth_signup.invitation_scope', 'b2b') == 'b2c' and request.website.is_public_user()">
+                                    <p class="alert alert-info mt-3" role="status">
+                                        <a role="button" t-att-href='order.partner_id.signup_prepare() and order.partner_id.signup_url' class='btn btn-primary'>Sign Up</a>
+                                        to follow your order.
+                                    </p>
+                                </t>
+                                <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_confirmation_1"/>
+                                <h3 class="text-left mt-3">
+                                    <strong>Payment Information:</strong>
+                                </h3>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2">
+                                                <t t-esc="order.get_portal_last_transaction().acquirer_id.name" />
+                                            </td>
+                                            <td class="text-right" width="100">
+                                                <strong>Total:</strong>
+                                            </td>
+                                            <td class="text-right" width="100">
+                                                <strong t-field="order.amount_total" t-options="{'widget': 'monetary', 'display_currency': order.pricelist_id.currency_id}" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <t t-call="website_sale.payment_confirmation_status"/>
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                                        <div><b>Billing <t t-if="same_shipping and not only_services"> &amp; Shipping</t>: </b><span t-esc='order.partner_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/></div>
+                                        <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address"><b>Shipping: </b><span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/></div>
+                                    </div>
+                                </div>
+                                <div class="oe_structure mt-3" id="oe_structure_website_sale_confirmation_2"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-auto">
+                            <t t-set="website_sale_order" t-value="order"/>
+                            <t t-call="website_sale.cart_summary">
+                                <t t-set="hide_coupon">1</t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure" id="oe_structure_website_sale_confirmation_3"/>
+            </div>
+        </xpath>
+    </template>
 
     <template id="website_sale_products_inh" inherit_id="website_sale.products" customize_show="True" name="website_sale_products_inh">
         <xpath expr='//table[@width="100%"]' position='replace'>
@@ -31,71 +99,312 @@
     </template>
 
     <template id="website_sale_products_item_inh" inherit_id="website_sale.products_item" customize_show="True" name="website_sale_products_item_inh">
-        <xpath expr='//div[@itemscope="itemscope"]' position='replace'>
+        <xpath expr="//div[@itemscope=&quot;itemscope&quot;]" position="replace">
             <div itemscope="itemscope" itemtype="http://schema.org/Product">
-                <div class="oe_product_image">
-                    <a itemprop="url" t-att-href="product_href">
-                        <h3 align="center">
-                            <a align="center" itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name"/>
-                            <a align="center" role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
-                        </h3>
-                        <span t-field="product.image" t-options="{'widget': 'image', 'class':'Image_class'}"/>
-                    </a>
-                </div>
-                <t t-if="show_publish">
-                    <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
-                        <t t-call="website.publish_management">
-                            <t t-set="object" t-value="product"/>
-                            <t t-set="publish_edit" t-value="True"/>
-                            <t t-set="action" t-value="'product.product_template_action'"/></t>
-                    </div>
-                </t>
-                <section>
-                    <div>
-                        <div class="pricing-box-container">
-                            <div class="pricing-box text-center">
-                                <p class="price"><span t-esc="product.porcentaje_crowfunding" /><sub>%</sub></p>
-                                <table class="table_border">
-                                    <tr>
-                                        <td  class="price" align="left">
-                                            <span t-esc="product.objetivo_crowfunding" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-                                        </td>
-                                        <td  class="price" align="right">
-                                            <span t-esc="product.invertido" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <p>TIR histórica interés fijo: <strong><span t-esc="product.tir_historico"><sub>%</sub></span></strong></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td  align="center">
-                                            <p><span t-esc="product.rentabilidad_anual"/>% <br/> Rentabilidad Anual</p>
-                                        </td>
-                                        <td  align="center">
-                                            <p><span t-esc="product.rentabilidad_total"/>% <br/> Rentabilidad Total</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <p> <span t-esc="product.inversores"/> inversores</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <p>Plazo: <span t-esc="product.plazo_inversion"> meses </span></p>
-                                        </td>
 
-                                    </tr>
-                                </table>
-                                <button class="btn-primary" t-att-href="product_href">Invertir</button>
-                            </div>
+                <div class="container-img-shop" style="margin: 0; padding: 0; border: 1;">
+                    <img style="100%">
+                        <span overflow="auto" display="inline-block;" t-field="product.image" t-options="{'widget': 'image', 'resize':'400x400'}"/>
+                    </img>
+                    <div style="border:1px ridge grey;" class="top-ban-shop white-shop">
+                        <a itemprop="url" t-att-href="product_href">
+                            <h4 align="center">
+                                <a align="center" itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name"/>
+                                <a align="center" role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class="bottom-ban-shop black-shop">
+                        <h4 align="left">
+                            ICON
+                        </h4>
+                    </div>
+                    <t t-if="show_publish">
+                        <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
+                            <t t-call="website.publish_management">
+                                <t t-set="object" t-value="product"/>
+                                <t t-set="publish_edit" t-value="True"/>
+                                <t t-set="action" t-value="'product.product_template_action'"/></t>
+                        </div>
+                    </t>
+                </div>
+                <div class="details-box-shop">
+                    <div class="pricing-box-container">
+                        <div style="margin: 0; padding: 0; border: 0;" class="pricing-box text-center">
+                            <table class="table_border" align="center">
+                                <tr class="lineBorder">
+                                    <td  class="price" align="left">
+                                        <span  t-esc="product.invertido" t-options="{'widget': 'monetary',
+'display_currency': website.currency_id}"/><sub>[<span t-esc="product.porcentaje_crowdfunding"/><sub>%</sub>]</sub>
+                                    </td>
+                                    <td/>
+                                    <td >
+                                        <p class="price" align="right"><span
+                                                t-esc="product.objetivo_crowdfunding"
+                                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/></p>
+                                    </td>
+                                </tr>
+                                <tr class="lineBorder" style="padding-top:5px">
+                                    <td  colspan="3" align="center">
+                                        <p>TIR histórica interés fijo: <strong><span t-esc="product.tir_historico"/><sub>%</sub></strong></p>
+                                    </td>
+
+                                </tr>
+                                <tr class="lineBorder" style="padding-top:5px">
+                                    <td   align="center">
+                                        <p><strong><span t-esc="product.rentabilidad_anual"/>%</strong> <br/> Rentabilidad Anual</p>
+                                    </td>
+                                    <td align="center"> </td>
+                                    <td   align="center">
+                                        <p><strong><span t-esc="product.rentabilidad_total"/>%</strong> <br/> Rentabilidad Total</p>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td align="center">
+                                        <p> <span t-esc="product.inversores"/> inversores</p>
+                                    </td>
+                                    <td/>
+                                    <td align="center">
+                                        <p>Plazo: <span t-esc="product.plazo_inversion"> meses </span></p>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <a itemprop="url" t-att-href="product_href">
+                                <h5 align="center">
+                                    Invertir
+                                    <a align="center" role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+                                </h5>
+                            </a>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </xpath>
     </template>
 
+    <!--<template id="website_sale_products_inh_add_to_cart"
+    inherit_id="website_sale.product" customize_show="True"
+    name="website_sale_products_inh_add_to_cart">
+    <xpath expr='//div[@class="js_product js_main_product"]/a'
+    position='replace'>
+    <a role="button" id="add_to_cart"
+    class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Invertir</a>
+    </xpath>
+    </template>-->
+
+    <template id="website_sale_inh_cart_lines"
+              inherit_id="website_sale.cart_lines" customize_show="True"
+              name="website_sale_inh_cart_lines">
+        <xpath expr="//table[@id=&quot;cart_products&quot;]" position="replace">
+            <div class="right2">
+                <div>
+                    <div align="center" style="width:100%" class="white">
+                        <h3>Enhorabuena va a invertir<br/><strong class="circle green" t-field="website_sale_order.website_order_line[0].product_uom_qty" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/> en
+                            <strong t-field="website_sale_order.website_order_line[0].name_short"/></h3>
+                    </div>
+                    <div align="center">
+                        <img style="width:100%">
+                            <span t-field="website_sale_order.website_order_line[0].product_id.image" t-options="{'widget': 'image', 'resize':'300x300'}"/>
+                        </img>
+                    </div>
+                    <div align="center">
+                        <h4> SOME LEGAL TEXT IF PROCEED </h4>
+                    </div>
+                    <div class="row" id="wallet_boxes">
+                        <div align="center" t-if="website_sale_order and not website_sale_order.wallet_txn_id and website_sale_order.partner_wallet_balance">
+                            <h3 align="center">La cantidad
+                                invertida será
+                                restada del saldo disponible en
+                                su wallet</h3>
+                            <p>
+                                <b><h4>Wallet Balance:
+                                    <span class="badge">
+                                        <span class="oe_currency_value">
+                                            <t t-esc="website_sale_order.partner_wallet_balance" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: website.currency_id}"/>
+                                        </span>
+                                    </span>
+                                </h4> </b></p>
+                        </div>
+                    </div>
+                    <div>
+                        <a role="button" href="/shop" class="btn btn-secondary mb32 d-none d-xl-inline-block">
+                            <span class="fa fa-chevron-left"/>
+                            <span class="">Ver Oportunidades</span>
+                        </a>
+                        <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right d-none d-xl-inline-block" href="/shop/wallet/pay">
+                            <span class="">Confirmar
+                                Inversión</span>
+                            <span class="fa fa-chevron-right"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!--<template id="header_calma" inherit_id="website_sale.header"
+    name="Header Shop My Cart Link Calma">
+    <xpath expr="//header//ul[@id='top_menu']/li[@id='my_cart']"
+    position="replace">
+    </xpath>
+    </template>-->
+
+    <template id="website_sale_products_inh_payment"
+              inherit_id="website_sale.payment" customize_show="True"
+              name="website_sale_products_inh_payment">
+        <xpath expr='//div[@id="wrap"]'
+               position='replace'>
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+
+                        <div class="col-12" t-if="errors">
+                            <t t-foreach="errors" t-as="error">
+                                <div class="alert alert-danger" t-if="error" role="alert">
+                                    <h4>
+                                        <t t-esc="error[0]" />
+                                    </h4>
+                                    <t t-esc="error[1]" />
+                                </div>
+                            </t>
+                        </div>
+                        <div class="col-12col-xl order-xl-1 oe_cart">
+                            <t t-call="calma_grid.website_sale_inh_cart_lines"/>
+                            <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_payment_1"/>
+                            <div id="payment_method" class="mt-3" t-if="(acquirers or tokens) and website_sale_order.amount_total">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure" id="oe_structure_website_sale_payment_2"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="website_sale_product_form_inh"
+              inherit_id="website_sale.product" customize_show="True" name="website_sale_product_form_inh">
+    <xpath expr='//div[@id="product_details"]' position='replace'>
+        <div class="col-md-6 col-xl-4 offset-xl-2" id="product_details">
+            <h1 align="center" itemprop="name" t-field="product.name">Product Name</h1>
+            <span itemprop="url" style="display:none;" t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
+            <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="js_product js_main_product">
+                    <t t-placeholder="select">
+                        <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>
+                        <input type="hidden" class="product_template_id" name="product_template_id" t-att-value="product.id"/>
+                        <t t-if="first_possible_combination" t-call="sale.variants">
+                            <t t-set="ul_class" t-value="'flex-column'"/>
+                            <t t-set="parent_combination" t-value="None"/></t>
+                        <t t-else="">
+                            <ul class="d-none js_add_cart_variants" t-att-data-attribute_exclusions="{'exclusions: []'}"/>
+                        </t>
+                    </t>
+                    <div class="details-box-shop">
+                        <div >
+                            <div>
+                                <table align="center" style="width:100%"
+                                       class="p_att" >
+                                    <tr class="lineBorder">
+                                        <td align="left">
+                                            <span t-esc="product.zona"/>
+                                        </td>
+                                        <td/>
+                                        <td/>
+                                        <td>
+                                            <p align="right">
+                                                <span t-esc="product.tipo_inversion.name"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="lineBorder"  style="background-color:#F5F5F5;">
+                                        <td class="price" align="left">
+                                            <span t-esc="product.invertido" t-options="{'widget': 'monetary',                                             'display_currency': website.currency_id}"/>
+                                            <sub>[
+                                                <span t-esc="product.porcentaje_crowdfunding"/>
+                                                <sub>%</sub>]
+                                            </sub>
+                                        </td>
+                                        <td/>
+                                        <td>
+                                            <p class="price" align="right">
+                                                <span t-esc="product.objetivo_crowdfunding" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="lineBorder" >
+                                        <td  colspan="4" align="center">
+                                            <p>Inversores :
+                                                <strong>
+                                                    <span t-esc="product.inversores"/>
+                                                </strong>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="lineBorder" style="background-color:#F5F5F5;">
+                                        <td align="center">
+                                            <p>
+                                                <strong>
+                                                    <span t-esc="product.rentabilidad_anual"/>%
+                                                </strong>
+                                                <br/> Rentabilidad Anual
+                                            </p>
+                                        </td>
+                                        <td align="center"></td>
+                                        <td align="center">
+                                            <p>
+                                                <strong>
+                                                    <span t-esc="product.rentabilidad_total"/>%
+                                                </strong>
+                                                <br/> Rentabilidad Total
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="lineBorder" style="padding-top:5px">
+                                        <td colspan="3" align="center">
+                                            <p>Plazo:
+                                                <span t-esc="product.plazo_inversion"> meses </span>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding-top:5px">
+                                        <td colspan="3" align="center">
+                                            <p>
+                                                <strong>
+                                                    ¿Cuanto vas a invertir?
+                                                </strong>
+                                                <br/>
+                                                <input type="text"  data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                                                <strong>€</strong>
+                                                <br/>
+                                                <a align="center" role="button" id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Cart</a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <p t-if="True" class="css_not_available_msg alert alert-warning">This combination does not exist.</p>
+                </div>
+            </form>
+            <p t-elif="not product.active" class="alert alert-warning">This product is no longer available.</p>
+            <p t-else="" class="alert alert-warning">This product has no valid combination.</p>
+            <hr t-if="product.description_sale"/>
+            <div class="o_not_editable">
+                <p t-field="product.description_sale" class="text-muted"/>
+            </div>
+            <hr/>
+        </div>
+    </xpath>
+
+    <template id="website_sale_product_quantity_inh"
+              inherit_id="website_sale.product_quantity" customize_show="True"
+              name="website_sale_product_quantity_inh">
+        <xpath expr='//div[@class="css_quantity input-group oe_website_spinner"]'
+               position='replace'>
+
+        </xpath>
+    </template>
 </odoo>
