@@ -49,7 +49,11 @@ class CustomPortalDetails(CustomerPortal):
                 values.update(
                     {key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if
                      key in post})
-                values.update({'zip': values.pop('zipcode', '')})
+                values.update({
+                    'zip': values.pop('zipcode', ''),
+                    'x_name_dni_back': dni_back.filename,
+                    'x_name_dni_front': dni_front.filename,
+                })
                 partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
