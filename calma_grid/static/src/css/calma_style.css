@@ -23,21 +23,16 @@
 }
 .price {
     margin: 5px 0;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 900;
 }
-
 .Image_class > img { height: 6000px; width: 10000px; }
 .oe_form .oe_form_field_image img { max-width:656px; max-height: 1056px; }
-
 .container-img-shop {
     position: relative;
     max-width:350px;
     padding: 0;
-
-
 }
-
 .top-ban-shop {
     right:0px;
     position: absolute;
@@ -58,10 +53,8 @@
     border: 0;
     left: 0px
 }
-
 .black-shop {
-    background-color:black;
-    opacity:0.5;
+    background-color:grey;
     color:white;
     padding: 0;
 }
@@ -76,15 +69,12 @@
     padding: 0;
     margin: 0;
     border:1px ridge grey;
-
 }
 .lineBorder {
-
     border-bottom-color: #efefef;
     border-bottom-width: 5px;
     border-bottom-style: solid;
 }
-
 .clearfix::after {
     content: "";
     clear: both;
@@ -95,14 +85,11 @@
     float:left;
     text-align: center;
 }
-
 .right {
     position: relative;
     margin-left: 750px;
     border-style: outset;
 }
-
-
 .top-ban {
     right:0px;
     position: absolute;
@@ -116,7 +103,8 @@
     left: 0px;
 }
 .black {
-    background-color:black;opacity:0.5;
+    background-color:black;
+    opacity:0.5;
     color:white;
 }
 
@@ -150,7 +138,6 @@
     flex: 1;
     padding: 0 30px 30px;
     margin: 0%;
-
 }
 .td_ {
     padding-top:10px;
@@ -166,7 +153,6 @@
 .right2 {
     margin-left:200px;
 }
-
 .p_att {
     margin: 5px 0;
     font-size: 14px;

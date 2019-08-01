@@ -16,7 +16,6 @@
             </xpath>
         </field>
     </record>
-
     <record id="transaction_form_marketpay" model="ir.ui.view">
         <field name="name">acquirer.transaction.form.marketpay</field>
         <field name="model">payment.transaction</field>

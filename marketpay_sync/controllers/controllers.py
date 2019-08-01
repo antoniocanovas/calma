@@ -22,6 +22,9 @@ class CustomPortalDetails(CustomerPortal):
         if post:
             dni_front = post.pop('x_dni_front')
             dni_back = post.pop('x_dni_back')
+            print("DEBUG")
+            print(dni_front.name)
+
             error, error_message = self.details_form_validate(post)
             if error.get('x_dni_front') and dni_front:
                 error.pop('x_dni_front')
@@ -49,11 +52,10 @@ class CustomPortalDetails(CustomerPortal):
                 values.update(
                     {key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if
                      key in post})
-                values.update({
-                    'zip': values.pop('zipcode', ''),
-                    'x_name_dni_back': dni_back.filename,
-                    'x_name_dni_front': dni_front.filename,
-                })
+                values.update({'zip': values.pop('zipcode', ''),
+                               'x_name_dni_back': dni_back.filename,
+                               'x_name_dni_front': dni_front.filename,
+                               })
                 partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
