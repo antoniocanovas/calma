@@ -18,13 +18,18 @@
                         <group>
                             <field name="x_marketpayuser_id" readonly="1"/>
                             <field name="x_dni_front"
-                                   filename="x_name_dni_front" widget="image"/>
+                                   filename="x_name_dni_front"/>
                             <field name="x_name_dni_front" invisible="1"/>
+                            <field name="x_dni_f_preview"
+                                   widget="image"/>
                         </group>
                         <group>
+                            <field name="x_marketpaywallet_id" readonly="1"/>
                             <field name="x_dni_back"
-                                   filename="x_name_dni_back" widget="image"/>
+                                   filename="x_name_dni_back"/>
                             <field name="x_name_dni_back" invisible="1"/>
+                            <field name="x_dni_b_preview" widget="image"/>
+
                         </group>
                     </group>
                 </page>

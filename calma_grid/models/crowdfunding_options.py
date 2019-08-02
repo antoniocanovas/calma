@@ -19,3 +19,6 @@ class CrowdfundingOptions(models.Model):
     )
     note = fields.Text()
     icon = fields.Binary()
+    icon_name = fields.Char(
+        string='Nombre Archivo',
+    )

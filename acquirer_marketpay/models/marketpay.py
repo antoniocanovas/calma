@@ -107,8 +107,7 @@ class PaymentAcquirer(models.Model):
         client = swagger_client.ApiClient(configuration=config)
         api_instance = swagger_client.Configuration.set_default(config)
 
-        walletid = "9347379"
-        userid = "9347382"
+        walletid = marketpaydata.x_marketpaywallet_id
 
         currency = "EUR"
         amount = str(int(round(values['amount'] * 100)))
@@ -120,6 +119,8 @@ class PaymentAcquirer(models.Model):
         cancel_url = '%s/wallet/error/transaction' % base_url
 
         apiPayin = swagger_client.PayInsRedsysApi()
+        pay_in_id = False
+        api_response = False
 
         fees = swagger_client.Money(amount=amountfee, currency=currency)
         debited = swagger_client.Money(amount=amount, currency=currency)
@@ -129,10 +130,11 @@ class PaymentAcquirer(models.Model):
         try:
             api_response = apiPayin.pay_ins_redsys_redsys_post_payment_by_web(
                 redsys_pay_in=redsys_pay)
+            pay_in_id = api_response.pay_in_id
+            self.x_redsys_url = api_response.url
+
         except ApiException as e:
             print(_("Exception when calling UsersApi->users_post: %s\n" % e))
-        pay_in_id = api_response.pay_in_id
-        self.x_redsys_url = api_response.url
 
         PT = request.env['payment.transaction'].sudo()
         tx = PT.search([

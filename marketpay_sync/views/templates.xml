@@ -126,13 +126,15 @@
                                 <label class="col-form-label"
                                        for="x_dni_front">Anverso
                                     DNI</label>
-                                <input type="file" name="x_dni_front" class="file" multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
+                                <input type="file" name="x_dni_front" class="file"
+                                       multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
                             </div>
                             <div t-attf-class="form-group col-xl-6">
                                 <label class="col-form-label"
                                        for="x_dni_back">Reverso
                                     DNI</label>
-                                <input type="file" name="x_dni_back" class="file" multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
+                                <input type="file" name="x_dni_back" class="file" multiple="false" data-show-upload="true" data-show-caption="true"
+                                       lass="file" data-show-preview="true"/>
                             </div>
                             <input type="hidden" name="redirect" t-att-value="redirect"/>
                         </div>

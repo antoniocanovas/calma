@@ -67,7 +67,8 @@
             </div>
         </xpath>
     </template>
-    <template id="website_sale_products_inh" inherit_id="website_sale.products" customize_show="True" name="website_sale_products_inh" priority="9999">
+    <template id="website_sale_products_inh"
+              inherit_id="website_sale.products" customize_show="True" name="website_sale_products_inh" priority="9999">
         <xpath expr='//table[@width="100%"]' position='replace'>
             <table width="100%" >
                 <tbody>
@@ -78,7 +79,6 @@
                                 <td>
                                     <table>
                                         <td>
-
                                             <div class="oe_product_cart" t-att-data-publish="product.website_published and 'on' or 'off'">
                                                 <t t-set="product_image_big" t-value="td_product['x']+td_product['y'] &gt; 2"/>
                                                 <t t-call="website_sale.products_item"/>
@@ -95,7 +95,9 @@
             </table>
         </xpath>
     </template>
-    <template id="website_sale_products_item_inh" inherit_id="website_sale.products_item" customize_show="True" name="website_sale_products_item_inh" priority="9999">
+    <template id="website_sale_products_item_inh"
+              inherit_id="website_sale.products_item" customize_show="True"
+              name="website_sale_products_item_inh" priority="9999">
         <xpath expr="//div[@itemscope=&quot;itemscope&quot;]" position="replace">
             <div itemscope="itemscope" itemtype="http://schema.org/Product">
                 <div class="container-img-shop" style="margin: 0; padding: 0; border: 1;">
@@ -111,9 +113,41 @@
                         </a>
                     </div>
                     <div class="bottom-ban-shop black-shop">
-                        <h4 align="left">
-                            ICON
-                        </h4>
+                        <div style="float:right"
+                             t-if="product.tipo_inversion.icon !=False">
+                            <image>
+                                <span t-field="product.tipo_inversion.icon"
+                                      t-options="{'widget': 'image', 'resize':'30x30'}"/>
+                            </image>
+                        </div>
+                        <div style="float:right"
+                             t-if="product.riesgo_inversion.icon !=False">
+                            <image>
+                                <span t-field="product.riesgo_inversion.icon"
+                                      t-options="{'widget': 'image', 'resize':'30x30'}"/>
+                            </image>
+                        </div>
+                        <div style="float:right"
+                             t-if="product.pais.icon !=False">
+                            <image>
+                                <span t-field="product.pais.icon"
+                                      t-options="{'widget': 'image', 'resize':'30x30'}"/>
+                            </image>
+                        </div>
+                        <div style="float:right"
+                             t-if="product.financiacion_bancaria.icon !=False">
+                            <image>
+                                <span t-field="product.financiacion_bancaria.icon"
+                                      t-options="{'widget': 'image', 'resize':'30x30'}"/>
+                            </image>
+                        </div>
+                        <div style="float:right"
+                             t-if="product.premium.icon !=False">
+                            <image>
+                                <span t-field="product.premium.icon"
+                                      t-options="{'widget': 'image', 'resize':'30x30'}"/>
+                            </image>
+                        </div>
                     </div>
                     <t t-if="show_publish">
                         <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
@@ -129,15 +163,38 @@
                         <div style="margin: 0; padding: 0; border: 0;" class="pricing-box text-center">
                             <table class="table_border" align="center">
                                 <tr class="lineBorder">
-                                    <td  class="price" align="left">
-                                        <span  t-esc="product.invertido" t-options="{'widget': 'monetary',
-                                            'display_currency': website.currency_id}"/><sub>[<span t-esc="product.porcentaje_crowdfunding"/><sub>%</sub>]</sub>
+                                    <td class="price" align="left">
+                                        <p class="p_att">
+                                            Objetivo
+                                        </p>
                                     </td>
                                     <td/>
-                                    <td >
-                                        <p class="price" align="right"><span
-                                                t-esc="product.objetivo_crowdfunding"
-                                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/></p>
+                                    <td>
+                                        <p class="price" align="right">
+                                            <span
+                                                    t-esc="product.objetivo_crowdfunding"
+                                                    t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr class="lineBorder">
+                                    <td class="price" align="left">
+                                        <p class="p_att">
+                                            Porcentaje
+                                        </p>
+                                    </td>
+                                    <td/>
+                                    <td>
+                                        <p class="price" align="right">
+                                            <span
+                                                    t-esc="product.invertido" t-options="{'widget': 'monetary',
+                                                            'display_currency': website.currency_id}"/>
+                                            <sub>[
+                                                <span
+                                                        t-esc="'%.2f'% product.porcentaje_crowdfunding"/>
+                                                <sub>%</sub>]
+                                            </sub>
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr class="lineBorder" style="padding-top:5px">
@@ -161,7 +218,7 @@
                                     </td>
                                     <td/>
                                     <td align="center">
-                                        <p>Plazo: <span t-esc="product.plazo_inversion"> meses </span></p>
+                                        <p>Plazo: <span t-esc="product.plazo_inversion">  </span>meses</p>
                                     </td>
                                 </tr>
                             </table>
@@ -258,7 +315,8 @@
         </xpath>
     </template>
     <template id="website_sale_product_form_inh"
-              inherit_id="website_sale.product" customize_show="True" name="website_sale_product_form_inh" priority="9999">
+              inherit_id="website_sale.product" customize_show="True"
+              name="website_sale_product_form_inh" priority="9999">
         <xpath expr='//div[@id="product_details"]' position='replace'>
             <div class="col-md-6 col-xl-4 offset-xl-2" id="product_details">
                 <h1 align="center" itemprop="name" t-field="product.name">Product Name</h1>
@@ -287,24 +345,44 @@
                                             </td>
                                             <td/>
                                             <td/>
-                                            <td>
-                                                <p align="right">
-                                                    <span t-esc="product.tipo_inversion.name"/>
-                                                </p>
+                                            <td align="right">
+                                                <span t-esc="product.tipo_inversion.name"/>
                                             </td>
                                         </tr>
                                         <tr class="lineBorder"  style="background-color:#F5F5F5;">
                                             <td class="price" align="left">
-                                                <span t-esc="product.invertido" t-options="{'widget': 'monetary',                                             'display_currency': website.currency_id}"/>
-                                                <sub>[
-                                                    <span t-esc="product.porcentaje_crowdfunding"/>
-                                                    <sub>%</sub>]
-                                                </sub>
+                                                <p class="p_att">
+                                                    Objetivo
+                                                </p>
                                             </td>
+                                            <td/>
                                             <td/>
                                             <td>
                                                 <p class="price" align="right">
-                                                    <span t-esc="product.objetivo_crowdfunding" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                    <span
+                                                            t-esc="product.objetivo_crowdfunding"
+                                                            t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr class="lineBorder">
+                                            <td class="price" align="left">
+                                                <p class="p_att">
+                                                    Porcentaje
+                                                </p>
+                                            </td>
+                                            <td/>
+                                            <td/>
+                                            <td>
+                                                <p class="price" align="right">
+                                                    <span
+                                                            t-esc="product.invertido" t-options="{'widget': 'monetary',
+                                                            'display_currency': website.currency_id}"/>
+                                                    <sub>[
+                                                        <span
+                                                                t-esc="'%.2f'% product.porcentaje_crowdfunding"/>
+                                                        <sub>%</sub>]
+                                                    </sub>
                                                 </p>
                                             </td>
                                         </tr>
@@ -326,7 +404,8 @@
                                                     <br/> Rentabilidad Anual
                                                 </p>
                                             </td>
-                                            <td align="center"></td>
+                                            <td/>
+                                            <td/>
                                             <td align="center">
                                                 <p>
                                                     <strong>
@@ -337,14 +416,13 @@
                                             </td>
                                         </tr>
                                         <tr class="lineBorder" style="padding-top:5px">
-                                            <td colspan="3" align="center">
-                                                <p>Plazo:
-                                                    <span t-esc="product.plazo_inversion"> meses </span>
-                                                </p>
+                                            <td colspan="4" align="center">
+                                                <p>Plazo: <span
+                                                        t-esc="product.plazo_inversion"/> meses</p>
                                             </td>
                                         </tr>
                                         <tr style="padding-top:5px">
-                                            <td colspan="3" align="center">
+                                            <td colspan="4" align="center">
                                                 <p>
                                                     <strong>
                                                         ¿Cuanto vas a invertir?
@@ -377,8 +455,9 @@
     <template id="website_sale_product_quantity_inh"
               inherit_id="website_sale.product_quantity" customize_show="True"
               name="website_sale_product_quantity_inh" priority="9999">
-        <xpath expr='//div[hasclass("css_quantity")]'
-               position='replace'/>
+        <xpath expr='//div[@class="css_quantity input-group oe_website_spinner"]'
+               position='replace'>
+        </xpath>
     </template>
 
 </odoo>

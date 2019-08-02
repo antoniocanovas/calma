@@ -9,7 +9,8 @@
                 <field name="name"/>
                 <field name="crowdfunding_type"/>
                 <field name="note"/>
-                <field name="icon"/>
+                <field name="icon" filename="icon_name" widget="image"/>
+                <field name="icon_name" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -22,13 +23,13 @@
                     <field name="name"/>
                     <field name="crowdfunding_type"/>
                     <field name="note"/>
-                    <field name="icon"/>
+                    <field name="icon" filename="icon_name" widget="image"/>
+                    <field name="icon_name" invisible="1"/>
                     <separator/>
                 </group>
             </form>
         </field>
     </record>
-
     <record model="ir.actions.act_window" id="action_options_crowd">
         <field name="name">Options</field>
         <field name="type">ir.actions.act_window</field>
