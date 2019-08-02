@@ -7,8 +7,8 @@ import base64
 
 class CustomPortalDetails(CustomerPortal):
     MANDATORY_BILLING_FIELDS = CustomerPortal.MANDATORY_BILLING_FIELDS + \
-                              ["zipcode", "state_id", "vat", "x_dni_front",
-                               "x_dni_back"]
+                               ["zipcode", "state_id", "vat", "x_dni_front",
+                                "x_dni_back"]
 
     @route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
@@ -22,8 +22,6 @@ class CustomPortalDetails(CustomerPortal):
         if post:
             dni_front = post.pop('x_dni_front')
             dni_back = post.pop('x_dni_back')
-            print("DEBUG")
-            print(dni_front.name)
 
             error, error_message = self.details_form_validate(post)
             if error.get('x_dni_front') and dni_front:

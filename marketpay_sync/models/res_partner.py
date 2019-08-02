@@ -45,19 +45,21 @@ class ResPartner(models.Model):
         string='Nombre Archivo',
     )
     x_dni_f_preview = fields.Binary(
-        string='Vista Previa', compute='_get_image_f'
+        string='Vista Previa',
+        compute='_compute_image_f',
     )
     x_dni_b_preview = fields.Binary(
-        string='Vista previa', compute='_get_image_b'
+        string='Vista previa',
+        compute='_compute_image_b',
     )
 
     @api.depends('x_dni_front')
-    def _get_image_f(self):
+    def _compute_image_f(self):
         for record in self:
             record.x_dni_f_preview=record.x_dni_front
 
     @api.depends('x_dni_back')
-    def _get_image_b(self):
+    def _compute_image_b(self):
         for record in self:
             record.x_dni_b_preview = record.x_dni_back
 

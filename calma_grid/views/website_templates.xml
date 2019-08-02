@@ -417,10 +417,8 @@
                                         </tr>
                                         <tr class="lineBorder" style="padding-top:5px">
                                             <td colspan="4" align="center">
-                                                <p>Plazo:
-                                                    <span
-                                                            t-esc="product.plazo_inversion">  </span> meses
-                                                </p>
+                                                <p>Plazo: <span
+                                                        t-esc="product.plazo_inversion"/> meses</p>
                                             </td>
                                         </tr>
                                         <tr style="padding-top:5px">
