@@ -119,6 +119,8 @@ class PaymentAcquirer(models.Model):
         cancel_url = '%s/wallet/error/transaction' % base_url
 
         apiPayin = swagger_client.PayInsRedsysApi()
+        pay_in_id = False
+        api_response = False
 
         fees = swagger_client.Money(amount=amountfee, currency=currency)
         debited = swagger_client.Money(amount=amount, currency=currency)
