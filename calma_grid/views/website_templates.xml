@@ -340,13 +340,15 @@
                                     <table align="center" style="width:100%"
                                            class="p_att" >
                                         <tr class="lineBorder">
-                                            <td align="left">
+                                            <td class="price" align="left">
                                                 <span t-esc="product.zona"/>
                                             </td>
                                             <td/>
                                             <td/>
-                                            <td align="right">
-                                                <span t-esc="product.tipo_inversion.name"/>
+                                            <td>
+                                                <p class="price" align="right">
+                                                    <span t-esc="product.tipo_inversion.name"/>
+                                                </p>
                                             </td>
                                         </tr>
                                         <tr class="lineBorder"  style="background-color:#F5F5F5;">
@@ -425,13 +427,25 @@
                                             <td colspan="4" align="center">
                                                 <p>
                                                     <strong>
-                                                        ¿Cuanto vas a invertir?
+                                                        <h4>
+                                                            ¿Cuanto vas a invertir?
+                                                        </h4>
                                                     </strong>
+                                                    <input class="input_inv"
+                                                           style="text-align:right;"
+                                                           type="text"
+                                                           data-min="1"
+                                                           name="add_qty"
+                                                           t-att-value="add_qty or 1"/><label
+                                                        style="text-align:center;" class="input_label">€</label>
                                                     <br/>
-                                                    <input type="text"  data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
-                                                    <strong>€</strong>
-                                                    <br/>
-                                                    <a align="center" role="button" id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Cart</a>
+                                                    <div>
+                                                        <button align="center"
+                                                                id="add_to_cart"
+                                                                class="js_check_product a-submit"
+                                                                href="#">Invertir
+                                                        </button>
+                                                    </div>
                                                 </p>
                                             </td>
                                         </tr>
