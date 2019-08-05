@@ -161,12 +161,11 @@
                 <div class="details-box-shop">
                     <div class="pricing-box-container">
                         <div style="margin: 0; padding: 0; border: 0;" class="pricing-box text-center">
-                            <table class="table_border" align="center">
+                            <table class="table_border p_att" align="center"
+                                   style="width:90%">
                                 <tr class="lineBorder">
                                     <td class="price" align="left">
-                                        <p class="p_att">
-                                            Objetivo
-                                        </p>
+                                        <span> Objetivo </span>
                                     </td>
                                     <td/>
                                     <td>
@@ -179,9 +178,7 @@
                                 </tr>
                                 <tr class="lineBorder">
                                     <td class="price" align="left">
-                                        <p class="p_att">
-                                            Porcentaje
-                                        </p>
+                                        <span> Invertido </span>
                                     </td>
                                     <td/>
                                     <td>
@@ -337,7 +334,7 @@
                         <div class="details-box-shop">
                             <div >
                                 <div>
-                                    <table align="center" style="width:100%"
+                                    <table align="center" style="width:90%"
                                            class="p_att" >
                                         <tr class="lineBorder">
                                             <td class="price" align="left">
@@ -353,9 +350,7 @@
                                         </tr>
                                         <tr class="lineBorder"  style="background-color:#F5F5F5;">
                                             <td class="price" align="left">
-                                                <p class="p_att">
-                                                    Objetivo
-                                                </p>
+                                                <span> Objetivo </span>
                                             </td>
                                             <td/>
                                             <td/>
@@ -369,9 +364,7 @@
                                         </tr>
                                         <tr class="lineBorder">
                                             <td class="price" align="left">
-                                                <p class="p_att">
-                                                    Porcentaje
-                                                </p>
+                                                <span> Invertido </span>
                                             </td>
                                             <td/>
                                             <td/>
