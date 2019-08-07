@@ -28,23 +28,8 @@ class WebsiteWallet(http.Controller):
         partner = request.env.user.partner_id
         stored_card = PM.search([('partner_id', '=', partner.id)], order="id desc", limit=1)
 
-        amount = 0
         values = dict()
         values['form_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 'form' and acq.view_template_id]
-        #currency_id = request.website.get_current_pricelist().currency_id.id
-        #base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-
-        #for acq in values['form_acquirers']:
-        #    acq.form = acq.with_context(
-        #        submit_class='btn btn-primary', submit_txt=_('Add Money')).sudo().render(
-        #        '/',
-        #        amount,
-        #        currency_id,
-        #        partner_id=request.env.user.partner_id.id,
-        #        values={
-        #            'return_url': base_url + '/wallet/payment/validate',
-        #        }
-        #    )
 
         payflow = request.env['payment.acquirer'].sudo().search([
             ('provider', '=', 'payflow_pro'), ('is_wallet_acquirer', '=', True)])
@@ -59,48 +44,6 @@ class WebsiteWallet(http.Controller):
             'stored_card': stored_card if stored_card and flag else False
         }
         return request.render("website_wallet.add_money", vals)
-
-    #@http.route(['/wallet/add/money/quantity'], type='http', auth="user", website=True)
-    #def wallet_add_money_quantity(self, **post):
-    #    acquirers = request.env['payment.acquirer'].sudo().search([
-    #        ('website_published', '=', True), ('is_wallet_acquirer', '=', True)])
-
-    #   PM = request.env['payment.token'].sudo()
-    #    partner = request.env.user.partner_id
-    #    stored_card = PM.search([('partner_id', '=', partner.id)], order="id desc", limit=1)
-
-    #    amount = 0
-    #    values = dict()
-    #    values['form_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 'form' and acq.view_template_id]
-    #    currency_id = request.website.get_current_pricelist().currency_id.id
-    #    base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-
-    #   for acq in values['form_acquirers']:
-    #        acq.form = acq.with_context(
-    #            submit_class='btn btn-primary', submit_txt=_('Add Money')).sudo().render(
-    #            '/',
-    #            amount,
-    #            currency_id,
-    #            partner_id=request.env.user.partner_id.id,
-    #            values={
-    #                'return_url': base_url + '/wallet/payment/validate',
-    #            }
-    #        )
-
-    #    payflow = request.env['payment.acquirer'].sudo().search([
-    #        ('provider', '=', 'payflow_pro'), ('is_wallet_acquirer', '=', True)])
-    #    flag = False
-    #    if payflow.website_published and payflow.is_wallet_acquirer:
-    #        flag = True
-
-    #    vals = {
-    #        'wallet_bal': request.env.user.partner_id.wallet_balance,
-    #        'acquirers': acquirers,
-    #        'form_acquirers': values['form_acquirers'],
-    #        'stored_card': stored_card if stored_card and flag else False
-    #    }
-    #    return request.render("website_wallet.add_money_quantity", vals)
-
 
     #@http.route(['/wallet/add/money/transaction'], type='http', auth="user", website=True)
     @http.route(['/wallet/add/money/quantity'], type='http', auth="user", website=True)
@@ -239,8 +182,6 @@ class WebsiteWallet(http.Controller):
             tx.state = 'done'
             tx.date = datetime.now()
 
-        #tx.s2s_feedback(data, 'payflow_pro')
-
         vals = {
                 'tx_state': tx.state.capitalize(),
                 'tx_amount': tx.amount,
@@ -344,8 +285,6 @@ class WebsiteWallet(http.Controller):
 
         print (post)
         print(partner)
-        #if post.get('amount') == '':
-        #    return request.redirect("/wallet/add/account")
 
         return request.render("website_wallet.add_account")
 
@@ -391,7 +330,6 @@ class PayflowProController(http.Controller):
 class WebsiteSale(WebsiteSale):
     @http.route(['/shop/wallet/pay'], type='http', auth="public", website=True)
     def shop_wallet_pay(self, **post):
-        print("#########PAGO POR WALLET############")
         order = request.website.sale_get_order()
         if not order:
             return request.redirect('/shop/cart')
@@ -406,10 +344,6 @@ class WebsiteSale(WebsiteSale):
         #if res and order.wallet_txn_id.amount == round(order.amount_total, 2):
         if res and order.wallet_txn_id.amount == round(order.order_line[0].product_uom_qty, 2):
             # Traspasar fondos del wallet del usuario al wallet del proyecto
-
-
-
-            # Order Confirmation Page
             order.wallet_txn_id.sudo().state = 'done'
             tx = order.wallet_txn_id
             if tx.state == 'done':

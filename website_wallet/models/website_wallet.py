@@ -153,7 +153,6 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_wallet_pay(self):
-        print("################pago por wallet desde funcion##################")
         for order in self.filtered(lambda l: l.state in ['draft', 'sent']):
             #if order.partner_wallet_balance >= order.amount_total:
                 #tx_amount = order.amount_total
@@ -195,7 +194,6 @@ class SaleOrder(models.Model):
     @api.multi
     def action_marketpay_wallet(self,order):
         ######## Obtener Wallet de cada Producto ################
-        print(order.order_line[0].product_id.project_wallet)
         credited_wallet_id = order.order_line[0].product_id.project_wallet
         ######## Obtener Acquirer Marketpay #################
         acquirer = self.env['payment.acquirer'].sudo().search([
@@ -226,12 +224,6 @@ class SaleOrder(models.Model):
 
         ############ trae los valores del partner ############
 
-        # walletid = marketpaydata.x_marketpaywallet_id
-        # userid = marketpaydata.x_marketpayuser_id
-
-        walletid = "9347379"
-        userid = "9347382"
-
         currency = "EUR"
         amount = str(int(round(order.order_line[0].product_uom_qty * 100)))
         print(amount)
@@ -244,10 +236,11 @@ class SaleOrder(models.Model):
 
         fees = swagger_client.Money(amount=amountfee, currency=currency)
         debited_founds = swagger_client.Money(amount=amount, currency=currency)
-
-        credited_user_id = "9347382"
-        debited_wallet_id= "9347379"
-
+        print(order.partner_id.name)
+        credited_user_id = order.partner_id.x_marketpayuser_id
+        debited_wallet_id= order.partner_id.x_marketpaywallet_id
+        print("debug")
+        print(credited_wallet_id)
 
         transfer = swagger_client.TransferPost(credited_user_id=credited_user_id,debited_funds=debited_founds,
                                                credited_wallet_id=credited_wallet_id, debited_wallet_id=debited_wallet_id,fees=fees)
