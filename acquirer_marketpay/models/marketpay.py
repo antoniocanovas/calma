@@ -19,7 +19,6 @@ except ImportError:
     swagger_client = None
     ApiException = None
 
-
 class PaymentAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
@@ -28,28 +27,15 @@ class PaymentAcquirer(models.Model):
             ('marketpay', 'Marketpay'),
         ],
     )
-    x_marketpay_key = fields.Char(
-        string='Key',
-        required=True,
-    )
-    x_marketpay_secret = fields.Char(
-        string='secret',
-        required=True,
-    )
-    x_marketpay_domain = fields.Char(
-        string='domain',
-        required=True,
-    )
-    x_marketpay_fee = fields.Integer(
+    marketpay_fee = fields.Integer(
         string='Comisión',
-        required=True,
+        default='0',
     )
-    x_marketpay_currency = fields.Char(
+    marketpay_currency = fields.Char(
         string='Currency',
         default='978',
-        required_if_provider='marketpay',
     )
-    x_redsys_url = fields.Char()
+    redsys_url = fields.Char()
 
     @api.model
     def _get_website_url(self):
@@ -83,10 +69,11 @@ class PaymentAcquirer(models.Model):
         # Marketpay values for the user that do the operation
         marketpaydata = values['partner']
 
-        # Partner configuration
-        encoded = self.x_marketpay_key + ":" + self.x_marketpay_secret
+        #Obtain marketpay values form res.company
+        company_marketpay = self.env['res.company']._company_default_get()
 
-        token_url = 'https://api-sandbox.marketpay.io/v2.01/oauth/token'
+        # Partner configuration
+        encoded = company_marketpay.marketpay_key + ":" + company_marketpay.marketpay_secret
 
         key = 'Basic %s' % base64.b64encode(
             encoded.encode('ascii')).decode('ascii')
@@ -94,7 +81,7 @@ class PaymentAcquirer(models.Model):
         headers = {'Authorization': key,
                    'Content-Type': 'application/x-www-form-urlencoded'}
 
-        r = requests.post(token_url, data=data, headers=headers)
+        r = requests.post(company_marketpay.token_url, data=data, headers=headers)
 
         rs = r.content.decode()
         response = json.loads(rs)
@@ -102,7 +89,7 @@ class PaymentAcquirer(models.Model):
 
         # We set configuration of Swagger
         config = swagger_client.Configuration()
-        config.host = self.x_marketpay_domain
+        config.host = company_marketpay.marketpay_domain
         config.access_token = token
         client = swagger_client.ApiClient(configuration=config)
         api_instance = swagger_client.Configuration.set_default(config)
@@ -111,7 +98,7 @@ class PaymentAcquirer(models.Model):
 
         currency = "EUR"
         amount = str(int(round(values['amount'] * 100)))
-        amountfee = self.x_marketpay_fee
+        amountfee = company_marketpay.marketpay_fee
 
         # Controller URL et in wallet to generate the transaction
         success_url = '%s/wallet/add/money/transaction' % base_url
@@ -131,7 +118,7 @@ class PaymentAcquirer(models.Model):
             api_response = apiPayin.pay_ins_redsys_redsys_post_payment_by_web(
                 redsys_pay_in=redsys_pay)
             pay_in_id = api_response.pay_in_id
-            self.x_redsys_url = api_response.url
+            self.redsys_url = api_response.url
 
         except ApiException as e:
             print(_("Exception when calling UsersApi->users_post: %s\n" % e))
@@ -144,6 +131,7 @@ class PaymentAcquirer(models.Model):
             ('state', '=', 'draft')], limit=1)
 
         tx.marketpay_txnid = pay_in_id
+
         marketpay_values.update({
             'Ds_MerchantParameters': api_response.ds_merchant_parameters,
             'Ds_SignatureVersion': api_response.ds_signature_version,
@@ -155,7 +143,6 @@ class PaymentAcquirer(models.Model):
     def marketpay_get_form_action_url(self):
         return self.x_redsys_url
 
-
 # Transaction No usado en desarrollo para futuros
 # Se usa el transaction que vienee definido en el módulo wallet
 
@@ -166,88 +153,3 @@ class PaymentTransaction(models.Model):
         string='Marketpay ID',
     )
 
-    def merchant_params_json2dict(self, data):
-        parameters = data.get('Ds_MerchantParameters', '')
-        return json.loads(base64.b64decode(parameters).decode())
-
-    # --------------------------------------------------
-    # No Usado en proyecto CALMA
-    # No en producción, definidas funciones para una posible implementación
-    # de hacer el transaction desde marketpay en lugar del wallet
-    # --------------------------------------------------
-
-    @api.model
-    def _marketpay_form_get_tx_from_data(self, data):
-        print("################RESULT FORM #####################")
-        pedido = data['order']
-        reference = pedido.transaction_ids[0].reference
-        print(reference)
-        tx = self.search([('reference', '=', reference)])
-        print(tx)
-        return tx
-
-    @api.multi
-    def _marketpay_form_get_invalid_parameters(self, data):
-        test_env = http.request.session.get('test_enable', False)
-        invalid_parameters = []
-        if invalid_parameters and test_env:
-            return []
-        return invalid_parameters
-
-    @api.multi
-    def _marketpay_form_validate(self, data):
-        # Tomamos la id de paymenttransaction
-        pedido = data['order']
-        reference = pedido.transaction_ids[0].reference
-        tx = self.search([('reference', '=', reference)])
-
-        # create an instance of the API class
-        api_instance = swagger_client.PayInsRedsysApi()
-        pay_in_id = tx.redsys_txnid  # int | The Id of a payment
-        print(pay_in_id)
-        try:
-            api_response = api_instance.pay_ins_redsys_redsys_get_payment(
-                pay_in_id)
-            print(api_response)
-        except ApiException as e:
-            print("Exception when calling PayInsRedsysApi->pay_ins_redsys_"
-                  "redsys_get_payment: %s\n" % e)
-
-        print("vamos!!")
-        print(api_response.status)
-
-        if api_response.status == "SUCCEEDED":
-            print("dentro del if")
-            self.write({
-                'state': 'done',
-                'state_message': 'Ok',
-            })
-            print("escrito el estado del pedido")
-            return True
-
-        if api_response.status == "FAILED":
-            self.write({
-                'state': 'cancel',
-                'state_message': 'Bank Error'
-            })
-            return False
-
-    @api.model
-    def form_feedback(self, data, acquirer_name):
-        res = super().form_feedback(data, acquirer_name)
-        tx = False
-        try:
-            tx_find_method_name = '_%s_form_get_tx_from_data' % acquirer_name
-            if hasattr(self, tx_find_method_name):
-                tx = getattr(self, tx_find_method_name)(data)
-                _logger.info(
-                    '<%s> transaction processed: tx ref:%s, tx amount: %s',
-                    acquirer_name, tx.reference if tx else 'n/a',
-                    tx.amount if tx else 'n/a')
-        except Exception:
-            if tx:
-                _logger.exception(
-                    _('Fail to confirm the order or send the confirmation '
-                      'email%s', tx and ' for the transaction %s' %
-                      tx.reference or ''))
-        return res

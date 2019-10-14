@@ -24,8 +24,12 @@ class ResCompany(models.Model):
         related='country_id.code',
         readonly=True,
     )
-    marketpay_key = fields.Char()
-    marketpay_secret = fields.Char()
+    marketpay_key = fields.Char(
+        string='Key',
+    )
+    marketpay_secret = fields.Char(
+        string='secret',
+    )
     marketpay_domain = fields.Char(
         default='https://api-sandbox.marketpay.io',
     )

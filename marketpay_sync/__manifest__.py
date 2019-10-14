@@ -11,6 +11,7 @@
         'sale_management',
         'website_sale',
         'website_wallet',
+        'contacts',
     ],
     'data': [
         'views/res_company_views.xml',
