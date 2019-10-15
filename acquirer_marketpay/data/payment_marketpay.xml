@@ -9,10 +9,6 @@
         <field name="company_id" ref="base.main_company"/>
         <field name="view_template_id" ref="redsys_form"/>
         <field name="environment">test</field>
-        <field name="x_marketpay_key">73a4d867-aeec-4e89-a295-64f14dc25ab9</field>
-        <field name="x_marketpay_secret">kFNm3CQU-ynHaM5g4OZ4MsSxOqmM85j4lgOVLkCgQYY=</field>
-        <field name="x_marketpay_domain">https://api-sandbox.marketpay.io</field>
-        <field name="x_marketpay_fee">0</field>
         <field name="description" type="html">
             <p>
                 A payment gateway to accept online payments via credit cards.
