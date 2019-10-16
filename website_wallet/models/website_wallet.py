@@ -104,7 +104,6 @@ class PaymentTransaction(models.Model):
         order.write({
             'payment_tx_id': tx.id,
         })
-
         return tx
 
     def render_sale_button(self, order, submit_txt=None, render_values=None):
@@ -130,7 +129,6 @@ class PaymentTransaction(models.Model):
             values=values,
         )
 
-
 class PaymentAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
@@ -154,15 +152,15 @@ class SaleOrder(models.Model):
     @api.multi
     def action_wallet_pay(self):
         for order in self.filtered(lambda l: l.state in ['draft', 'sent']):
-            #if order.partner_wallet_balance >= order.amount_total:
-                #tx_amount = order.amount_total
             if order.partner_wallet_balance >= order.order_line[0].product_uom_qty:
                 tx_amount = order.order_line[0].product_uom_qty
-            #if order.partner_wallet_balance < order.amount_total:
-            #    tx_amount = order.partner_wallet_balance
             if order.partner_wallet_balance < order.order_line[0].product_uom_qty:
                 raise osv.except_osv(('Autorización'), ('Código o Número de autorización deffinido'))
                 raise UserError(_('No tienes suficientes fondos. Por favor adquiere fondos para tu wallet.'))
+            # Comprobar si la cantidad a invertir es igual o mayor que la inversión mínima del producto
+            #if tx_amount < order.order_line[0].product_id.inversion_minima:
+            #    raise osv.except_osv(('Autorización'), ('Código o Número de autorización deffinido'))
+            #    raise UserError(_('Por favor la inversión mínima para este proyecto es.'))
 
             if order.wallet_txn_id:
                 tx = order.wallet_txn_id
@@ -192,78 +190,76 @@ class SaleOrder(models.Model):
         return True
 
     @api.multi
-    def action_marketpay_wallet(self,order):
-        ######## Obtener Wallet de cada Producto ################
-        credited_wallet_id = order.order_line[0].product_id.project_wallet
-        ######## Obtener Acquirer Marketpay #################
-        acquirer = self.env['payment.acquirer'].sudo().search([
-            ('is_wallet_acquirer', '=', True)], limit=1)
-        if not acquirer:
-            raise UserError(_('No acquirer configured. Please create wallet acquirer.'))
-        # Configuración CLiente
-        encoded = acquirer.x_marketpay_key + ":" + acquirer.x_marketpay_secret
+    def _prepare_marketpay_key(self):
+        self.ensure_one()
+        marketpay_key = self.env.user.company_id.marketpay_key
+        marketpay_secret = self.env.user.company_id.marketpay_secret
+        if not marketpay_key or not marketpay_secret:
+            raise ValidationError(
+                _("You must set MarketPay's key and secret in company form."))
+        secret = '%s:%s' % (marketpay_key, marketpay_secret)
+        return "Basic %s" % base64.b64encode(secret.encode()).decode('ascii')
 
-        token_url = 'https://api-sandbox.marketpay.io/v2.01/oauth/token'
+    @api.multi
+    def _set_swagger_config(self):
+        self.ensure_one()
+        key = self._prepare_marketpay_key()
+        token_url = self.env.user.company_id.token_url
+        marketpay_domain = self.env.user.company_id.marketpay_domain
 
-        key = 'Basic %s' % base64.b64encode(encoded.encode('ascii')).decode('ascii')
         data = {'grant_type': 'client_credentials'}
-        headers = {'Authorization': key, 'Content-Type': 'application/x-www-form-urlencoded'}
+        headers = {'Authorization': key,
+                   'Content-Type': 'application/x-www-form-urlencoded'}
 
         r = requests.post(token_url, data=data, headers=headers)
-
         rs = r.content.decode()
         response = json.loads(rs)
         token = response['access_token']
 
-        # Configuración default de Swagger
         config = swagger_client.Configuration()
-        config.host = acquirer.x_marketpay_domain
+        config.host = marketpay_domain
         config.access_token = token
         client = swagger_client.ApiClient(configuration=config)
         api_instance = swagger_client.Configuration.set_default(config)
+        return True
 
-        ############ trae los valores del partner ############
+    @api.multi
+    def action_marketpay_wallet(self,order):
+        credited_wallet_id = order.order_line[0].product_id.project_wallet
+        acquirer = self.env['payment.acquirer'].sudo().search([
+            ('is_wallet_acquirer', '=', True)], limit=1)
+        if not acquirer:
+            raise UserError(_('No acquirer configured. Please create wallet acquirer.'))
+
+        swagger_config = self._set_swagger_config()
 
         currency = "EUR"
         amount = str(int(round(order.order_line[0].product_uom_qty * 100)))
-        print(amount)
-        amountfee = acquirer.x_marketpay_fee
+        amountfee = acquirer.marketpay_fee
 
         # create an instance of the API class
         api_instance = swagger_client.TransfersApi()
 
-
-
         fees = swagger_client.Money(amount=amountfee, currency=currency)
         debited_founds = swagger_client.Money(amount=amount, currency=currency)
-        print(order.partner_id.name)
         credited_user_id = order.partner_id.x_marketpayuser_id
         debited_wallet_id= order.partner_id.x_marketpaywallet_id
-        print("debug")
-        print(credited_wallet_id)
 
         transfer = swagger_client.TransferPost(credited_user_id=credited_user_id,debited_funds=debited_founds,
                                                credited_wallet_id=credited_wallet_id, debited_wallet_id=debited_wallet_id,fees=fees)
         try:
-
             api_response = api_instance.transfers_post(transfer=transfer)
-            print(api_response)
-
         except ApiException as e:
             print("Exception when calling UsersApi->users_post: %s\n" % e)
-
         return True
 
     @api.multi
     def action_product_update(self, order):
-        ######## Obtener Wallet de cada Producto ################
         order_line = order.order_line[0]
         product=order.order_line[0].product_id
 
         product.invertido = product.invertido + order_line.product_uom_qty
         product.inversores = product.inversores + 1
-
-
         return True
 
     @api.multi

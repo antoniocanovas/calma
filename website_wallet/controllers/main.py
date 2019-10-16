@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 
 import logging
 import pprint
 import requests
 import werkzeug
+import json
 from datetime import datetime
 import swagger_client
 from swagger_client.rest import ApiException
-
 
 from odoo import http, _
 from odoo.http import request
@@ -16,72 +17,51 @@ from odoo.osv import expression
 
 _logger = logging.getLogger(__name__)
 
-
-class WebsiteWallet(http.Controller):
+class CalmaWebsiteWallet(http.Controller):
     @http.route(['/wallet/add/money'], type='http', auth="user", website=True)
     def wallet_add_money(self, **post):
-
         acquirers = request.env['payment.acquirer'].sudo().search([
             ('website_published', '=', True), ('is_wallet_acquirer', '=', True)])
 
-        PM = request.env['payment.token'].sudo()
         partner = request.env.user.partner_id
-        stored_card = PM.search([('partner_id', '=', partner.id)], order="id desc", limit=1)
 
         values = dict()
         values['form_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 'form' and acq.view_template_id]
-
-        payflow = request.env['payment.acquirer'].sudo().search([
-            ('provider', '=', 'payflow_pro'), ('is_wallet_acquirer', '=', True)])
-        flag = False
-        if payflow.website_published and payflow.is_wallet_acquirer:
-            flag = True
 
         vals = {
             'wallet_bal': request.env.user.partner_id.wallet_balance,
             'acquirers': acquirers,
             'form_acquirers': values['form_acquirers'],
-            'stored_card': stored_card if stored_card and flag else False
         }
         return request.render("website_wallet.add_money", vals)
 
-    #@http.route(['/wallet/add/money/transaction'], type='http', auth="user", website=True)
     @http.route(['/wallet/add/money/quantity'], type='http', auth="user", website=True)
     def wallet_add_money_txn(self, **post):
-
         user = request.env.user
         partner = user.partner_id
         PA = request.env['payment.acquirer'].sudo()
         PT = request.env['payment.transaction'].sudo()
-        PM = request.env['payment.token'].sudo()
-
-        print("1")
 
         if post.get('amount') == '':
             return request.redirect("/wallet/add/money")
-
 
         if post.get('amount'):
             amount = float(post.get('amount')) > 0
             if not amount or not post.get('payment_acquirer'):
                 return request.redirect("/wallet/add/money")
 
-        #add_amount = "%.2f" % float(post.get('amount'))
-
         add_amount = float(post.get('amount'))
-        print("2")
+
         acquirer_id = post.get('payment_acquirer') and int(post.get('payment_acquirer'))
         acquirer = PA.search([('id', '=', acquirer_id)])
-        print("3")
+
         tx = PT.search([
             ('is_wallet_transaction', '=', True), ('wallet_type', '=', 'credit'),
             ('partner_id', '=', partner.id), ('state', '=', 'draft')], limit=1)
         if tx:
-            print("4")
             tx.amount = add_amount
             tx.acquirer_id = acquirer.id
         else:
-            print("5")
             tx = PT.create({
                 'acquirer_id': acquirer.id,
                 'type': 'form',
@@ -96,15 +76,9 @@ class WebsiteWallet(http.Controller):
 
                 ),
             })
-        print("3")
         acquirers = request.env['payment.acquirer'].sudo().search([
             ('website_published', '=', True), ('is_wallet_acquirer', '=', True)])
 
-        PM = request.env['payment.token'].sudo()
-        partner = request.env.user.partner_id
-        stored_card = PM.search([('partner_id', '=', partner.id)], order="id desc", limit=1)
-
-        amount = add_amount
         values = dict()
         values['form_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 'form' and acq.view_template_id]
         currency_id = request.website.get_current_pricelist().currency_id.id
@@ -113,60 +87,40 @@ class WebsiteWallet(http.Controller):
            acq.form = acq.with_context(
                submit_class='btn btn-primary', submit_txt=_('Add Money')).sudo().render(
                '/',
-               amount,
+               add_amount,
                currency_id,
                partner_id=request.env.user.partner_id.id,
                values={
                    'return_url': base_url + '/wallet/payment/validate',
                }
            )
-        payflow = request.env['payment.acquirer'].sudo().search([
-            ('provider', '=', 'payflow_pro'), ('is_wallet_acquirer', '=', True)])
-        flag = False
-        if payflow.website_published and payflow.is_wallet_acquirer:
-            flag = True
-
         vals = {
             'wallet_bal': request.env.user.partner_id.wallet_balance,
             'acquirers': acquirers,
             'form_acquirers': values['form_acquirers'],
-            'amount':amount,
-            'stored_card': stored_card if stored_card and flag else False
+            'amount':add_amount,
         }
-
         return request.render("website_wallet.add_money_quantity", vals)
 
     @http.route(['/wallet/add/money/transaction'], type='http', auth="user", website=True)
     def wallet_add_money_txn_2(self, **post):
-
         user = request.env.user
         partner = user.partner_id
         PT = request.env['payment.transaction'].sudo()
-        PM = request.env['payment.token'].sudo()
-
 
         tx = PT.search([
             ('is_wallet_transaction', '=', True), ('wallet_type', '=', 'credit'),
             ('partner_id', '=', partner.id), ('state', '=', 'draft')], limit=1)
 
-
-
         # create an instance of the API class
         api_instance = swagger_client.PayInsRedsysApi()
         marketpayid = tx.marketpay_txnid
 
-
         try:
             # View a Redsys payment
             api_response = api_instance.pay_ins_redsys_redsys_get_payment(marketpayid)
-            print(api_response)
-
-            print(api_response.execution_date)
-
         except ApiException as e:
             print("Exception when calling PayInsRedsysApi->pay_ins_redsys_redsys_get_payment: %s\n" % e)
-
-        #return request.redirect("/wallet/add/money")
 
         if api_response.status == "FAILED":
             error = 'Received unrecognized RESULT for PayFlow Pro ' \
@@ -174,11 +128,9 @@ class WebsiteWallet(http.Controller):
             _logger.info(error)
             tx.state = 'error'
             tx.state_message = error
-
         if api_response.status == "SUCCEEDED":
             _logger.info('%s Marketpay payment for tx %s: set as done' %
                          (tx.reference, api_response.result_message))
-
             tx.state = 'done'
             tx.date = datetime.now()
 
@@ -191,7 +143,6 @@ class WebsiteWallet(http.Controller):
                 'wallet_bal': request.env.user.partner_id.wallet_balance,
         }
         return request.render("website_wallet.add_money_success", vals)
-
 
     @http.route(['/wallet/payment/transaction'], type='json', auth="public", website=True)
     def wallet_payment_transaction(self, acquirer_id=None, amount=None, **post):
@@ -275,16 +226,10 @@ class WebsiteWallet(http.Controller):
         }
         return request.render("website_wallet.wallet_transaction_history", vals)
 
-        ### Añadir cuentas bancarias y solicitar payouts ###
-
     @http.route(['/wallet/add/account'], type='http', auth="user", website=True)
     def wallet_add_account(self, **post):
-        amount = 0
         user = request.env.user
         partner = user.partner_id
-
-        print (post)
-        print(partner)
 
         return request.render("website_wallet.add_account")
 
@@ -337,11 +282,8 @@ class WebsiteSale(WebsiteSale):
         if order.wallet_txn_id:
             return request.redirect('shop/payment')
 
-        print(order.wallet_txn_id)
-        print(order)
         res = order.action_wallet_pay()
-        print(res)
-        #if res and order.wallet_txn_id.amount == round(order.amount_total, 2):
+
         if res and order.wallet_txn_id.amount == round(order.order_line[0].product_uom_qty, 2):
             # Traspasar fondos del wallet del usuario al wallet del proyecto
             order.wallet_txn_id.sudo().state = 'done'
@@ -350,7 +292,6 @@ class WebsiteSale(WebsiteSale):
                 _logger.info('Wallet transaction completed, %s (ID %s)',
                              tx.sale_order_ids and tx.sale_order_ids[0].name,
                              tx.sale_order_ids and tx.sale_order_ids[0].id)
-                # order.with_context(send_email=True).action_confirm()
                 order.with_context(send_email=True).action_confirm()
                 order.wallet_txn_id.sudo().write({'state': 'done'})
                 if request.env['ir.config_parameter'].sudo().get_param('website_sale.automatic_invoice', default=False):
@@ -403,8 +344,14 @@ class WebsiteSale(WebsiteSale):
         if sale_order_id is None:
             order = request.website.sale_get_order()
         else:
+            partner_id = request.env.user.partner_id.id
+            sale_order_id = request.env['sale.order'].search(
+                [('partner_id', '=', partner_id)],
+                order='date_order desc',
+                limit=1
+            )
             order = request.env['sale.order'].sudo().browse(sale_order_id)
-            assert order.id == request.session.get('sale_last_order_id')
+            assert order.id == request.session.get(sale_order_id)
 
         if transaction_id:
             tx = request.env['payment.transaction'].sudo().browse(transaction_id)
@@ -428,3 +375,55 @@ class WebsiteSale(WebsiteSale):
 
         PaymentProcessing.remove_payment_transaction(tx)
         return request.redirect('/shop/confirmation')
+
+    @http.route(['/shop/cart'], type='http', auth="public", website=True)
+    def cart(self, access_token=None, revive='', **post):
+        """
+        Redirect to shop
+        """
+        return request.redirect('/shop')
+
+    @http.route(['/shop/cart/update'], type='http', auth="public",
+                methods=['POST'], website=True, csrf=False)
+    def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
+        """No cart allowed so delete orders on cart"""
+        sale_order = request.website.sale_get_order(force_create=True)
+        if sale_order.state == 'draft':
+            sale_order.order_line.unlink()
+        if sale_order.state != 'draft':
+            request.session['sale_order_id'] = None
+            sale_order = request.website.sale_get_order(force_create=True)
+
+        product_custom_attribute_values = None
+        if kw.get('product_custom_attribute_values'):
+            product_custom_attribute_values = json.loads(
+                kw.get('product_custom_attribute_values'))
+
+        no_variant_attribute_values = None
+        if kw.get('no_variant_attribute_values'):
+            no_variant_attribute_values = json.loads(
+                kw.get('no_variant_attribute_values'))
+
+        sale_order._cart_update(
+            product_id=int(product_id),
+            add_qty=add_qty,
+            set_qty=set_qty,
+            product_custom_attribute_values=product_custom_attribute_values,
+            no_variant_attribute_values=no_variant_attribute_values,
+        )
+        return request.redirect("/shop/payment")
+
+    @http.route(['/shop/confirmation'], type='http', auth="public", website=True)
+    def payment_confirmation(self, **post):
+        # sale_order_id = request.session.get('sale_last_order_id')
+        partner_id = request.env.user.partner_id.id
+        sale_order_id = request.env['sale.order'].search(
+            [('partner_id', '=', partner_id)],
+            order='date_order desc',
+            limit=1
+        )
+        if sale_order_id:
+            # order = request.env['sale.order'].sudo().browse(sale_order_id)
+            return request.render("website_wallet.calma_sale_confirmation", {'order': sale_order_id})
+        else:
+            return request.redirect('/shop')

@@ -14,11 +14,13 @@
 #################################################################################
 
 {
-    'name': 'Website Wallet IC2',
+    'name': 'Website Wallet',
     'description': 'Website wallet for faster checkout process',
     'category': 'Ecommerce',
+    'summary': 'Allows customers to add money to the wallet and use it later on',
     'version': '1.0',
-    'author': 'YO MISMO.',
+    'license': 'OPL-1',
+    'author': 'Kanak Infosystems LLP.',
     'website': 'http://www.kanakinfosystems.com',
     'depends': ['website_sale', 'payment_paypal', 'website_payment'],
     'data': [
