@@ -24,8 +24,12 @@ class ResCompany(models.Model):
         related='country_id.code',
         readonly=True,
     )
-    marketpay_key = fields.Char()
-    marketpay_secret = fields.Char()
+    marketpay_key = fields.Char(
+        string='Key',
+    )
+    marketpay_secret = fields.Char(
+        string='secret',
+    )
     marketpay_domain = fields.Char(
         default='https://api-sandbox.marketpay.io',
     )
@@ -45,27 +49,33 @@ class ResCompany(models.Model):
         return "Basic %s" % base64.b64encode(secret.encode()).decode('ascii')
 
     @api.multi
-    def _get_wallet(self):
+    def _set_swagger_config(self):
+        self.ensure_one()
         key = self._prepare_marketpay_key()
         token_url = self.env.user.company_id.token_url
         marketpay_domain = self.env.user.company_id.marketpay_domain
+
         data = {'grant_type': 'client_credentials'}
-        headers = {
-            'Authorization': key,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        headers = {'Authorization': key,
+                   'Content-Type': 'application/x-www-form-urlencoded'}
+
         r = requests.post(token_url, data=data, headers=headers)
         rs = r.content.decode()
         response = json.loads(rs)
         token = response['access_token']
-        # Configuración default de Swagger
+
+        # We set configuration of Swagger
         config = swagger_client.Configuration()
         config.host = marketpay_domain
         config.access_token = token
-        swagger_client.ApiClient(configuration=config)
-        swagger_client.Configuration.set_default(config)
-        apiUser = swagger_client.UsersApi()
+        client = swagger_client.ApiClient(configuration=config)
+        api_instance = swagger_client.Configuration.set_default(config)
+        return True
 
+    @api.multi
+    def _get_wallet(self):
+        swagger_config = self._set_swagger_config()
+        apiUser = swagger_client.UsersApi()
         address = swagger_client.Address(
             address_line1=self.street,
             address_line2=self.street2,
