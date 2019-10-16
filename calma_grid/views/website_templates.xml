@@ -462,7 +462,7 @@
     <template id="website_sale_product_quantity_inh"
               inherit_id="website_sale.product_quantity" customize_show="True"
               name="website_sale_product_quantity_inh" priority="9999">
-        <xpath expr='//div[@class="css_quantity input-group oe_website_spinner"]'
+        <xpath expr="//div[hasclass('css_quantity')]"
                position='replace'>
         </xpath>
     </template>
