@@ -8,10 +8,8 @@
         <field name="arch" type="xml">
             <xpath expr='//group[@name="acquirer"]' position='after'>
                 <group attrs="{'invisible': [('provider', '!=', 'marketpay')]}">
-                    <field name="x_marketpay_key" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
-                    <field name="x_marketpay_secret" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
-                    <field name="x_marketpay_domain" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
-                    <field name="x_marketpay_fee" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
+                    <field name="marketpay_currency" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
+                    <field name="marketpay_fee" attrs="{'required': [('provider', '=', 'marketpay')]}"/>
                 </group>
             </xpath>
         </field>
