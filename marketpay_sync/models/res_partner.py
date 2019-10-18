@@ -56,7 +56,7 @@ class ResPartner(models.Model):
     @api.depends('x_dni_front')
     def _compute_image_f(self):
         for record in self:
-            record.x_dni_f_preview=record.x_dni_front
+            record.x_dni_f_preview = record.x_dni_front
 
     @api.depends('x_dni_back')
     def _compute_image_b(self):

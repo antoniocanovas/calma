@@ -1,34 +1,47 @@
-# -*- coding: utf-'8' "-*-"
-import json
 import logging
 import time
 import requests
 import re
-import urllib.request
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
 
-class AcquirerPayflowPro(models.Model):
+class PaymentAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
-    provider = fields.Selection(selection_add=[('payflow_pro', 'Cardit / Debit Card')])
+    provider = fields.Selection(
+        selection_add=[
+            ('payflow_pro', 'Cardit / Debit Card'),
+        ],
+    )
     payflow_partner = fields.Char(
-        'Partner ID', required_if_provider='payflow_pro',
-        help='The ID provided to you by the authorized PayPal Reseller who registered you for '
-             'the gateway. If you purchased your account directly from PayPal, use PayPal.')
+        string='Partner ID',
+        required_if_provider='payflow_pro',
+        help='The ID provided to you by the authorized PayPal Reseller who '
+             'registered you for the gateway. If you purchased your account '
+             'directly from PayPal, use PayPal.',
+    )
     payflow_vendor = fields.Char(
-        'Vender/Merchant ID', required_if_provider='payflow_pro',
-        help='Your merchant login ID that you created when you registered for the account. ')
+        string='Vender/Merchant ID',
+        required_if_provider='payflow_pro',
+        help='Your merchant login ID that you created when you registered for '
+             'the account. ',
+    )
     payflow_username = fields.Char(
-        'Username', required_if_provider='payflow_pro',
-        help='If you set up one or more additional users on the account, this value is the '
-             'ID of the user authorized to process transactions.')
+        string='Username',
+        required_if_provider='payflow_pro',
+        help='If you set up one or more additional users on the account, this'
+             ' value is the ID of the user authorized to process '
+             'transactions.',
+    )
     payflow_password = fields.Char(
-        'Password', required_if_provider='payflow_pro',
-        help='The password that you defined while registering for the account.')
+        string='Password',
+        required_if_provider='payflow_pro',
+        help='The password that you defined while registering for the '
+             'account.',
+    )
 
     def _get_payflow_pro_urls(self):
         """ Payflow pro URLS """
@@ -54,7 +67,8 @@ class AcquirerPayflowPro(models.Model):
     @api.multi
     def payflow_pro_s2s_form_validate(self, data):
         error = dict()
-        mandatory_fields = ["cc_number", "cc_cvv", "cc_holder_name", "cc_expiry", "cc_brand"]
+        mandatory_fields = [
+            "cc_number", "cc_cvv", "cc_holder_name", "cc_expiry", "cc_brand"]
         # Validation
         for field_name in mandatory_fields:
             if not data.get(field_name):
@@ -85,18 +99,23 @@ class AcquirerPayflowPro(models.Model):
                 'ship_to_last_name': partner_values.get('last_name'),
                 'ship_to_address1': partner_values.get('address'),
                 'ship_to_city': partner_values.get('city'),
-                'ship_to_state': partner_values.get('state') and partner_values['state'].code,
+                'ship_to_state': partner_values.get('state') and
+                                 partner_values['state'].code,
                 'ship_to_zip': partner_values.get('zip'),
-                'ship_to_country': partner_values.get('country') and partner_values.get('country').code,
+                'ship_to_country': partner_values.get('country') and
+                                   partner_values.get('country').code,
                 'ship_to_email': partner_values.get('email'),
                 'ship_to_phone': partner_values.get('phone')
             }
             bill_vals = partner_values['partner']['parent_id']
             bill_information.update(ship_information)
             bill_information.update({
-                'currency_code': partner_values.get('currency') and partner_values.get('currency').name,
-                'bill_to_first_name': self._split_partner_name(bill_vals.name)[0],
-                'bill_to_last_name': self._split_partner_name(bill_vals.name)[1],
+                'currency_code': partner_values.get('currency') and
+                                 partner_values.get('currency').name,
+                'bill_to_first_name':
+                    self._split_partner_name(bill_vals.name)[0],
+                'bill_to_last_name':
+                    self._split_partner_name(bill_vals.name)[1],
                 'bill_to_address1': bill_vals.street,
                 'bill_to_city': bill_vals.city,
                 'bill_to_state': bill_vals.state_id.code or '',
@@ -108,20 +127,24 @@ class AcquirerPayflowPro(models.Model):
         else:
             bill_information.update({
                 'ship_to_same_as_bill': True,
-                'currency_code': partner_values.get('currency') and partner_values.get('currency').name,
+                'currency_code': partner_values.get('currency') and
+                                 partner_values.get('currency').name,
                 'bill_to_first_name': partner_values.get('first_name'),
                 'bill_to_last_name': partner_values.get('last_name'),
                 'bill_to_address1': partner_values.get('address'),
                 'bill_to_city': partner_values.get('city'),
-                'bill_to_state': partner_values.get('state') and partner_values['state'].code,
+                'bill_to_state': partner_values.get('state') and
+                                 partner_values['state'].code,
                 'bill_to_zip': partner_values.get('zip'),
-                'bill_to_country': partner_values.get('country') and partner_values.get('country').code,
+                'bill_to_country': partner_values.get('country') and
+                                   partner_values.get('country').code,
                 'bill_to_email': partner_values.get('email'),
                 'bill_to_phone': partner_values.get('phone')
             })
         payflow_tx_values = dict(bill_information)
         if self.fees_active:
-            payflow_tx_values['handling'] = '%.2f' % payflow_tx_values.pop('fees', 0.0)
+            payflow_tx_values['handling'] = '%.2f' % payflow_tx_values.pop(
+                'fees', 0.0)
         return payflow_tx_values
 
     @api.multi
@@ -131,7 +154,8 @@ class AcquirerPayflowPro(models.Model):
         return '/payment/%s/s2s/feedback' % self.provider
 
     def _split_partner_name(self, partner_name):
-        return [' '.join(partner_name.split()[-1:]), ' '.join(partner_name.split()[:-1])]
+        return [' '.join(partner_name.split()[-1:]), ' '.join(
+            partner_name.split()[:-1])]
 
     def _build_parmlist(self, parmdict):
         """
@@ -179,20 +203,31 @@ class AcquirerPayflowPro(models.Model):
         return results
 
 
-class PaymentMethod(models.Model):
+class PaymentToken(models.Model):
     _inherit = 'payment.token'
 
-    cc_number = fields.Char('Card Number')
-    cc_holder_name = fields.Char('Card Holder Name')
-    cc_expiry = fields.Char('Card Expiry')
-    cc_cvv = fields.Integer('CVV Code')
-    cc_brand = fields.Char('Card Brand')
+    cc_number = fields.Char(
+        string='Card Number',
+    )
+    cc_holder_name = fields.Char(
+        string='Card Holder Name',
+    )
+    cc_expiry = fields.Char(
+        string='Card Expiry',
+    )
+    cc_cvv = fields.Integer(
+        string='CVV Code',
+    )
+    cc_brand = fields.Char(
+        string='Card Brand',
+    )
 
     @api.model
     def payflow_pro_create(self, values):
         """ Save Credit Card before account verify with TRXTYPE=A
 
-        Account Verification, also known as zero dollar Authorization (TRXTYPE=A),
+        Account Verification, also known as zero dollar Authorization (
+            TRXTYPE=A),
         verifies credit card information.
         - AMT: value is always 0 for varification.
         - RESULT: Although the RESULT values returned is 0 (Approved).
@@ -200,9 +235,11 @@ class PaymentMethod(models.Model):
 
         """
         if values.get('cc_number'):
-            Acquirer = self.env['payment.acquirer'].browse(values['acquirer_id'])
+            Acquirer = self.env['payment.acquirer'].browse(
+                values['acquirer_id'])
             values['cc_number'] = values['cc_number'].replace(' ', '')
-            expiry = str(values['cc_expiry'][:2]) + str(values['cc_expiry'][-2:])
+            expiry = str(values['cc_expiry'][:2]) + str(
+                values['cc_expiry'][-2:])
             cvv = values['cc_cvv'][:3]
             alias = 'ODOO-NEW-ALIAS-%s' % time.time()
             # Generate unique token (Current time in milliseconds)
@@ -223,42 +260,50 @@ class PaymentMethod(models.Model):
                 'cvv': cvv,
             }
             parmlist = Acquirer._build_parmlist(req_param)
-            payflow_pro_url = Acquirer._get_payflow_pro_urls()['payflow_pro_url']
+            payflow_pro_url = \
+                Acquirer._get_payflow_pro_urls()['payflow_pro_url']
             headers = {
                     'content-type': "application/x-www-form-urlencoded",
                 }
-            response = requests.request("POST", payflow_pro_url, data=parmlist, headers=headers)
+            response = requests.request("POST", payflow_pro_url, data=parmlist,
+                                        headers=headers)
             result_dictlist = Acquirer._build_dictlist(response.text)
             response.close()
             if not result_dictlist['result'] == '0':
-                error = 'Payflow Pro get credit card authentication has been failed'
+                error = 'Payflow Pro get credit card authentication has ' \
+                        'been failed'
                 _logger.error(error)
                 raise Exception(error)
             return {
                 'acquirer_ref': alias,
-                'name': 'XXXXXXXXXXXX%s - %s' % (values['cc_number'][-4:], values['cc_holder_name'])
+                'name': 'XXXXXXXXXXXX%s - %s' % (values['cc_number'][-4:],
+                                                 values['cc_holder_name'])
             }
         return {}
 
 
-class PayFlowProPaymentTransaction(models.Model):
+class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'
 
     payflow_pnref = fields.Char(
-        'PNREF Number',
-        help='The PNREF is a unique transaction '
-             'identification number issued by PayPal that identifies the transaction '
-             'for billing, reporting, and transaction data purposes.')
+        string='PNREF Number',
+        help='The PNREF is a unique transaction identification number issued '
+             'by PayPal that identifies the transaction for billing, '
+             'reporting, and transaction data purposes.',
+    )
 
     @api.multi
     def payflow_pro_s2s_do_transaction(self, vals):
         self.ensure_one()
         acquirer = self.acquirer_id
         pmethod = self.env['payment.token'].search([
-            ('partner_id', '=', self.partner_id.id), ('acquirer_id', '=', acquirer.id)], limit=1)
+            ('partner_id', '=', self.partner_id.id),
+            ('acquirer_id', '=', acquirer.id),
+        ], limit=1)
         if not pmethod:
             extra_payment_method = self.env['payment.token'].search([
-                ('partner_id', '=', self.partner_id.id)], order="id desc", limit=1)
+                ('partner_id', '=', self.partner_id.id),
+            ], order="id desc", limit=1)
             if not extra_payment_method:
                 return False
 
@@ -266,18 +311,6 @@ class PayFlowProPaymentTransaction(models.Model):
             payment_method = pmethod
         else:
             payment_method = extra_payment_method
-            # payment_method = self.env['payment.token'].create({
-            #     'partner_id': self.partner_id.id,
-            #     'acquirer_id': acquirer.id,
-            #     'acquirer_ref': extra_payment_method.acquirer_ref,
-            #     'active': True,
-            #     'name': extra_payment_method.name,
-            #     'cc_number': extra_payment_method.cc_number,
-            #     'cc_expiry': extra_payment_method.cc_expiry,
-            #     'cc_holder_name': extra_payment_method.cc_holder_name,
-            #     'cc_brand': extra_payment_method.cc_brand,
-            #     'cc_cvv': str(extra_payment_method.cc_cvv),
-            # })
 
         payflow_credential = {
             'partner': acquirer.payflow_partner,
@@ -291,10 +324,10 @@ class PayFlowProPaymentTransaction(models.Model):
         req_params = dict(payflow_credential)
         req_params.update({
             'acct': payment_method.cc_number,
-            'expdate': str(payment_method.cc_expiry[:2] + payment_method.cc_expiry[-2:]),
+            'expdate': str(payment_method.cc_expiry[:2] +
+                           payment_method.cc_expiry[-2:]),
             'cvv2': payment_method.cc_cvv,
             'orderid': vals.get('reference'),
-            # 'amt': float(vals.get('amount')) + float(vals.get('handling', 0.0)),
             'amt': float(vals.get('amount')),
             'handlingamt': vals.get('handling'),
             'currency': vals.get('currency_code'),
@@ -319,16 +352,17 @@ class PayFlowProPaymentTransaction(models.Model):
         })
         parmlist = acquirer._build_parmlist(req_params)
         payflow_pro_url = acquirer._get_payflow_pro_urls()['payflow_pro_url']
-        result_dictlist = dict()
         try:
             headers = {
                     'content-type': "application/x-www-form-urlencoded",
                 }
-            response = requests.request("POST", payflow_pro_url, data=parmlist, headers=headers)
+            response = requests.request(
+                "POST", payflow_pro_url, data=parmlist, headers=headers)
             result_dictlist = acquirer._build_dictlist(response.text)
             response.close()
         except Exception as e:
-            _logger.exception(u'Payflow Pro get CAPTURE request failed - %s', e)
+            _logger.exception(
+                'Payflow Pro get CAPTURE request failed - %s', e)
             raise UserWarning("Payflow Pro get CAPTURE request failed.")
         return result_dictlist
 
@@ -339,14 +373,16 @@ class PayFlowProPaymentTransaction(models.Model):
         if hasattr(self, tx_find_method_name):
             tx = getattr(self, tx_find_method_name)(data)
 
-        invalid_param_method_name = '_%s_s2s_get_invalid_parameters' % acquirer_name
+        invalid_param_method_name = '_%s_s2s_get_invalid_parameters' % \
+                                    acquirer_name
         if hasattr(self, invalid_param_method_name):
             invalid_parameters = getattr(tx, invalid_param_method_name)(data)
 
         if invalid_parameters:
             _error_message = '%s: incorrect tx data:\n' % (acquirer_name)
             for item in invalid_parameters:
-                _error_message += '\t%s: received %s instead of %s\n' % (item[0], item[1], item[2])
+                _error_message += '\t%s: received %s instead of %s\n' % (
+                    item[0], item[1], item[2])
             _logger.error(_error_message)
             return False
 
@@ -356,26 +392,34 @@ class PayFlowProPaymentTransaction(models.Model):
 
         if validate and \
            tx and tx.state == 'done' and \
-           tx.sale_order_ids and tx.sale_order_ids[0].state in ['draft', 'sent']:
-            tx.sale_order_ids[0].sudo().with_context(send_email=True).action_confirm()
+           tx.sale_order_ids and tx.sale_order_ids[0].state in \
+                ['draft', 'sent']:
+            tx.sale_order_ids[0].sudo().with_context(
+                send_email=True).action_confirm()
         return True
 
     @api.model
     def _payflow_pro_s2s_get_tx_from_data(self, data):
         reference, pnref_number = data.get('orderid'), data.get('pnref')
         if not reference:
-            error_msg = _('Payflow Pro: received data with missing ORDERID (%s)') % (reference)
+            error_msg = _(
+                'Payflow Pro: received data with missing ORDERID (%s)') % (
+                reference)
             _logger.info(error_msg)
             raise ValidationError(error_msg)
 
         if not pnref_number:
-            error_msg = _('Payflow Pro: received data with missing PNREF (%s)') % (pnref_number)
+            error_msg = _(
+                'Payflow Pro: received data with missing PNREF (%s)') % (
+                pnref_number)
             _logger.info(error_msg)
             raise ValidationError(error_msg)
 
-        txns = self.env['payment.transaction'].search([('reference', '=', reference)])
+        txns = self.env['payment.transaction'].search(
+            [('reference', '=', reference)])
         if not txns or len(txns) > 1:
-            error_msg = 'Payflow Pro: received data for reference %s' % (reference)
+            error_msg = 'Payflow Pro: received data for reference %s' % (
+                reference)
             if not txns:
                 error_msg += ': no order found'
             else:
@@ -389,12 +433,14 @@ class PayFlowProPaymentTransaction(models.Model):
         invalid_parameters = []
         # Check order number
         if data.get('orderid') != self.reference:
-            invalid_parameters.append(('orderid', data.get('orderid'), self.reference))
+            invalid_parameters.append(
+                ('orderid', data.get('orderid'), self.reference))
 
         # Check acquirer reference order number
-        if self.acquirer_reference and data.get('orderid') != self.acquirer_reference:
-            invalid_parameters.append(('orderid', data.get('orderid'), self.acquirer_reference))
-
+        if self.acquirer_reference and data.get('orderid') != \
+                self.acquirer_reference:
+            invalid_parameters.append(('orderid', data.get('orderid'),
+                                       self.acquirer_reference))
         return invalid_parameters
 
     @api.model
@@ -423,23 +469,29 @@ class PayFlowProPaymentTransaction(models.Model):
             })
             return self.write(tx_vals)
 
-    def _check_or_create_sale_tx(self, order, acquirer, payment_token=None, tx_type='form', add_tx_values=None, reset_draft=True):
+    def _check_or_create_sale_tx(self, order, acquirer, payment_token=None,
+                                 tx_type='form', add_tx_values=None,
+                                 reset_draft=True):
         tx = self
         if not tx:
             tx = self.search([('reference', '=', order.name)], limit=1)
 
         if tx.state in ['error', 'cancel']:  # filter incorrect states
             tx = False
-        if (tx and tx.acquirer_id != acquirer) or (tx and tx.sale_order_id != order):  # filter unmatching
+        if (tx and tx.acquirer_id != acquirer) or (
+                tx and tx.sale_order_id != order):  # filter unmatching
             tx = False
-        if tx and payment_token and tx.payment_token_id and payment_token != tx.payment_token_id:  # new or distinct token
+        if tx and payment_token and tx.payment_token_id and \
+                payment_token != tx.payment_token_id:  # new or distinct token
             tx = False
 
-        # still draft tx, no more info -> rewrite on tx or create a new one depending on parameter
+        # still draft tx, no more info -> rewrite on tx or create a new one
+        # depending on parameter
         if tx and tx.state == 'draft':
             if reset_draft:
                 tx.write(dict(
-                    self.on_change_partner_id(order.partner_id.id).get('value', {}),
+                    self.on_change_partner_id(order.partner_id.id).get(
+                        'value', {}),
                     amount=order.amount_total,
                     type=tx_type)
                 )
@@ -461,7 +513,8 @@ class PayFlowProPaymentTransaction(models.Model):
             }
             if add_tx_values:
                 tx_values.update(add_tx_values)
-            if payment_token and payment_token.sudo().partner_id == order.partner_id:
+            if payment_token and payment_token.sudo().partner_id == \
+                    order.partner_id:
                 tx_values['payment_token_id'] = payment_token.id
 
             tx = self.create(tx_values)

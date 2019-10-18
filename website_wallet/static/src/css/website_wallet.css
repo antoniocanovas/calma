@@ -20,7 +20,6 @@ div.header_wallet div.bal {
 div.header_wallet div.bal span.balstr {
     font-size: 12px;
     color: #969695;
-    font-weight: lighter;
     line-height: 1;
     text-transform: uppercase;
     font-weight: bold;
@@ -38,7 +37,6 @@ div.header_wallet div.bal span.balamt {
 .wallet h4.wallet-balance {
     font-weight: 400;
     font-size: 1.375em;
-    color: #584938;
     border-bottom: none;
     margin-bottom: 40px;
     color: #333;
@@ -60,9 +58,9 @@ div.header_wallet div.bal span.balamt {
     font-weight: lighter;
 }
 
-.wallet input[type="text"]:focus, 
+.wallet input[type="text"]:focus,
 .wallet select:focus {
-  border-color: 1px solid #ccc;
+  border: 1px solid #ccc;
   box-shadow: none;
   outline: 0 none;
 }

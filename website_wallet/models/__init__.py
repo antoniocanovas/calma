@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from . import website_wallet
+from . import account_invoice
 from . import paypal_payment
-from . import account_payment
+from . import website_wallet
