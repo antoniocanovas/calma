@@ -18,7 +18,7 @@
     'category': 'Ecommerce',
     'summary': 'Allows customers to add money to the wallet and use it '
                'later on',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'license': 'OPL-1',
     'author': 'Kanak Infosystems LLP.',
     'website': 'http://www.kanakinfosystems.com',

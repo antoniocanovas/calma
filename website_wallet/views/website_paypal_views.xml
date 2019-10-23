@@ -95,7 +95,7 @@
                 <notebook>
                     <page string="Paypal Payflow Pro TX Details">
                         <group>
-                            <field name="payflow_pnref" />
+                            <field name="payflow_pnref"/>
                         </group>
                     </page>
                 </notebook>
@@ -104,4 +104,3 @@
     </record>
 
 </odoo>
-s

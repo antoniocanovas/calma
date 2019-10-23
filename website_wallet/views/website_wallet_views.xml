@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <menuitem name='Wallet' id='root_wallet_menu' parent='account.menu_finance_configuration' />
+    <menuitem name='Wallet' id='root_wallet_menu' parent='account.menu_finance_configuration'/>
     <!-- Wallet Acquirer -->
     <record id="wallet_acquirer_form" model="ir.ui.view">
         <field name="name">payment.acquirer.form</field>
         <field name="model">payment.acquirer</field>
-        <field name="inherit_id" ref="payment.acquirer_form" />
+        <field name="inherit_id" ref="payment.acquirer_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='acquirer_left']" position="after">
                 <group name="is_wallet">
-                    <field name="is_wallet_acquirer" />
+                    <field name="is_wallet_acquirer"/>
                 </group>
             </xpath>
+            <field name="journal_id" position="attributes">
+                <attribute name="attrs">{'required':[('is_wallet_acquirer','=',True)]}</attribute>
+            </field>
         </field>
     </record>
     <record id="wallet_acquirer_list" model="ir.ui.view">
         <field name="name">payment.acquirer.list</field>
         <field name="model">payment.acquirer</field>
-        <field name="inherit_id" ref="payment.acquirer_list" />
+        <field name="inherit_id" ref="payment.acquirer_list"/>
         <field name="arch" type="xml">
             <field name="environment" position="after">
-                <field name="is_wallet_acquirer" />
+                <field name="is_wallet_acquirer"/>
             </field>
         </field>
     </record>
@@ -33,16 +36,16 @@
         <field name="domain">[('is_wallet_acquirer','=', True)]</field>
         <field name="context">{'create': True}</field>
     </record>
-    <menuitem action='wallet_acquirer_action' id='wallet_acquirer_menu' parent='root_wallet_menu' />
+    <menuitem action='wallet_acquirer_action' id='wallet_acquirer_menu' parent='root_wallet_menu'/>
     <!-- Wallet Transaction -->
     <record id="wallet_transaction_form" model="ir.ui.view">
         <field name="name">payment.transaction.form</field>
         <field name="model">payment.transaction</field>
-        <field name="inherit_id" ref="payment.transaction_form" />
+        <field name="inherit_id" ref="payment.transaction_form"/>
         <field name="arch" type="xml">
             <field name="date" position="after">
-                <field name="is_wallet_transaction" />
-                <field name="wallet_type" attrs="{'invisible': [('is_wallet_transaction', '=', False)], 'required': [('is_wallet_transaction', '=', True)]}" />
+                <field name="is_wallet_transaction"/>
+                <field name="wallet_type" attrs="{'invisible': [('is_wallet_transaction', '=', False)], 'required': [('is_wallet_transaction', '=', True)]}"/>
             </field>
         </field>
     </record>
@@ -54,45 +57,45 @@
         <field name="domain">[('is_wallet_transaction','=', True)]</field>
         <field name="context">{'create': True}</field>
     </record>
-    <menuitem action='action_wallet_transaction' id='wallet_transaction_menu' parent='root_wallet_menu' sequence='30' />
+    <menuitem action='action_wallet_transaction' id='wallet_transaction_menu' parent='root_wallet_menu' sequence='30'/>
     <!-- Res Partner -->
     <record id="res_partner_form_view_wallet" model="ir.ui.view">
         <field name="name">res partner form</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook[last()]" position="inside">
                 <page name='wallet' string="Wallet">
                     <group>
-                        <field name="wallet_balance" />
+                        <field name="wallet_balance"/>
                     </group>
                     <field name="wallet_transaction" mode="tree" readonly='1'>
                         <form string="Wallet Transaction">
                             <group>
                                 <group>
-                                    <field name="reference" />
-                                    <label for="amount" />
+                                    <field name="reference"/>
+                                    <label for="amount"/>
                                     <div class="o_row">
-                                        <field name="amount" class="oe_inline" />
-                                        <field name="currency_id" options="{'no_open': True, 'no_create': True}" class="oe_inline" />
+                                        <field name="amount" class="oe_inline"/>
+                                        <field name="currency_id" options="{'no_open': True, 'no_create': True}" class="oe_inline"/>
                                     </div>
-                                    <field name="state" />
-                                    <field name="wallet_type" />
+                                    <field name="state"/>
+                                    <field name="wallet_type"/>
                                 </group>
                                 <group>
-                                    <field name="acquirer_id" />
-                                    <field name="create_date" />
-                                    <field name="date" />
+                                    <field name="acquirer_id"/>
+                                    <field name="create_date"/>
+                                    <field name="date"/>
                                 </group>
                             </group>
                         </form>
                         <tree string="Wallet Transaction">
-                            <field name="reference" />
-                            <field name="create_date" />
-                            <field name="acquirer_id" />
-                            <field name="wallet_type" />
-                            <field name="state" />
-                            <field name="amount" />
+                            <field name="reference"/>
+                            <field name="create_date"/>
+                            <field name="acquirer_id"/>
+                            <field name="wallet_type"/>
+                            <field name="state"/>
+                            <field name="amount"/>
                         </tree>
                     </field>
                 </page>
@@ -103,16 +106,16 @@
     <record id="wallet_sale_order_form_view" model="ir.ui.view">
         <field name="name">Sale Order Wallet</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale_total']" position="before">
                 <group class="oe_subtotal_footer" attrs="{'invisible': ['|', '|', ('partner_wallet_balance', '==', False), ('state', 'not in', ('draft', 'sent')), ('wallet_txn_id', '!=', False)]}">
-                    <field name="partner_wallet_balance" />
-                    <button name="action_wallet_pay" states="draft,sent" string="Wallet Pay" type="object" class="btn-primary" />
+                    <field name="partner_wallet_balance"/>
+                    <button name="action_wallet_pay" states="draft,sent" string="Wallet Pay" type="object" class="btn-primary"/>
                 </group>
             </xpath>
             <xpath expr="//field[@name='amount_total']" position="after">
-                <field name="wallet_txn_id" readonly="1" attrs="{'invisible': [('wallet_txn_id', '==', False)]}" groups="base.group_no_one" />
+                <field name="wallet_txn_id" readonly="1" attrs="{'invisible': [('wallet_txn_id', '==', False)]}" groups="base.group_no_one"/>
             </xpath>
         </field>
     </record>
