@@ -20,6 +20,7 @@ except ImportError:
     swagger_client = None
     ApiException = None
 
+
 class PaymentAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
@@ -91,8 +92,8 @@ class PaymentAcquirer(models.Model):
         config = swagger_client.Configuration()
         config.host = marketpay_domain
         config.access_token = token
-        client = swagger_client.ApiClient(configuration=config)
-        api_instance = swagger_client.Configuration.set_default(config)
+        swagger_client.ApiClient(configuration=config)
+        swagger_client.Configuration.set_default(config)
         return True
 
     @api.multi
@@ -106,7 +107,7 @@ class PaymentAcquirer(models.Model):
         # Marketpay values for the user that do the operation
         marketpaydata = values['partner']
 
-        swagger_config = self._set_swagger_config()
+        self._set_swagger_config()
 
         walletid = marketpaydata.x_marketpaywallet_id
         currency = "EUR"
@@ -156,8 +157,9 @@ class PaymentAcquirer(models.Model):
     def marketpay_get_form_action_url(self):
         return self.redsys_url
 
+
 # Transaction No usado en desarrollo para futuros
-# Se usa el transaction que vienee definido en el módulo wallet
+# Se usa el transaction que viene definido en el módulo wallet
 
 class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'

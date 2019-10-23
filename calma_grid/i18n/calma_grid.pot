@@ -1,0 +1,464 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* calma_grid
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-23 11:44+0000\n"
+"PO-Revision-Date: 2019-10-23 11:44+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "&amp; Shipping"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "30-day money-back guarantee<br/>\n"
+"                        Free Shipping in U.S.<br/>\n"
+"                        Buy now, get in 2 days"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<b>Shipping: </b>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "<br/> Rentabilidad Anual"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "<br/> Rentabilidad Total"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<i class=\"fa fa-print\"/> Print"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "<span class=\"\">Confirmar\n"
+"                                Inversión</span>\n"
+"                            <span class=\"fa fa-chevron-right\"/>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "<span class=\"fa fa-chevron-left\"/>\n"
+"                            <span class=\"\">Ver Oportunidades</span>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "<span> Invertido </span>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "<span> Objetivo </span>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<span>Confirmed</span>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<span>Order</span>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<strong>Payment Information:</strong>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "<strong>Total:</strong>"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "Add to Cart"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__crfd
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__crfd
+msgid "Alcance CRFD"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "Billing"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.products_template_inh
+msgid "Crowdfunding"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model,name:calma_grid.model_crowdfunding_options
+msgid "Crowdfunding Options"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__crowdfunding_type
+msgid "Crowdfunding Type"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "Enhorabuena va a invertir<br/>"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__crowdfunding
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__crowdfunding
+msgid "Es crowdfunding"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__financiacion_bancaria
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__financiacion_bancaria
+msgid "Financiacion Bancaria"
+msgstr ""
+
+#. module: calma_grid
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Financiación"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__id
+msgid "ID"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__icon
+msgid "Icon"
+msgstr ""
+
+#. module: calma_grid
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Inversión"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__inversores
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__inversores
+msgid "Inversores"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "Inversores :"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__invertido
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__invertido
+msgid "Invertido"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "Invertir"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "La cantidad\n"
+"                                invertida será\n"
+"                                restada del saldo disponible en\n"
+"                                su wallet"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__mapa
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__mapa
+msgid "Mapa"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__name
+msgid "Name"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__icon_name
+msgid "Nombre Archivo"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_crowdfunding_options__note
+msgid "Note"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__objetivo_crowdfunding
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__objetivo_crowdfunding
+msgid "Objetivo Crowdfunding"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.view_options_crowd_tree
+#: model_terms:ir.ui.view,arch_db:calma_grid.view_x_rgpd_legales_form
+msgid "Opciones"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.ui.menu,name:calma_grid.options_crowdfunding_menu_category
+msgid "Opciones Crowdfunding"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.actions.act_window,name:calma_grid.action_options_crowd
+msgid "Options"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__pais
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__pais
+msgid "Pais"
+msgstr ""
+
+#. module: calma_grid
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "País"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__plazo_inversion
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__plazo_inversion
+msgid "Plazo Inversion"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "Plazo:"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__porcentaje_crowdfunding
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__porcentaje_crowdfunding
+msgid "Porcentaje Crowdfunding"
+msgstr ""
+
+#. module: calma_grid
+#: selection:crowdfunding.options,crowdfunding_type:0
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__premium
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__premium
+msgid "Premium"
+msgstr ""
+
+#. module: calma_grid
+#: code:addons/calma_grid/models/product_template.py:71
+#, python-format
+msgid "Primero debe crear una compañía con MarketpayId"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "Print"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "Product Name"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model,name:calma_grid.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__rentabilidad_anual
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__rentabilidad_anual
+msgid "Rentabilidad Anual"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__rentabilidad_real
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__rentabilidad_real
+msgid "Rentabilidad Real"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__rentabilidad_total
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__rentabilidad_total
+msgid "Rentabilidad Total"
+msgstr ""
+
+#. module: calma_grid
+#: selection:crowdfunding.options,crowdfunding_type:0
+msgid "Riesgo"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__riesgo_inversion
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__riesgo_inversion
+msgid "Riesgo Inversion"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "SOME LEGAL TEXT IF PROCEED"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "Sale"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "Sign Up"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__tir_historico
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__tir_historico
+msgid "TIR Histórico"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "TIR histórica interés fijo:"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "Thank you for your order."
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "This combination does not exist."
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "This product has no valid combination."
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "This product is no longer available."
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "This product is unpublished."
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__tipo_inversion
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__tipo_inversion
+msgid "Tipo Inversion"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "Unpublished"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "Wallet Balance:"
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__project_wallet
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__project_wallet
+msgid "Wallet de Proyecto"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "You must fill out your wallet first if you want to invest."
+msgstr ""
+
+#. module: calma_grid
+#: model:ir.model.fields,field_description:calma_grid.field_product_product__zona
+#: model:ir.model.fields,field_description:calma_grid.field_product_template__zona
+msgid "Zona"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
+msgid "en"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "inversores"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+msgid "meses"
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
+msgid "to follow your order."
+msgstr ""
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "¿Cuanto vas a invertir?"
+msgstr ""
+

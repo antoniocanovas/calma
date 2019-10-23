@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-<data noupdate="1">
-    <!-- Sequences for sale.order -->
+<odoo noupdate="1">
+
     <record id="seq_wallet" model="ir.sequence">
         <field name="name">Payment Transaction</field>
         <field name="code">payment.wallet.transaction</field>
@@ -40,5 +39,4 @@
         ])]'/>
     </record>
 
-</data>
-</openerp>
+</odoo>

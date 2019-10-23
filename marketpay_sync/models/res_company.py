@@ -68,13 +68,13 @@ class ResCompany(models.Model):
         config = swagger_client.Configuration()
         config.host = marketpay_domain
         config.access_token = token
-        client = swagger_client.ApiClient(configuration=config)
-        api_instance = swagger_client.Configuration.set_default(config)
+        swagger_client.ApiClient(configuration=config)
+        swagger_client.Configuration.set_default(config)
         return True
 
     @api.multi
     def _get_wallet(self):
-        swagger_config = self._set_swagger_config()
+        self._set_swagger_config()
         apiUser = swagger_client.UsersApi()
         address = swagger_client.Address(
             address_line1=self.street,

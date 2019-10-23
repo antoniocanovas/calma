@@ -36,13 +36,13 @@ class ResPartner(models.Model):
         string='DNI Anverso',
     )
     x_name_dni_front = fields.Char(
-        string='Nombre Archivo',
+        string='Nombre Anverso',
     )
     x_dni_back = fields.Binary(
         string='DNI Reverso',
     )
     x_name_dni_back = fields.Char(
-        string='Nombre Archivo',
+        string='Nombre Reverso',
     )
     x_dni_f_preview = fields.Binary(
         string='Vista Previa',
@@ -56,7 +56,7 @@ class ResPartner(models.Model):
     @api.depends('x_dni_front')
     def _compute_image_f(self):
         for record in self:
-            record.x_dni_f_preview=record.x_dni_front
+            record.x_dni_f_preview = record.x_dni_front
 
     @api.depends('x_dni_back')
     def _compute_image_b(self):
