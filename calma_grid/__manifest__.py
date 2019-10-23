@@ -6,9 +6,10 @@
     'license': 'AGPL-3',
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
-    'version': '12.0.2.6.0',
+    'version': '12.0.2.6.1',
     'depends': [
         'sale_management',
+        'sale_order_line_input',
         'website_sale',
     ],
     'data': [
