@@ -177,10 +177,10 @@ class SaleOrder(models.Model):
     def action_wallet_pay(self):
         for order in self.filtered(lambda l: l.state in ['draft', 'sent']):
             if order.partner_wallet_balance >= \
-                    order.order_line[0].product_uom_qty:
-                tx_amount = order.order_line[0].product_uom_qty
+                    order.amount_total:
+                tx_amount = order.amount_total
             if order.partner_wallet_balance < \
-                    order.order_line[0].product_uom_qty:
+                    order.amount_total:
                 raise ValidationError(
                     _('Código o Número de autorización definido'))
 
@@ -257,7 +257,7 @@ class SaleOrder(models.Model):
 
         self._set_swagger_config()
         currency = "EUR"
-        amount = str(int(round(order.order_line[0].product_uom_qty * 100)))
+        amount = str(int(round(order.amount_total * 100)))
         amountfee = acquirer.marketpay_fee
 
         # create an instance of the API class
@@ -284,7 +284,7 @@ class SaleOrder(models.Model):
     def action_product_update(self, order):
         order_line = order.order_line[0]
         product = order.order_line[0].product_id
-        product.invertido = product.invertido + order_line.product_uom_qty
+        product.invertido = product.invertido + order.amount_total
         product.inversores = product.inversores + 1
         return True
 
