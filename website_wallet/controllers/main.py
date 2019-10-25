@@ -306,7 +306,7 @@ class WebsiteSale(WebsiteSale):
             return request.redirect('shop/payment')
         res = order.action_wallet_pay()
         if res and order.wallet_txn_id.amount == round(
-                order.order_line[0].product_uom_qty, 2):
+                order.amount_total, 2):
             # Traspasar fondos del wallet del usuario al wallet del proyecto
             order.wallet_txn_id.sudo().state = 'done'
             tx = order.wallet_txn_id
