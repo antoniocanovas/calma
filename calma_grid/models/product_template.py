@@ -76,37 +76,37 @@ class ProductTemplate(models.Model):
 
     @api.constrains('crowdfunding')
     def _create_wallet(self):
-        self._check_wallet()
-        if self.crowdfunding == True:
-            if self.project_wallet == False:
-                marketpay_domain = self.env.user.company_id.marketpay_domain
-                token_url = self.env.user.company_id.token_url
-                key = self.env.user.company_id._prepare_marketpay_key()
-                data = {'grant_type': 'client_credentials'}
-                headers = {'Authorization': key,
-                           'Content-Type': 'application/x-www-form-urlencoded'}
-                r = requests.post(token_url, data=data, headers=headers)
-                rs = r.content.decode()
-                response = json.loads(rs)
-                token = response['access_token']
-                config = swagger_client.Configuration()
-                config.host = marketpay_domain
-                config.access_token = token
-                swagger_client.ApiClient(configuration=config)
-                swagger_client.Configuration.set_default(config)
-                swagger_client.UsersApi()
+        for product in self:
+            if product.crowdfunding == True:
+                if product.cowdfunding and not product.project_wallet:
+                    marketpay_domain = self.env.user.company_id.marketpay_domain
+                    token_url = self.env.user.company_id.token_url
+                    key = self.env.user.company_id._prepare_marketpay_key()
+                    data = {'grant_type': 'client_credentials'}
+                    headers = {'Authorization': key,
+                               'Content-Type': 'application/x-www-form-urlencoded'}
+                    r = requests.post(token_url, data=data, headers=headers)
+                    rs = r.content.decode()
+                    response = json.loads(rs)
+                    token = response['access_token']
+                    config = swagger_client.Configuration()
+                    config.host = marketpay_domain
+                    config.access_token = token
+                    swagger_client.ApiClient(configuration=config)
+                    swagger_client.Configuration.set_default(config)
+                    swagger_client.UsersApi()
 
-                apiWallet = swagger_client.WalletsApi()
-                ownersList = [self.env.user.company_id.marketpayuser_id]
-                wallet = swagger_client.WalletPost(
-                    owners=ownersList,
-                    description="wallet en EUR",
-                    currency='EUR')
-                try:
-                    api_response = apiWallet.wallets_post(wallet=wallet)
-                    self.project_wallet = api_response.id
-                except ApiException as e:
-                    print("Exception when calling WalletApi->Wallet_post: %s\n" % e)
+                    apiWallet = swagger_client.WalletsApi()
+                    ownersList = [self.env.user.company_id.marketpayuser_id]
+                    wallet = swagger_client.WalletPost(
+                        owners=ownersList,
+                        description="wallet en EUR",
+                        currency='EUR')
+                    try:
+                        api_response = apiWallet.wallets_post(wallet=wallet)
+                        product.project_wallet = api_response.id
+                    except ApiException as e:
+                        print("Exception when calling WalletApi->Wallet_post: %s\n" % e)
 
 
 
