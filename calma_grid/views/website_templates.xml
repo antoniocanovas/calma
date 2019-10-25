@@ -318,11 +318,16 @@
                             <span class="fa fa-chevron-left"/>
                             <span class="">Ver Oportunidades</span>
                         </a>
-                        <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right d-none d-xl-inline-block" href="/shop/wallet/pay">
-                            <span class="">Confirmar
-                                Inversión</span>
-                            <span class="fa fa-chevron-right"/>
-                        </a>
+                        <t t-if="request.env.user.partner_id.wallet_balance &gt;= website_sale_order.amount_total">
+                            <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right d-none d-xl-inline-block" href="/shop/wallet/pay">
+                                <span class="">Confirmar
+                                    Inversión</span>
+                                <span class="fa fa-chevron-right"/>
+                            </a>
+                        </t>
+                        <t t-if="request.env.user.partner_id.wallet_balance &lt; website_sale_order.amount_total">
+                            <p class="alert alert-warning">You must fill out your wallet first if you want to invest that amount.</p>
+                        </t>
                     </div>
                 </div>
             </div>

@@ -53,6 +53,7 @@
                         </group>
                         <group name="studio_group_crowf_marketpay">
                             <field name="project_wallet"/>
+                            <field name="inversion_minima"/>
                         </group>
                     </page>
                 </notebook>
