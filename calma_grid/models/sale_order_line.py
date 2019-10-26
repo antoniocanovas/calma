@@ -1,8 +1,14 @@
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
+
+    is_investment = fields.Boolean(
+        related='product_id.crowdfunding',
+        store=True,
+        readonly=True,
+    )
 
     @api.multi
     def write(self, values):

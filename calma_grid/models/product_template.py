@@ -40,11 +40,9 @@ class ProductTemplate(models.Model):
         domain=[('crowdfunding_type', '=', OPTIONS[4][0])],
     )
     objetivo_crowdfunding = fields.Float()
-    invertido = fields.Float()
     porcentaje_crowdfunding = fields.Float(
         compute='_compute_porcentaje_crowdfunding',
     )
-    inversores = fields.Integer()
     plazo_inversion = fields.Char()
     rentabilidad_anual = fields.Char()
     tir_historico = fields.Char(
@@ -53,13 +51,48 @@ class ProductTemplate(models.Model):
     rentabilidad_total = fields.Char()
     project_wallet = fields.Char(
         string='Wallet de Proyecto',
-        readonly = True,
+        readonly=True,
     )
     mapa = fields.Binary()
     rentabilidad_real = fields.Char()
     inversion_minima = fields.Float(
         string='Inversión Mínima',
     )
+    sale_line_ids = fields.One2many(
+        string='Sale lines',
+        comodel_name='sale.order.line',
+        inverse_name='product_id',
+    )
+    invertido = fields.Float(
+        compute='_compute_investments_count',
+    )
+    inversores = fields.Integer(
+        compute='_compute_investments_count',
+    )
+
+    def _get_sale_lines(self, domain):
+        # To easy filter sale order lines
+        sale_order_line = self.env['sale.order.line']
+        domain += [('is_investment', '=', True)]
+        return sale_order_line.search(domain)
+
+    @api.depends('sale_line_ids.price_subtotal',
+                 'sale_line_ids.order_id.partner_id')
+    def _compute_investments_count(self):
+        for product in self:
+            sale_lines = self._get_sale_lines(
+                [('product_id', 'in', product.product_variant_ids.ids)])
+            product.invertido = sum(sale_lines.mapped('price_subtotal'))
+            product.inversores = len(sale_lines.mapped('order_id.partner_id'))
+
+    @api.multi
+    def action_view_sale_lines(self):
+        sale_lines = self._get_sale_lines(
+            [('product_id', '=', self.product_variant_ids.id)])
+        action = self.env.ref(
+            'calma_grid.action_sales_order_line_calma').read()[0]
+        action['domain'] = [('id', 'in', sale_lines.ids)]
+        return action
 
     @api.depends('invertido', 'objetivo_crowdfunding')
     def _compute_porcentaje_crowdfunding(self):
@@ -105,7 +138,5 @@ class ProductTemplate(models.Model):
                     api_response = apiWallet.wallets_post(wallet=wallet)
                     product.project_wallet = api_response.id
                 except ApiException as e:
-                    print("Exception when calling WalletApi->Wallet_post: %s\n" % e)
-
-
-
+                    print("Exception when calling WalletApi->Wallet_post: "
+                          "%s\n" % e)

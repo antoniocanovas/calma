@@ -4,7 +4,7 @@
     'name': 'Acquirer Marketpay',
     'category': 'Payment Acquirer',
     'summary': 'Payment Acquirer: marketpay Implementation',
-    'version': '12.0.3.0.0',
+    'version': '12.0.3.0.1',
     'author': "Pedro Baños, Cubells",
     'depends': [
         'payment',

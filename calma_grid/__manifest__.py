@@ -1,3 +1,5 @@
+# Copyright 2019 Pedro Baños - Ingeniería Cloud
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     'name': "Calma Grid",
     'summary': """
@@ -6,10 +8,9 @@
     'license': 'AGPL-3',
     'website': "https://ingenieriacloud.com",
     'category': 'Tools',
-    'version': '12.0.2.6.2',
+    'version': '12.0.2.7.2',
     'depends': [
         'sale_management',
-        'sale_order_line_input',
         'website_sale',
     ],
     'data': [
@@ -18,6 +19,7 @@
         'views/product_template_views.xml',
         'views/website_templates.xml',
         'views/templates.xml',
+        'views/sale_order_line_views.xml',
     ],
     'installable': True,
 }

@@ -4,8 +4,17 @@ from odoo.exceptions import ValidationError
 import requests
 import base64
 import json
-import swagger_client
-from swagger_client.rest import ApiException
+import logging
+_logger = logging.getLogger(__name__)
+try:
+    import swagger_client
+    from swagger_client.rest import ApiException
+except ImportError:
+    _logger.warning("Marketpay synchronization is not available because the"
+                    "`swagger_client` python library cannot be found. Please"
+                    "install from: https://github.com/pedroguirao/swagger/")
+    swagger_client = None
+    ApiException = None
 
 
 class ResCompany(models.Model):
