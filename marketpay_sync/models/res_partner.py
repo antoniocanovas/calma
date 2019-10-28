@@ -1,13 +1,22 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from swagger_client.rest import ApiException
 import tempfile
 import os
 import requests
 import base64
 import json
-import swagger_client
+import logging
+_logger = logging.getLogger(__name__)
+try:
+    import swagger_client
+    from swagger_client.rest import ApiException
+except ImportError:
+    _logger.warning("Marketpay synchronization is not available because the"
+                    "`swagger_client` python library cannot be found. Please"
+                    "install from: https://github.com/pedroguirao/swagger/")
+    swagger_client = None
+    ApiException = None
 
 
 class ResPartner(models.Model):
@@ -52,6 +61,36 @@ class ResPartner(models.Model):
         string='Vista previa',
         compute='_compute_image_b',
     )
+    investment_count = fields.Integer(
+        compute='_compute_investment_count',
+        string='Investment Count',
+    )
+    sale_order_line_ids = fields.One2many(
+        comodel_name='sale.order.line',
+        inverse_name='order_partner_id',
+        string='Sales Order Lines',
+    )
+
+    def _get_sale_lines(self, domain):
+        # To easy filter sale order lines
+        sale_order_line = self.env['sale.order.line']
+        domain += [('is_investment', '=', True)]
+        return sale_order_line.search(domain)
+
+    def _compute_investment_count(self):
+        for partner in self:
+            sale_lines = self._get_sale_lines(
+                [('order_partner_id', 'in', partner.ids)])
+            partner.investment_count = len(sale_lines.mapped('order_id'))
+
+    @api.multi
+    def action_view_sale_lines(self):
+        sale_lines = self._get_sale_lines(
+            [('order_partner_id', 'in', self.ids)])
+        action = self.env.ref(
+            'calma_grid.action_sales_order_line_calma').read()[0]
+        action['domain'] = [('id', 'in', sale_lines.ids)]
+        return action
 
     @api.depends('x_dni_front')
     def _compute_image_f(self):

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 15:41+0000\n"
-"PO-Revision-Date: 2019-07-24 15:41+0000\n"
+"POT-Creation-Date: 2019-10-28 05:54+0000\n"
+"PO-Revision-Date: 2019-10-28 05:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/controllers/controllers.py:39
+#: code:addons/marketpay_sync/controllers/controllers.py:40
 #, python-format
 msgid " Please, upload an image for dni back field."
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/controllers/controllers.py:36
+#: code:addons/marketpay_sync/controllers/controllers.py:37
 #, python-format
 msgid " Please, upload an image for dni front field."
 msgstr ""
@@ -102,26 +102,6 @@ msgid "Country..."
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model,name:marketpay_sync.model_crowdfunding_options
-msgid "Crowdfunding Options"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__crowdfunding_type
-msgid "Crowdfunding Type"
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
 msgid "Cuentas Bancarias"
 msgstr ""
@@ -168,72 +148,67 @@ msgid "Dirección"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:103
-#: code:addons/marketpay_sync/models/res_partner.py:209
+#: code:addons/marketpay_sync/models/res_company.py:122
+#: code:addons/marketpay_sync/models/res_partner.py:266
 #, python-format
 msgid "El campo C.P es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:213
+#: code:addons/marketpay_sync/models/res_partner.py:270
 #, python-format
 msgid "El campo DNI Anverso es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:215
+#: code:addons/marketpay_sync/models/res_partner.py:272
 #, python-format
 msgid "El campo DNI Reverso es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:197
+#: code:addons/marketpay_sync/models/res_partner.py:254
 #, python-format
 msgid "El campo Nombre es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:101
-#: code:addons/marketpay_sync/models/res_partner.py:207
+#: code:addons/marketpay_sync/models/res_company.py:120
+#: code:addons/marketpay_sync/models/res_partner.py:264
 #, python-format
 msgid "El campo calle es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:99
-#: code:addons/marketpay_sync/models/res_partner.py:205
+#: code:addons/marketpay_sync/models/res_company.py:118
+#: code:addons/marketpay_sync/models/res_partner.py:262
 #, python-format
 msgid "El campo ciudad es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:97
-#: code:addons/marketpay_sync/models/res_partner.py:203
+#: code:addons/marketpay_sync/models/res_company.py:116
+#: code:addons/marketpay_sync/models/res_partner.py:260
 #, python-format
 msgid "El campo mail es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:93
-#: code:addons/marketpay_sync/models/res_partner.py:199
+#: code:addons/marketpay_sync/models/res_company.py:112
+#: code:addons/marketpay_sync/models/res_partner.py:256
 #, python-format
 msgid "El campo pais es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:95
-#: code:addons/marketpay_sync/models/res_partner.py:201
+#: code:addons/marketpay_sync/models/res_company.py:114
+#: code:addons/marketpay_sync/models/res_partner.py:258
 #, python-format
 msgid "El campo provincia es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:211
+#: code:addons/marketpay_sync/models/res_partner.py:268
 #, python-format
 msgid "El campo vat es obligatorio"
 msgstr ""
@@ -244,33 +219,33 @@ msgid "Email"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:132
+#: code:addons/marketpay_sync/models/res_partner.py:189
 #, python-format
-msgid "Error al Registrar Usuario, por favor intentelo de nuevo mÃ¡s tarde"
+msgid "Error al Registrar Usuario, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:148
+#: code:addons/marketpay_sync/models/res_partner.py:205
 #, python-format
-msgid "Error al Registrar Wallet, por favor intentelo de nuevo mÃ¡s tarde"
+msgid "Error al Registrar Wallet, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:77
+#: code:addons/marketpay_sync/models/res_partner.py:134
 #, python-format
-msgid "Error al sincronizar el DNI, por favor intentelo de nuevo mÃ¡s tarde"
+msgid "Error al sincronizar el DNI, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:64
+#: code:addons/marketpay_sync/models/res_partner.py:121
 #, python-format
-msgid "Error al sincronizar el DNI. Por favor intentelo de nuevo mÃ¡s tarde"
+msgid "Error al sincronizar el DNI. Por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:104
+#: code:addons/marketpay_sync/models/res_partner.py:161
 #, python-format
-msgid "Error al validar Usuario, por favor intentelo de nuevo mÃ¡s tarde"
+msgid "Error al validar Usuario, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
@@ -280,43 +255,29 @@ msgid "Es Inversor"
 msgstr ""
 
 #. module: marketpay_sync
-#: selection:crowdfunding.options,crowdfunding_type:0
-msgid "Financiación"
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.view_company_marketpay
 msgid "Generate Marketpay values"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__id
-msgid "ID"
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__investment_count
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__investment_count
+msgid "Investment Count"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__icon
-msgid "Icon"
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_partner_marketpay_data
+msgid "Investments"
 msgstr ""
 
 #. module: marketpay_sync
-#: selection:crowdfunding.options,crowdfunding_type:0
-msgid "Inversión"
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_res_partner_filter
+msgid "Investor"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__write_date
-msgid "Last Updated on"
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_key
+msgid "Key"
 msgstr ""
 
 #. module: marketpay_sync
@@ -336,16 +297,6 @@ msgid "Marketpay ID"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_key
-msgid "Marketpay Key"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_secret
-msgid "Marketpay Secret"
-msgstr ""
-
-#. module: marketpay_sync
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_marketpayuser_id
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_marketpayuser_id
 msgid "Marketpay User"
@@ -358,21 +309,15 @@ msgid "Marketpay Wallet"
 msgstr ""
 
 #. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__name
-msgid "Name"
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_name_dni_front
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_name_dni_front
+msgid "Nombre Anverso"
 msgstr ""
 
 #. module: marketpay_sync
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_name_dni_back
-#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_name_dni_front
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_name_dni_back
-#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_name_dni_front
-msgid "Nombre Archivo"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.model.fields,field_description:marketpay_sync.field_crowdfunding_options__note
-msgid "Note"
+msgid "Nombre Reverso"
 msgstr ""
 
 #. module: marketpay_sync
@@ -381,39 +326,13 @@ msgid "Número de cuenta"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_options_crowd_tree
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_x_rgpd_legales_form
-msgid "Opciones"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.ui.menu,name:marketpay_sync.options_crowdfunding_menu_category
-msgid "Opciones Crowdfunding"
-msgstr ""
-
-#. module: marketpay_sync
-#: model:ir.actions.act_window,name:marketpay_sync.action_options_crowd
-msgid "Options"
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
 msgid "Pay with"
 msgstr ""
 
 #. module: marketpay_sync
-#: selection:crowdfunding.options,crowdfunding_type:0
-msgid "País"
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Phone"
-msgstr ""
-
-#. module: marketpay_sync
-#: selection:crowdfunding.options,crowdfunding_type:0
-msgid "Premium"
 msgstr ""
 
 #. module: marketpay_sync
@@ -423,8 +342,9 @@ msgid "Reverso\n"
 msgstr ""
 
 #. module: marketpay_sync
-#: selection:crowdfunding.options,crowdfunding_type:0
-msgid "Riesgo"
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__sale_order_line_ids
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__sale_order_line_ids
+msgid "Sales Order Lines"
 msgstr ""
 
 #. module: marketpay_sync
@@ -466,6 +386,18 @@ msgid "VAT Number"
 msgstr ""
 
 #. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_dni_f_preview
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_dni_f_preview
+msgid "Vista Previa"
+msgstr ""
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_dni_b_preview
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_dni_b_preview
+msgid "Vista previa"
+msgstr ""
+
+#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.hide_wallet
 msgid "Wallet Balance:"
@@ -477,7 +409,7 @@ msgid "Wallet Transaction History"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_company.py:43
+#: code:addons/marketpay_sync/models/res_company.py:56
 #, python-format
 msgid "You must set MarketPay's key and secret in company form."
 msgstr ""
@@ -490,6 +422,11 @@ msgstr ""
 #. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Zip / Postal Code"
+msgstr ""
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_company__marketpay_secret
+msgid "secret"
 msgstr ""
 
 #. module: marketpay_sync

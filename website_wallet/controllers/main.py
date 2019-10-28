@@ -86,6 +86,7 @@ class CalmaWebsiteWallet(http.Controller):
         currency_id = request.website.get_current_pricelist().currency_id.id
         base_url = request.env['ir.config_parameter'].sudo().get_param(
             'web.base.url')
+        vals = {}
         for acq in values['form_acquirers']:
             acq.form = acq.with_context(
                 submit_class='btn btn-primary',
@@ -102,7 +103,7 @@ class CalmaWebsiteWallet(http.Controller):
                 'wallet_bal': request.env.user.partner_id.wallet_balance,
                 'acquirers': acquirers,
                 'form_acquirers': values['form_acquirers'],
-                'amount':add_amount,
+                'amount': add_amount,
             }
         return request.render("website_wallet.add_money_quantity", vals)
 
@@ -133,8 +134,8 @@ class CalmaWebsiteWallet(http.Controller):
 
         if api_response.status == "FAILED":
             error = 'Received unrecognized RESULT for PayFlow Pro ' \
-                    'payment %s: %s, set as error' % (
-                tx.reference, api_response.result_message)
+                'payment %s: %s, set as error' % (
+                    tx.reference, api_response.result_message)
             _logger.info(error)
             tx.state = 'error'
             tx.state_message = error
@@ -295,7 +296,7 @@ class PayflowProController(http.Controller):
         return werkzeug.utils.redirect('/shop/payment/validate')
 
 
-class WebsiteSale(WebsiteSale):
+class WebsiteSaleCustom(WebsiteSale):
     @http.route(['/shop/wallet/pay'], type='http', auth="public", website=True)
     def shop_wallet_pay(self, **post):
         order = request.website.sale_get_order()
@@ -335,7 +336,7 @@ class WebsiteSale(WebsiteSale):
             payment_action_id=request.env.ref(
                 'payment.action_payment_acquirer').id,
             return_url='/shop/payment/validate',
-            bootstrap_formatting= True
+            bootstrap_formatting=True,
         )
         domain = expression.AND([
             ['&', '&', ('website_published', '=', True),

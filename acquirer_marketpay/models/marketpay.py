@@ -4,11 +4,8 @@ from odoo.tools import config
 from odoo import http
 from odoo.http import request
 
-import requests
 import base64
 import logging
-import json
-
 _logger = logging.getLogger(__name__)
 try:
     import swagger_client
@@ -31,7 +28,6 @@ class PaymentAcquirer(models.Model):
     )
     marketpay_fee = fields.Float(
         string='Comisión',
-        default='0',
     )
     marketpay_currency = fields.Char(
         string='Currency',
@@ -73,30 +69,6 @@ class PaymentAcquirer(models.Model):
         return "Basic %s" % base64.b64encode(secret.encode()).decode('ascii')
 
     @api.multi
-    def _set_swagger_config(self):
-        self.ensure_one()
-        key = self._prepare_marketpay_key()
-        token_url = self.env.user.company_id.token_url
-        marketpay_domain = self.env.user.company_id.marketpay_domain
-
-        data = {'grant_type': 'client_credentials'}
-        headers = {'Authorization': key,
-                   'Content-Type': 'application/x-www-form-urlencoded'}
-
-        r = requests.post(token_url, data=data, headers=headers)
-        rs = r.content.decode()
-        response = json.loads(rs)
-        token = response['access_token']
-
-        # We set configuration of Swagger
-        config = swagger_client.Configuration()
-        config.host = marketpay_domain
-        config.access_token = token
-        swagger_client.ApiClient(configuration=config)
-        swagger_client.Configuration.set_default(config)
-        return True
-
-    @api.multi
     def marketpay_form_generate_values(self, values):
         self.ensure_one()
 
@@ -107,7 +79,7 @@ class PaymentAcquirer(models.Model):
         # Marketpay values for the user that do the operation
         marketpaydata = values['partner']
 
-        self._set_swagger_config()
+        self.env.user.company_id._set_swagger_config()
 
         walletid = marketpaydata.x_marketpaywallet_id
         currency = "EUR"

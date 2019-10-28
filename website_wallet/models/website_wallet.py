@@ -1,6 +1,4 @@
-import requests
 import base64
-import json
 import swagger_client
 from swagger_client.rest import ApiException
 from odoo import _, api, fields, models
@@ -175,6 +173,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_wallet_pay(self):
+        tx_amount = 0.0
         for order in self.filtered(lambda l: l.state in ['draft', 'sent']):
             if order.partner_wallet_balance >= \
                     order.amount_total:
@@ -203,13 +202,12 @@ class SaleOrder(models.Model):
                     'is_wallet_transaction': True,
                     'wallet_type': 'debit',
                     'sale_order_ids': [(4, order.id)],
-                    'reference':
-                        self.env['payment.transaction'].get_next_wallet_reference(),
+                    'reference': self.env[
+                        'payment.transaction'].get_next_wallet_reference(),
                 }
                 tx = self.env['payment.transaction'].sudo().create(values)
                 order.wallet_txn_id = tx.id
                 self.action_marketpay_wallet(order)
-                self.action_product_update(order)
         return True
 
     @api.multi
@@ -224,30 +222,7 @@ class SaleOrder(models.Model):
         return "Basic %s" % base64.b64encode(secret.encode()).decode('ascii')
 
     @api.multi
-    def _set_swagger_config(self):
-        self.ensure_one()
-        key = self._prepare_marketpay_key()
-        token_url = self.env.user.company_id.token_url
-        marketpay_domain = self.env.user.company_id.marketpay_domain
-
-        data = {'grant_type': 'client_credentials'}
-        headers = {'Authorization': key,
-                   'Content-Type': 'application/x-www-form-urlencoded'}
-
-        r = requests.post(token_url, data=data, headers=headers)
-        rs = r.content.decode()
-        response = json.loads(rs)
-        token = response['access_token']
-
-        config = swagger_client.Configuration()
-        config.host = marketpay_domain
-        config.access_token = token
-        swagger_client.ApiClient(configuration=config)
-        swagger_client.Configuration.set_default(config)
-        return True
-
-    @api.multi
-    def action_marketpay_wallet(self,order):
+    def action_marketpay_wallet(self, order):
         credited_wallet_id = order.order_line[0].product_id.project_wallet
         acquirer = self.env['payment.acquirer'].sudo().search([
             ('is_wallet_acquirer', '=', True)], limit=1)
@@ -255,7 +230,7 @@ class SaleOrder(models.Model):
             raise UserError(
                 _('No acquirer configured. Please create wallet acquirer.'))
 
-        self._set_swagger_config()
+        self.env.user.company_id._set_swagger_config()
         currency = "EUR"
         amount = str(int(round(order.amount_total * 100)))
         amountfee = acquirer.marketpay_fee
@@ -266,7 +241,7 @@ class SaleOrder(models.Model):
         fees = swagger_client.Money(amount=amountfee, currency=currency)
         debited_founds = swagger_client.Money(amount=amount, currency=currency)
         credited_user_id = order.partner_id.x_marketpayuser_id
-        debited_wallet_id= order.partner_id.x_marketpaywallet_id
+        debited_wallet_id = order.partner_id.x_marketpaywallet_id
 
         transfer = swagger_client.TransferPost(
             credited_user_id=credited_user_id,
@@ -281,14 +256,6 @@ class SaleOrder(models.Model):
         return True
 
     @api.multi
-    def action_product_update(self, order):
-        order_line = order.order_line[0]
-        product = order.order_line[0].product_id
-        product.invertido = product.invertido + order.amount_total
-        product.inversores = product.inversores + 1
-        return True
-
-    @api.multi
     def unlink(self):
         for order in self:
             if order.state != 'draft':
@@ -300,7 +267,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _create_payment_transaction(self, vals):
-        transaction = super(SaleOrder, self)._create_payment_transaction(vals)
+        transaction = super()._create_payment_transaction(vals)
         if self.wallet_txn_id and self.wallet_txn_id.amount:
             transaction.amount = sum(self.mapped('amount_total')) - \
                                  self.wallet_txn_id.amount

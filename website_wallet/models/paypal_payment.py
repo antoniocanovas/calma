@@ -99,19 +99,22 @@ class PaymentAcquirer(models.Model):
                 'ship_to_last_name': partner_values.get('last_name'),
                 'ship_to_address1': partner_values.get('address'),
                 'ship_to_city': partner_values.get('city'),
-                'ship_to_state': partner_values.get('state') and
-                                 partner_values['state'].code,
+                'ship_to_state':
+                    partner_values.get('state') and
+                    partner_values['state'].code,
                 'ship_to_zip': partner_values.get('zip'),
-                'ship_to_country': partner_values.get('country') and
-                                   partner_values.get('country').code,
+                'ship_to_country':
+                    partner_values.get('country') and
+                    partner_values.get('country').code,
                 'ship_to_email': partner_values.get('email'),
-                'ship_to_phone': partner_values.get('phone')
+                'ship_to_phone': partner_values.get('phone'),
             }
             bill_vals = partner_values['partner']['parent_id']
             bill_information.update(ship_information)
             bill_information.update({
-                'currency_code': partner_values.get('currency') and
-                                 partner_values.get('currency').name,
+                'currency_code':
+                    partner_values.get('currency') and
+                    partner_values.get('currency').name,
                 'bill_to_first_name':
                     self._split_partner_name(bill_vals.name)[0],
                 'bill_to_last_name':
@@ -122,24 +125,27 @@ class PaymentAcquirer(models.Model):
                 'bill_to_zip': bill_vals.zip or '',
                 'bill_to_country': bill_vals.country_id.code,
                 'bill_to_email': bill_vals.email or '',
-                'bill_to_phone': bill_vals.phone
+                'bill_to_phone': bill_vals.phone,
             })
         else:
             bill_information.update({
                 'ship_to_same_as_bill': True,
-                'currency_code': partner_values.get('currency') and
-                                 partner_values.get('currency').name,
+                'currency_code':
+                    partner_values.get('currency') and
+                    partner_values.get('currency').name,
                 'bill_to_first_name': partner_values.get('first_name'),
                 'bill_to_last_name': partner_values.get('last_name'),
                 'bill_to_address1': partner_values.get('address'),
                 'bill_to_city': partner_values.get('city'),
-                'bill_to_state': partner_values.get('state') and
-                                 partner_values['state'].code,
+                'bill_to_state':
+                    partner_values.get('state') and
+                    partner_values['state'].code,
                 'bill_to_zip': partner_values.get('zip'),
-                'bill_to_country': partner_values.get('country') and
-                                   partner_values.get('country').code,
+                'bill_to_country':
+                    partner_values.get('country') and
+                    partner_values.get('country').code,
                 'bill_to_email': partner_values.get('email'),
-                'bill_to_phone': partner_values.get('phone')
+                'bill_to_phone': partner_values.get('phone'),
             })
         payflow_tx_values = dict(bill_information)
         if self.fees_active:
@@ -263,8 +269,8 @@ class PaymentToken(models.Model):
             payflow_pro_url = \
                 Acquirer._get_payflow_pro_urls()['payflow_pro_url']
             headers = {
-                    'content-type': "application/x-www-form-urlencoded",
-                }
+                'content-type': "application/x-www-form-urlencoded",
+            }
             response = requests.request("POST", payflow_pro_url, data=parmlist,
                                         headers=headers)
             result_dictlist = Acquirer._build_dictlist(response.text)
@@ -354,8 +360,8 @@ class PaymentTransaction(models.Model):
         payflow_pro_url = acquirer._get_payflow_pro_urls()['payflow_pro_url']
         try:
             headers = {
-                    'content-type': "application/x-www-form-urlencoded",
-                }
+                'content-type': "application/x-www-form-urlencoded",
+            }
             response = requests.request(
                 "POST", payflow_pro_url, data=parmlist, headers=headers)
             result_dictlist = acquirer._build_dictlist(response.text)
@@ -379,7 +385,7 @@ class PaymentTransaction(models.Model):
             invalid_parameters = getattr(tx, invalid_param_method_name)(data)
 
         if invalid_parameters:
-            _error_message = '%s: incorrect tx data:\n' % (acquirer_name)
+            _error_message = '%s: incorrect tx data:\n' % acquirer_name
             for item in invalid_parameters:
                 _error_message += '\t%s: received %s instead of %s\n' % (
                     item[0], item[1], item[2])
@@ -391,8 +397,8 @@ class PaymentTransaction(models.Model):
             validate = getattr(tx, feedback_method_name)(data)
 
         if validate and \
-           tx and tx.state == 'done' and \
-           tx.sale_order_ids and tx.sale_order_ids[0].state in \
+                tx and tx.state == 'done' and \
+                tx.sale_order_ids and tx.sale_order_ids[0].state in \
                 ['draft', 'sent']:
             tx.sale_order_ids[0].sudo().with_context(
                 send_email=True).action_confirm()
@@ -404,14 +410,14 @@ class PaymentTransaction(models.Model):
         if not reference:
             error_msg = _(
                 'Payflow Pro: received data with missing ORDERID (%s)') % (
-                reference)
+                            reference)
             _logger.info(error_msg)
             raise ValidationError(error_msg)
 
         if not pnref_number:
             error_msg = _(
                 'Payflow Pro: received data with missing PNREF (%s)') % (
-                pnref_number)
+                            pnref_number)
             _logger.info(error_msg)
             raise ValidationError(error_msg)
 
@@ -460,7 +466,7 @@ class PaymentTransaction(models.Model):
             })
             return self.write(tx_vals)
         else:
-            error = 'Received unrecognized RESULT for PayFlow Pro '\
+            error = 'Received unrecognized RESULT for PayFlow Pro ' \
                     'payment %s: %s, set as error' % (self.reference, response)
             _logger.info(error)
             tx_vals.update({
