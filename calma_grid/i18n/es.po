@@ -554,4 +554,3 @@ msgstr "para seguir tu pedido."
 #: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
 msgid "¿Cuanto vas a invertir?"
 msgstr "¿Cuanto vas a invertir?"
-
