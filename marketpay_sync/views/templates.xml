@@ -8,15 +8,6 @@
                t-if="website.user_id != user_id and user_id.x_inversor != True">Alta Inversor </a>
         </xpath>
     </template>
-    <!-- Cuentas Bancarias queda pendiente, comentado hasta que comience el desarrollo -->
-    <!--<template id="add_ccc" name="Add CCC"
-              inherit_id="portal.frontend_layout">
-        <xpath expr="//a[@id='o_logout']" position="before">
-            <a href="/wallet/add/account" role="menuitem"
-               class="dropdown-item"
-               t-if="website.user_id != user_id and user_id.x_inversor != True">Cuentas bancarias</a>
-        </xpath>
-    </template>-->
 
     <template id="hide_wallet" name="Hide Wallet"
               inherit_id="website_wallet.wallet_link">
