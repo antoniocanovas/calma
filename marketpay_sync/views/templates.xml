@@ -8,16 +8,15 @@
                t-if="website.user_id != user_id and user_id.x_inversor != True">Alta Inversor </a>
         </xpath>
     </template>
-
-    <template id="add_ccc" name="Add CCC"
+    <!-- Cuentas Bancarias queda pendiente, comentado hasta que comience el desarrollo -->
+    <!--<template id="add_ccc" name="Add CCC"
               inherit_id="portal.frontend_layout">
         <xpath expr="//a[@id='o_logout']" position="before">
             <a href="/wallet/add/account" role="menuitem"
                class="dropdown-item"
-               t-if="website.user_id != user_id and user_id.x_inversor != False">Cuentas bancarias</a>
+               t-if="website.user_id != user_id and user_id.x_inversor != True">Cuentas bancarias</a>
         </xpath>
-    </template>
-
+    </template>-->
 
     <template id="hide_wallet" name="Hide Wallet"
               inherit_id="website_wallet.wallet_link">
@@ -148,88 +147,6 @@
                 </div>
             </form>
         </xpath>
-    </template>
-
-    <template id="add_account" name="Add Account">
-        <t t-call="website.layout">
-            <div class="container wallet">
-                <div class="row">
-                    <div class="col-md-12 mt8">
-                        <h3 class="heading_title mt16 text-center">Cuentas Bancarias</h3>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 mt16 mb32 lb_outer">
-                        <div class="col-md-6 col-sm-12 col-xs-12 mt16 mb16 mx-auto">
-                            <h4 class="wallet-balance text-center">
-                                Wallet Balance:
-                                <span class="amount">
-                                    <t t-esc="wallet_bal" />
-                                </span>
-                            </h4 >
-                            <div class="alert alert-danger" t-if="error">
-                                <p>
-                                    <t t-raw="error" />
-                                </p>
-                            </div>
-                            <table class="w3-table">
-                                <thead>
-                                    <tr>
-                                        <th class="wallet-balance text-center" colspan="3"><h4> Añadir Cuenta Bancaria</h4> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="wallet-balance">
-                                        <td colspan="6"> <strong>IBAN</strong></td>
-                                        <td colspan="6"> <strong>Titular</strong></td>
-                                    </tr>
-                                    <tr class="wallet-balance">
-                                        <td colspan="6"> <input type="text" required="true" placeholder="Número de cuenta" value="" class="account" id="add_account" name="add_account" /></td>
-                                        <td colspan="6"> <input type="text" required="true" placeholder="Titular" value="" class="account_user" id="add_account_user" name="add_account_user" /></td>
-                                    </tr>
-                                    <tr class="wallet-balance">
-                                        <td colspan="3"> <strong>Dirección</strong> <input type="text" required="true" placeholder="Dirección" value="" class="account_addr" id="add_account_addr" name="add_account_addr" /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="payment-options">
-                                <label class="lbl">Pay with</label>
-                                <div class="radio-box">
-                                    <div class="radio radio-primary" t-foreach="acquirers" t-as="acquirer">
-                                        <input type="radio" name="payment_acquirer" t-attf-id="radio#{acquirer_index + 1}" t-att-value="acquirer.id" checked="checked" t-if="acquirer_first" />
-                                        <input type="radio" name="payment_acquirer" t-attf-id="radio#{acquirer_index + 1}" t-att-value="acquirer.id" t-if="not acquirer_first" />
-                                        <label t-attf-for="radio#{acquirer_index + 1}">
-                                            <t t-esc="acquirer.name" />
-                                        </label>
-                                    </div>
-                                    <div class="radio radio-primary" t-if="stored_card">
-                                        <input type="radio" name="payment_acquirer" id="radio15" value="stored_card" t-att-data-store_card_id="stored_card.id" />
-                                        <label for="radio15">Stored Card (
-                                            <t t-esc="stored_card.name.split(' ')[0]" />)</label>
-                                    </div>
-                                </div>
-                                <div id="acquirers_list">
-                                    <t t-foreach="form_acquirers or []" t-as="acquirer">
-                                        <t t-if="acquirer.provider != 'payflow_pro'">
-                                            <div t-att-data-id="acquirer.id" t-att-class="'oe_sale_acquirer_button' if acquirer_first else 'oe_sale_acquirer_button d-none'">
-                                                <form action="/wallet/add/money/quantity" method="post" t-att-class="acquirer.provider">
-                                                    <div class="action-buttons" id="addCashActionBtns">
-                                                        <input type="hidden" name="payment_acquirer" t-att-value="acquirer.id" />
-                                                        <input type="hidden" name="amount" />
-                                                        <input type="submit" value="Proceed to pay" name="submit" class="btn btn-primary" />
-                                                    </div>
-                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                                    <div t-field="acquirer.pre_msg"/>
-                                                </form>
-                                            </div>
-                                        </t>
-                                    </t>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"/>
-                    </div>
-                </div>
-            </div>
-        </t>
     </template>
 
 </odoo>
