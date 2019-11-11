@@ -229,11 +229,11 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <a itemprop="url" t-att-href="product_href">
-                                    <h5 align="center">
-                                        Invertir
-                                        <a align="center" role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
-                                    </h5>
+                                <a role="button" t-att-href="product_href" class="btn btn-primary mb32">
+                                <h5 align="center">
+                                    <span>Invertir</span>
+                                    <a role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-primary mb32" title="This product is unpublished.">Unpublished</a>
+                                </h5>
                                 </a>
                             </div>
                         </div>
@@ -286,7 +286,7 @@
             <div class="right2">
                 <div>
                     <div align="center" style="width:100%" class="white">
-                        <h3>Enhorabuena va a invertir<br/><strong class="circle green" t-field="website_sale_order.website_order_line[0].product_uom_qty" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/> en
+                        <h3>Enhorabuena va a invertir<br/><strong t-field="website_sale_order.amount_total" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/> en
                             <strong t-field="website_sale_order.website_order_line[0].name_short"/></h3>
                     </div>
                     <div align="center">
@@ -314,12 +314,12 @@
                         </div>
                     </div>
                     <div>
-                        <a role="button" href="/shop" class="btn btn-secondary mb32 d-none d-xl-inline-block">
+                        <a role="button" href="/shop" class="btn btn-secondary mb32">
                             <span class="fa fa-chevron-left"/>
                             <span class="">Ver Oportunidades</span>
                         </a>
                         <t t-if="request.env.user.partner_id.wallet_balance &gt;= website_sale_order.amount_total">
-                            <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right d-none d-xl-inline-block" href="/shop/wallet/pay">
+                            <a role="button" t-if="website_sale_order and website_sale_order.website_order_line" class="btn btn-primary float-right" href="/shop/wallet/pay">
                                 <span class="">Confirmar
                                     Inversión</span>
                                 <span class="fa fa-chevron-right"/>
@@ -490,7 +490,7 @@
                                                             <t t-if="request.env.user.partner_id.wallet_balance &gt; 0">
                                                                 <button align="center"
                                                                         id="add_to_cart"
-                                                                        class="js_check_product a-submit"
+                                                                        class="js_check_product a-submit btn-primary"
                                                                         href="#">Invertir
                                                                 </button>
                                                             </t>

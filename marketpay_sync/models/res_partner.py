@@ -61,6 +61,9 @@ class ResPartner(models.Model):
         string='Vista previa',
         compute='_compute_image_b',
     )
+    validated_by = fields.Char(
+        string='Validado por',
+    )
     investment_count = fields.Integer(
         compute='_compute_investment_count',
         string='Investment Count',
@@ -156,6 +159,7 @@ class ResPartner(models.Model):
         try:
             apikyc.kyc_post_natural(user_id, kyc_user_natural=kyc_user_natural)
             self.x_inversor = True
+            self.validated_by = self.env.user.name
         except ApiException as e:
             raise ValidationError(
                 _('Error al validar Usuario, por favor intentelo de nuevo más '
