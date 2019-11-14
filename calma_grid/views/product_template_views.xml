@@ -67,6 +67,10 @@
                             <field name="project_wallet"/>
                             <field name="inversion_minima"/>
                         </group>
+                        <group>
+                            <button string="pagar" type="object"
+                                    name="pay_investors" class="oe_highlight"/>
+                        </group>
                     </page>
                 </notebook>
             </xpath>
