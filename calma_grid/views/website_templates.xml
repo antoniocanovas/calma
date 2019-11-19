@@ -494,8 +494,17 @@
                                                                         href="#">Invertir
                                                                 </button>
                                                             </t>
-                                                            <t t-if="request.env.user.partner_id.wallet_balance &lt;= 0">
-                                                                <p class="alert alert-warning">You must fill out your wallet first if you want to invest.</p>
+                                                            <t t-if="request.env.user.partner_id.wallet_balance &lt;=0">
+                                                                <t t-if="request.env.user.partner_id.x_inversor">
+                                                                    <a role="button" class="btn btn-primary" href="/wallet/add/money">
+                                                                        <span class="">Obtén más fondos</span>
+                                                                    </a>
+                                                                </t>
+                                                                <t t-if="not request.env.user.partner_id.x_inversor">
+                                                                    <a role="button" class="btn btn-primary" href="/my/account">
+                                                                        <span class="">Date de alta como inversor</span>
+                                                                    </a>
+                                                                </t>
                                                             </t>
                                                         </div>
                                                     </p>
