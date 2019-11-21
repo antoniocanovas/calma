@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-28 05:53+0000\n"
-"PO-Revision-Date: 2019-10-28 07:23+0100\n"
+"POT-Creation-Date: 2019-11-21 10:43+0000\n"
+"PO-Revision-Date: 2019-11-21 11:44+0100\n"
 "Last-Translator: cubells <vicent@vcubells.net>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -67,6 +67,16 @@ msgstr ""
 "                                <span class=\"fa fa-chevron-right\"/>"
 
 #. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "<span class=\"\">Get more funds</span>"
+msgstr "<span class=\"o_stat_text\">Obtén más fondos</span>"
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
+msgid "<span class=\"\">Register as an investor</span>"
+msgstr "<span class=\"o_stat_text\">Date de alta como inversor</span>"
+
+#. module: calma_grid
 #: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_inh_cart_lines
 msgid ""
 "<span class=\"fa fa-chevron-left\"/>\n"
@@ -96,6 +106,12 @@ msgstr "<span> Objetivo </span>"
 #: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
 msgid "<span>Confirmed</span>"
 msgstr "<span>Confirmado</span>"
+
+#. module: calma_grid
+#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
+#| msgid "<span> Invertido </span>"
+msgid "<span>Invertir</span>"
+msgstr "<span>Invertir</span>"
 
 #. module: calma_grid
 #: model_terms:ir.ui.view,arch_db:calma_grid.calma_sale_confirmation
@@ -227,7 +243,6 @@ msgstr "Invertido"
 
 #. module: calma_grid
 #: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
-#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_products_item_inh
 msgid "Invertir"
 msgstr "Invertir"
 
@@ -370,7 +385,7 @@ msgid "Premium"
 msgstr "Premium"
 
 #. module: calma_grid
-#: code:addons/calma_grid/models/product_template.py:108
+#: code:addons/calma_grid/models/product_template.py:109
 #, python-format
 msgid "Primero debe crear una compañía con MarketpayId"
 msgstr "Primero debe crear una compañía con MarketpayId"
@@ -519,11 +534,6 @@ msgid "You must fill out your wallet first if you want to invest that amount."
 msgstr "Has de introducir primero fondos en tu cartera si quieres invertir."
 
 #. module: calma_grid
-#: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
-msgid "You must fill out your wallet first if you want to invest."
-msgstr "Has de introducir primero fondos en tu cartera si quieres invertir."
-
-#. module: calma_grid
 #: model:ir.model.fields,field_description:calma_grid.field_product_product__zona
 #: model:ir.model.fields,field_description:calma_grid.field_product_template__zona
 msgid "Zona"
@@ -554,3 +564,6 @@ msgstr "para seguir tu pedido."
 #: model_terms:ir.ui.view,arch_db:calma_grid.website_sale_product_form_inh
 msgid "¿Cuanto vas a invertir?"
 msgstr "¿Cuanto vas a invertir?"
+
+#~ msgid "You must fill out your wallet first if you want to invest."
+#~ msgstr "Has de introducir primero fondos en tu cartera si quieres invertir."

@@ -417,6 +417,19 @@ class WebsiteSaleCustom(WebsiteSale):
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         """No cart allowed so delete orders on cart"""
         sale_order = request.website.sale_get_order(force_create=True)
+        for line in sale_order.order_line:
+            minimum = line.product_id.inversion_minima
+            if line.product_uom_qty < minimum:
+                # TODO: use a custom template to render a correct button and
+                #  to message to improve user experience
+                return request.render(
+                    'website.http_error', {
+                        'status_code': _('Warning'),
+                        'status_message': _(
+                            'Import minimum to invest is %s%s. '
+                            'Click your browser\'s back button to return to '
+                            'your product invest.') % (
+                            minimum, sale_order.currency_id.symbol)})
         if sale_order.state == 'draft':
             sale_order.order_line.unlink()
         if sale_order.state != 'draft':

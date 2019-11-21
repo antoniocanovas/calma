@@ -57,6 +57,7 @@ class ProductTemplate(models.Model):
     rentabilidad_real = fields.Char()
     inversion_minima = fields.Float(
         string='Inversión Mínima',
+        default=1.0,
     )
     sale_line_ids = fields.One2many(
         string='Sale lines',
