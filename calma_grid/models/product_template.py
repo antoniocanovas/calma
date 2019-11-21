@@ -57,6 +57,7 @@ class ProductTemplate(models.Model):
     rentabilidad_real = fields.Char()
     inversion_minima = fields.Float(
         string='Inversión Mínima',
+        default=1.0,
     )
     sale_line_ids = fields.One2many(
         string='Sale lines',
@@ -120,7 +121,7 @@ class ProductTemplate(models.Model):
     @api.constrains('crowdfunding')
     def _create_wallet(self):
         for product in self:
-            if product.cowdfunding and not product.project_wallet:
+            if product.crowdfunding and not product.project_wallet:
                 marketpay_domain = self.env.user.company_id.marketpay_domain
                 token_url = self.env.user.company_id.token_url
                 key = self.env.user.company_id._prepare_marketpay_key()

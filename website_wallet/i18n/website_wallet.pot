@@ -1,0 +1,635 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* website_wallet
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-21 10:45+0000\n"
+"PO-Revision-Date: 2019-11-21 10:45+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "&amp; Shipping"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "&amp;nbsp;"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "<b>Shipping: </b>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+msgid "<b>Wallet Balance: </b>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "<i class=\"fa fa-print\"/> Print"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.website_sale_products_inh_payment
+msgid "<span class=\"\">Confirmar\n"
+"                                        Inversión</span>\n"
+"                                    <span class=\"fa fa-chevron-right\"/>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.website_sale_products_inh_payment
+msgid "<span class=\"fa fa-chevron-left\"/>\n"
+"                                    <span class=\"\">Ver Oportunidades</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:payment.acquirer,cancel_msg:website_wallet.payment_acquirer_payflow_pro
+msgid "<span><i>Cancel,</i> Your payment has been cancelled.</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:payment.acquirer,done_msg:website_wallet.payment_acquirer_payflow_pro
+msgid "<span><i>Done,</i> Your online payment has been successfully processed. Thank you for your order.</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:payment.acquirer,error_msg:website_wallet.payment_acquirer_payflow_pro
+msgid "<span><i>Error,</i> Please be aware that an error occurred during the transaction. The order has been confirmed but will not be paid. Do not hesitate to contact us if you have any questions on the status of your order.</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:payment.acquirer,pending_msg:website_wallet.payment_acquirer_payflow_pro
+msgid "<span><i>Pending,</i> Your online payment has been successfully processed. But your order is not validated yet.</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "<span>Confirmed</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "<span>Order</span>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "<strong>Dirección</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "<strong>Error!</strong>\n"
+"                                <br/>\n"
+"                                <br/> Your payment not received at our end."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "<strong>IBAN</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "<strong>Payment Information:</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "<strong>Success!</strong>\n"
+"                                <br/>\n"
+"                                <br/> Your payment successfully added into wallet."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "<strong>Titular</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_confirmation
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_total
+msgid "<strong>Total:</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_total
+msgid "<strong>Wallet Paid:</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_confirmation
+msgid "<strong>Wallet:</strong>"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/controllers/main.py:93
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_quantity
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+#, python-format
+msgid "Add Money"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money
+msgid "Agregar Fondos"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Amount"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Añadir Cuenta Bancaria"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "Billing"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "CVV"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_token__cc_cvv
+msgid "CVV Code"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_token__cc_brand
+msgid "Card Brand"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_token__cc_expiry
+msgid "Card Expiry"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_token__cc_holder_name
+msgid "Card Holder Name"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_token__cc_number
+msgid "Card Number"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "Card number"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.acquirer,provider:0
+msgid "Cardit / Debit Card"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "Confirm <span class=\"fa fa-long-arrow-right\"/>"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.transaction,wallet_type:0
+msgid "Credit"
+msgstr ""
+
+#. module: website_wallet
+#: model:payment.acquirer,name:website_wallet.payment_acquirer_payflow_pro
+msgid "Credit / Debit Card"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Cuentas Bancarias"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_link
+msgid "Cuentas bancarias"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/website_wallet.py:184
+#, python-format
+msgid "Código o Número de autorización definido"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Date"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.transaction,wallet_type:0
+msgid "Debit"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Dirección"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money
+msgid "Enter amount"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "Expires"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_quantity
+msgid "Fondos Solicitados:"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,help:website_wallet.field_payment_acquirer__payflow_username
+msgid "If you set up one or more additional users on the account, this value is the ID of the user authorized to process transactions."
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/controllers/main.py:428
+#, python-format
+msgid "Import minimum to invest is %s%s. Click your browser's back button to return to your product invest."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money
+msgid "Indique la cantidad de € que desea ingresar en su Wallet"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__is_wallet_acquirer
+msgid "Is Wallet Acquirer"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_product_product__is_wallet_product
+#: model:ir.model.fields,field_description:website_wallet.field_product_template__is_wallet_product
+msgid "Is Wallet Product"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_transaction__is_wallet_transaction
+msgid "Is Wallet Transaction"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "MM / YY"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.acquirer,provider:0
+msgid "Manual Configuration"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.acquirer,provider:0
+msgid "Marketpay"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "Name"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/account_invoice.py:29
+#: code:addons/website_wallet/models/website_wallet.py:193
+#: code:addons/website_wallet/models/website_wallet.py:231
+#, python-format
+msgid "No acquirer configured. Please create wallet acquirer."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "No any transaction find in your account."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Número de cuenta"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_transaction__payflow_pnref
+msgid "PNREF Number"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__payflow_partner
+msgid "Partner ID"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__payflow_password
+msgid "Password"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/website_wallet.py:134
+#, python-format
+msgid "Pay Now"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+msgid "Pay by"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+#: model_terms:ir.ui.view,arch_db:website_wallet.website_sale_products_inh_payment
+msgid "Pay using Wallet"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Pay with"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/paypal_payment.py:411
+#, python-format
+msgid "Payflow Pro: received data with missing ORDERID (%s)"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/paypal_payment.py:418
+#, python-format
+msgid "Payflow Pro: received data with missing PNREF (%s)"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_payment_acquirer
+msgid "Payment Acquirer"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "Payment Method"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "Payment State"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_payment_token
+msgid "Payment Token"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.acquirer,provider:0
+msgid "Paypal"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.transaction_form_payflow_pro
+msgid "Paypal Payflow Pro TX Details"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "Print"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__provider
+msgid "Provider"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Reference"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model,name:website_wallet.model_sale_order
+msgid "Sale Order"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "Sign Up"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.payflow_pro_s2s_form
+msgid "Skip Now"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Status"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Stored Card ("
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "Thank you for your order."
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,help:website_wallet.field_payment_acquirer__payflow_partner
+msgid "The ID provided to you by the authorized PayPal Reseller who registered you for the gateway. If you purchased your account directly from PayPal, use PayPal."
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,help:website_wallet.field_payment_transaction__payflow_pnref
+msgid "The PNREF is a unique transaction identification number issued by PayPal that identifies the transaction for billing, reporting, and transaction data purposes."
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,help:website_wallet.field_payment_acquirer__payflow_password
+msgid "The password that you defined while registering for the account."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "Time"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+msgid "Titular"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+msgid "Transaction Details"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__payflow_username
+msgid "Username"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_acquirer__payflow_vendor
+msgid "Vender/Merchant ID"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.ui.menu,name:website_wallet.root_wallet_menu
+#: model_terms:ir.ui.view,arch_db:website_wallet.res_partner_form_view_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+msgid "Wallet"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.actions.act_window,name:website_wallet.wallet_acquirer_action
+#: model:ir.ui.menu,name:website_wallet.wallet_acquirer_menu
+msgid "Wallet Acquirer"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_res_partner__wallet_balance
+#: model:ir.model.fields,field_description:website_wallet.field_res_users__wallet_balance
+#: model:ir.model.fields,field_description:website_wallet.field_sale_order__partner_wallet_balance
+msgid "Wallet Balance"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_account
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_quantity
+#: model_terms:ir.ui.view,arch_db:website_wallet.add_money_success
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_link
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+#: model_terms:ir.ui.view,arch_db:website_wallet.website_sale_products_inh_payment
+msgid "Wallet Balance:"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_sale_order_form_view
+msgid "Wallet Pay"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_payment_transaction__wallet_type
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Wallet Process"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,field_description:website_wallet.field_res_partner__wallet_transaction
+#: model:ir.model.fields,field_description:website_wallet.field_res_users__wallet_transaction
+#: model:ir.model.fields,field_description:website_wallet.field_sale_order__wallet_txn_id
+#: model_terms:ir.ui.view,arch_db:website_wallet.res_partner_form_view_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_transaction_history
+msgid "Wallet Transaction"
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_link
+msgid "Wallet Transaction History"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.actions.act_window,name:website_wallet.action_wallet_transaction
+#: model:ir.ui.menu,name:website_wallet.wallet_transaction_menu
+msgid "Wallet Transactions"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/controllers/main.py:427
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: website_wallet
+#: selection:payment.acquirer,provider:0
+msgid "Wire Transfer"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/website_wallet.py:262
+#, python-format
+msgid "You can only delete draft quotations!"
+msgstr ""
+
+#. module: website_wallet
+#: code:addons/website_wallet/models/website_wallet.py:220
+#, python-format
+msgid "You must set MarketPay's key and secret in company form."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+msgid "You paid"
+msgstr ""
+
+#. module: website_wallet
+#: model:ir.model.fields,help:website_wallet.field_payment_acquirer__payflow_vendor
+msgid "Your merchant login ID that you created when you registered for the account. "
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:payment.acquirer,pre_msg:website_wallet.payment_acquirer_payflow_pro
+msgid "Your payment will be capture after clicking on the payment button."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.wallet_btn_payment
+msgid "amount from Wallet."
+msgstr ""
+
+#. module: website_wallet
+#: model_terms:ir.ui.view,arch_db:website_wallet.calma_sale_confirmation
+msgid "to follow your order."
+msgstr ""
+
