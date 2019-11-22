@@ -8,7 +8,22 @@
                t-if="website.user_id != user_id and user_id.x_inversor != True">Alta Inversor </a>
         </xpath>
     </template>
-
+    <template id="http_warning_signup">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+                        <div class="col-12 col-xl-8 oe_cart alert-info text-center"><p> </p>
+                        <p>Your registration as an investor is being processed. You will be notified in the next 24/48 hours in the email provided.</p>
+                        <a role="button" href="/my/home" class="btn btn-secondary mb32 d-none d-xl-inline-block">
+                            <span class="">Continue to your Account</span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
     <template id="hide_wallet" name="Hide Wallet"
               inherit_id="website_wallet.wallet_link">
         <xpath expr="//a[@href='/wallet/add/money']" position="replace">

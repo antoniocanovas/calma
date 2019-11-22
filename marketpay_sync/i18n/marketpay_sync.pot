@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-28 05:54+0000\n"
-"PO-Revision-Date: 2019-10-28 05:54+0000\n"
+"POT-Creation-Date: 2019-11-21 19:11+0000\n"
+"PO-Revision-Date: 2019-11-21 19:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,30 +16,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/controllers/controllers.py:40
+#: code:addons/marketpay_sync/controllers/controllers.py:41
 #, python-format
-msgid " Please, upload an image for dni back field."
+msgid " Please, upload an image for dni back field, and an spanish national identity card is needed to invest."
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/controllers/controllers.py:37
 #, python-format
-msgid " Please, upload an image for dni front field."
+msgid " Please, upload an image for dni front field, and an spanish national identity card is needed to invest."
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "<strong>Dirección</strong>"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "<strong>IBAN</strong>"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "<strong>Titular</strong>"
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.http_warning_signup
+msgid "<span class=\"\">Continue to your Account</span>"
 msgstr ""
 
 #. module: marketpay_sync
@@ -58,11 +48,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Anverso\n"
 "                                    DNI"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Añadir Cuenta Bancaria"
 msgstr ""
 
 #. module: marketpay_sync
@@ -102,16 +87,6 @@ msgid "Country..."
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Cuentas Bancarias"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_ccc
-msgid "Cuentas bancarias"
-msgstr ""
-
-#. module: marketpay_sync
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_company__x_codigopais_id
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__x_codigopais_id
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_users__x_codigopais_id
@@ -138,77 +113,67 @@ msgid "DNI Reverso"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_partner_marketpay_data
-msgid "DNI Validado"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Dirección"
-msgstr ""
-
-#. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:122
-#: code:addons/marketpay_sync/models/res_partner.py:266
+#: code:addons/marketpay_sync/models/res_partner.py:270
 #, python-format
 msgid "El campo C.P es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:270
+#: code:addons/marketpay_sync/models/res_partner.py:274
 #, python-format
 msgid "El campo DNI Anverso es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:272
+#: code:addons/marketpay_sync/models/res_partner.py:276
 #, python-format
 msgid "El campo DNI Reverso es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:254
+#: code:addons/marketpay_sync/models/res_partner.py:258
 #, python-format
 msgid "El campo Nombre es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:120
-#: code:addons/marketpay_sync/models/res_partner.py:264
+#: code:addons/marketpay_sync/models/res_partner.py:268
 #, python-format
 msgid "El campo calle es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:118
-#: code:addons/marketpay_sync/models/res_partner.py:262
+#: code:addons/marketpay_sync/models/res_partner.py:266
 #, python-format
 msgid "El campo ciudad es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:116
-#: code:addons/marketpay_sync/models/res_partner.py:260
+#: code:addons/marketpay_sync/models/res_partner.py:264
 #, python-format
 msgid "El campo mail es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:112
-#: code:addons/marketpay_sync/models/res_partner.py:256
+#: code:addons/marketpay_sync/models/res_partner.py:260
 #, python-format
 msgid "El campo pais es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
 #: code:addons/marketpay_sync/models/res_company.py:114
-#: code:addons/marketpay_sync/models/res_partner.py:258
+#: code:addons/marketpay_sync/models/res_partner.py:262
 #, python-format
 msgid "El campo provincia es obligatorio"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:268
+#: code:addons/marketpay_sync/models/res_partner.py:272
 #, python-format
 msgid "El campo vat es obligatorio"
 msgstr ""
@@ -219,31 +184,31 @@ msgid "Email"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:189
+#: code:addons/marketpay_sync/models/res_partner.py:193
 #, python-format
 msgid "Error al Registrar Usuario, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:205
+#: code:addons/marketpay_sync/models/res_partner.py:209
 #, python-format
 msgid "Error al Registrar Wallet, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:134
+#: code:addons/marketpay_sync/models/res_partner.py:137
 #, python-format
 msgid "Error al sincronizar el DNI, por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:121
+#: code:addons/marketpay_sync/models/res_partner.py:124
 #, python-format
 msgid "Error al sincronizar el DNI. Por favor intentelo de nuevo más tarde"
 msgstr ""
 
 #. module: marketpay_sync
-#: code:addons/marketpay_sync/models/res_partner.py:161
+#: code:addons/marketpay_sync/models/res_partner.py:165
 #, python-format
 msgid "Error al validar Usuario, por favor intentelo de nuevo más tarde"
 msgstr ""
@@ -321,16 +286,6 @@ msgid "Nombre Reverso"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Número de cuenta"
-msgstr ""
-
-#. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Pay with"
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Phone"
 msgstr ""
@@ -353,11 +308,6 @@ msgid "State / Province"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Stored Card ("
-msgstr ""
-
-#. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Street"
 msgstr ""
@@ -371,11 +321,6 @@ msgid "The ISO country code in two chars. \n"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
-msgid "Titular"
-msgstr ""
-
-#. module: marketpay_sync
 #: model:ir.model.fields,field_description:marketpay_sync.field_res_company__token_url
 msgid "Token Url"
 msgstr ""
@@ -383,6 +328,17 @@ msgstr ""
 #. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "VAT Number"
+msgstr ""
+
+#. module: marketpay_sync
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_partner__validated_by
+#: model:ir.model.fields,field_description:marketpay_sync.field_res_users__validated_by
+msgid "Validado por"
+msgstr ""
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.view_partner_marketpay_data
+msgid "Validar Inversor"
 msgstr ""
 
 #. module: marketpay_sync
@@ -398,7 +354,6 @@ msgid "Vista previa"
 msgstr ""
 
 #. module: marketpay_sync
-#: model_terms:ir.ui.view,arch_db:marketpay_sync.add_account
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.hide_wallet
 msgid "Wallet Balance:"
 msgstr ""
@@ -417,6 +372,11 @@ msgstr ""
 #. module: marketpay_sync
 #: model_terms:ir.ui.view,arch_db:marketpay_sync.portal_my_details_inh
 msgid "Your Name"
+msgstr ""
+
+#. module: marketpay_sync
+#: model_terms:ir.ui.view,arch_db:marketpay_sync.http_warning_signup
+msgid "Your registration as an investor is being processed. You will be notified in the next 24/48 hours in the email provided."
 msgstr ""
 
 #. module: marketpay_sync

@@ -34,10 +34,12 @@ class CustomPortalDetails(CustomerPortal):
                     error_message = []
             if error.get('x_dni_front'):
                 error_message.append(
-                    _(' Please, upload an image for dni front field.'))
+                    _(' Please, upload an image for dni front field, and an '
+                      'spanish national identity card is needed to invest.'))
             if error.get('x_dni_back'):
                 error_message.append(
-                    _(' Please, upload an image for dni back field.'))
+                    _(' Please, upload an image for dni back field, and an '
+                      'spanish national identity card is needed to invest.'))
             values.update({'error': error, 'error_message': error_message})
             values.update(post)
             if not error:
@@ -68,6 +70,6 @@ class CustomPortalDetails(CustomerPortal):
             'redirect': redirect,
             'page_name': 'my_details',
         })
-        response = request.render("portal.portal_my_details", values)
+        response = request.render("marketpay_sync.http_warning_signup", values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
