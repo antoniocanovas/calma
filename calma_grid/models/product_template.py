@@ -70,6 +70,16 @@ class ProductTemplate(models.Model):
     inversores = fields.Integer(
         compute='_compute_investments_count',
     )
+    state = fields.Selection(
+        selection=[
+            ('draft', 'Draft'),
+            ('crowdfunding', 'Crowdfunding'),
+            ('in_execution', 'In Execution'),
+            ('return', 'In Refund'),
+            ('closed', 'Closed'),
+        ],
+        default='draft',
+    )
 
     def _get_sale_lines(self, domain):
         # To easy filter sale order lines
