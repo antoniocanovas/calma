@@ -81,6 +81,31 @@ class ProductTemplate(models.Model):
         ],
         default='draft',
     )
+    @api.constrains('state','rentabilidad_real')
+    def get_total_refund(self):
+        for product in self:
+            if product.state == "return":
+                if not product.rentabilidad_real:
+                    product.state = "in_execution"
+                    raise ValidationError(_('El campo rentabilidad real no contiene datos'))
+                else:
+                    product.total_refund = ((((self.rentabilidad_real) / 100) * self.invertido) + self.invertido)
+
+    total_refund = fields.Float(string='Total a devolver',compute=get_total_refund)
+
+    @api.constrains('sale_line_ids')
+    def get_refund_done(self):
+        for line in self.sale_line_ids:
+            self.total_refund_done = self.total_refund_done + line.refund_done
+
+    total_refund_done = fields.Float(string='Total abonado',compute=get_refund_done,stored=False)
+
+    @api.constrains('state')
+    def check_closed_constraints(self):
+        if self.state == "closed" and self.total_refund_done != self.total_refund and self.crowdfunding:
+            self.state = "return"
+            raise ValidationError(
+                _('Hay que abonar todos los intereses antes de cerrar el proyecto'))
 
     def _get_sale_lines(self, domain):
         # To easy filter sale order lines
@@ -155,9 +180,8 @@ class ProductTemplate(models.Model):
     ### REFUND METHODS ###
     @api.multi
     def check_founds(self, wallet_id):
-        if not self.rentabilidad_real:
-            raise ValidationError(_('El campo rentabilidad real no contiene datos'))
-            total_refund = ((((self.rentabilidad_real) / 100) * self.invertido) + self.invertido) * 100
+
+            total_refund = self.total_refund * 100
             apiWallet = swagger_client.WalletsApi()
 
             try:
@@ -244,7 +268,7 @@ class ProductTemplate(models.Model):
         self.check_founds(self.project_wallet)
 
         for line in self.sale_line_ids:
-            if line.refund_done == False:
+            if not line.refund_done:
                 investor = line.order_partner_id
                 investor_market_id = investor.x_marketpayuser_id
                 investor_market_wallet = investor.x_marketpaywallet_id
@@ -252,6 +276,7 @@ class ProductTemplate(models.Model):
                 amount_to_tranfer = ((((self.rentabilidad_real) / 100) * line.price_subtotal) + line.price_subtotal)
                 # Make te transfer
                 self.wallet_transfer(amount_to_tranfer, investor, investor_market_id, investor_market_wallet)
-                line.refund_done = True
+                line.refund_done = amount_to_tranfer
+
 
 

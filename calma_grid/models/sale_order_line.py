@@ -9,7 +9,7 @@ class SaleOrderLine(models.Model):
         store=True,
         readonly=True,
     )
-    refund_done = fields.Boolean(string='Refund')
+    refund_done = fields.Float(string='Refund')
 
     @api.multi
     def write(self, values):
