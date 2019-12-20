@@ -95,10 +95,11 @@ class ProductTemplate(models.Model):
 
     @api.constrains('sale_line_ids')
     def get_refund_done(self):
+        self.total_refund_done = 0
         for line in self.sale_line_ids:
             self.total_refund_done = self.total_refund_done + line.refund_done
 
-    total_refund_done = fields.Float(string='Total abonado',compute=get_refund_done,stored=False)
+    total_refund_done = fields.Float(string='Total abonado',compute=get_refund_done)
 
     @api.constrains('state')
     def check_closed_constraints(self):
@@ -106,6 +107,11 @@ class ProductTemplate(models.Model):
             self.state = "return"
             raise ValidationError(
                 _('Hay que abonar todos los intereses antes de cerrar el proyecto'))
+
+    @api.constrains('invertido')
+    def check_crowdfunding_objetive(self):
+        if self.invertido >= self.objetivo_crowdfunding:
+            self.state = 'closed'
 
     def _get_sale_lines(self, domain):
         # To easy filter sale order lines
