@@ -1,5 +1,6 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
+from datetime import datetime
 
 import requests
 import json
@@ -44,17 +45,17 @@ class ProductTemplate(models.Model):
         compute='_compute_porcentaje_crowdfunding',
     )
     plazo_inversion = fields.Char()
-    rentabilidad_anual = fields.Char()
-    tir_historico = fields.Char(
+    rentabilidad_anual = fields.Float()
+    tir_historico = fields.Float(
         string='TIR Histórico',
     )
-    rentabilidad_total = fields.Char()
+    rentabilidad_total = fields.Float()
     project_wallet = fields.Char(
         string='Wallet de Proyecto',
         readonly=True,
     )
     mapa = fields.Binary()
-    rentabilidad_real = fields.Char()
+    rentabilidad_real = fields.Float()
     inversion_minima = fields.Float(
         string='Inversión Mínima',
         default=1.0,
@@ -80,6 +81,37 @@ class ProductTemplate(models.Model):
         ],
         default='draft',
     )
+    @api.constrains('state','rentabilidad_real')
+    def get_total_refund(self):
+        for product in self:
+            if product.state == "return":
+                if not product.rentabilidad_real:
+                    product.state = "in_execution"
+                    raise ValidationError(_('El campo rentabilidad real no contiene datos'))
+                else:
+                    product.total_refund = ((((self.rentabilidad_real) / 100) * self.invertido) + self.invertido)
+
+    total_refund = fields.Float(string='Total a devolver',compute=get_total_refund)
+
+    @api.constrains('sale_line_ids')
+    def get_refund_done(self):
+        self.total_refund_done = 0
+        for line in self.sale_line_ids:
+            self.total_refund_done = self.total_refund_done + line.refund_done
+
+    total_refund_done = fields.Float(string='Total abonado',compute=get_refund_done)
+
+    @api.constrains('state')
+    def check_closed_constraints(self):
+        if self.state == "closed" and self.total_refund_done != self.total_refund and self.crowdfunding:
+            self.state = "return"
+            raise ValidationError(
+                _('Hay que abonar todos los intereses antes de cerrar el proyecto'))
+
+    @api.constrains('invertido')
+    def check_crowdfunding_objetive(self):
+        if self.invertido >= self.objetivo_crowdfunding:
+            self.state = 'closed'
 
     def _get_sale_lines(self, domain):
         # To easy filter sale order lines
@@ -151,3 +183,106 @@ class ProductTemplate(models.Model):
                 except ApiException as e:
                     print("Exception when calling WalletApi->Wallet_post: "
                           "%s\n" % e)
+    ### REFUND METHODS ###
+    @api.multi
+    def check_founds(self, wallet_id):
+
+            total_refund = self.total_refund * 100
+            apiWallet = swagger_client.WalletsApi()
+
+            try:
+                api_response = apiWallet.wallets_get(wallet_id)
+                wallet_balance_cents = api_response.balance.amount
+            except ApiException as e:
+                print("Exception when calling WalletsApi->wallets_get: %s\n" % e)
+
+            if total_refund > wallet_balance_cents:
+                raise ValidationError(_('No hay fondos para hacer la operación'))
+            else:
+                return
+
+    @api.multi
+    def create_credit_pt(self, partner, amount, acquirer):
+        PA = self.env['payment.acquirer'].sudo()
+        PT = self.env['payment.transaction'].sudo()
+        tx = PT.search([
+                ('is_wallet_transaction', '=', True),
+                ('wallet_type', '=', 'credit'),
+                ('partner_id', '=', partner.id),
+                ('state', '=', 'draft')], limit=1)
+        if tx:
+                tx.amount = amount
+                tx.acquirer_id = acquirer.id
+                tx.state = 'done'
+                tx.date = datetime.now()
+        else:
+                PT.create({
+                    'acquirer_id': acquirer.id,
+                    'type': 'form',
+                    'amount': amount,
+                    'currency_id': acquirer.company_id.currency_id.id,
+                    'partner_id': partner.id,
+                    'partner_country_id': partner.country_id.id,
+                    'is_wallet_transaction': True,
+                    'wallet_type': 'credit',
+                    'reference': self.env[
+                        'payment.transaction'].sudo().get_next_wallet_reference(),
+                    'state': 'done',
+                    'date': datetime.now()
+                })
+
+    @api.multi
+    def wallet_transfer(self, amount_to_tranfer, investor, investor_market_id, investor_market_wallet):
+        credited_wallet_id = investor_market_wallet
+        acquirer = self.env['payment.acquirer'].sudo().search([
+            ('is_wallet_acquirer', '=', True)], limit=1)
+        if not acquirer:
+            raise UserError(
+                _('No acquirer configured. Please create wallet acquirer.'))
+
+        currency = "EUR"
+        amount = str(int(round(amount_to_tranfer * 100)))
+        amountfee = acquirer.marketpay_fee
+
+        # create an instance of the API class
+        api_instance = swagger_client.TransfersApi()
+
+        fees = swagger_client.Money(amount=amountfee, currency=currency)
+        debited_founds = swagger_client.Money(amount=amount, currency=currency)
+        credited_user_id = investor_market_id
+        debited_wallet_id = self.project_wallet
+
+        transfer = swagger_client.TransferPost(
+            credited_user_id=credited_user_id,
+            debited_funds=debited_founds,
+            credited_wallet_id=credited_wallet_id,
+            debited_wallet_id=debited_wallet_id,
+            fees=fees)
+        try:
+            api_response = api_instance.transfers_post(transfer=transfer)
+        except ApiException as e:
+            print("Exception when calling UsersApi->users_post: %s\n" % e)
+            # Make a credit Wallet transaction for user
+        self.create_credit_pt(investor, amount_to_tranfer, acquirer)
+        return True
+
+    @api.multi
+    def pay_investors(self):
+        # Set swagger Config
+        self.env.user.company_id._set_swagger_config()
+        #Check if enought € in project wallet for refund
+        self.check_founds(self.project_wallet)
+
+        for line in self.sale_line_ids:
+            if not line.refund_done:
+                investor = line.order_partner_id
+                investor_market_id = investor.x_marketpayuser_id
+                investor_market_wallet = investor.x_marketpaywallet_id
+                # Get amount to transfer for this Line
+                amount_to_tranfer = ((((self.rentabilidad_real) / 100) * line.price_subtotal) + line.price_subtotal)
+                # Make te transfer
+                self.wallet_transfer(amount_to_tranfer, investor, investor_market_id, investor_market_wallet)
+                line.refund_done = amount_to_tranfer
+
+
+
