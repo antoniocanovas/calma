@@ -229,7 +229,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <a role="button" t-att-href="product_href" class="btn btn-primary mb32" t-if="product.state == crowdfunding">
+                                <a role="button" t-att-href="product_href" class="btn btn-primary mb32" t-if="product.state == 'crowdfunding'">
                                 <h5 align="center">
                                     <span>Invertir</span>
                                     <a role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-primary mb32" title="This product is unpublished.">Unpublished</a>
@@ -474,9 +474,10 @@
                                             </tr>
                                             <tr style="padding-top:5px">
                                                 <td colspan="4" align="center">
-                                                    <p t-if="product.state == crowdfunding">
+                                                    <p t-if="product.state == 'crowdfunding'">
                                                         <strong>
                                                             <h4>
+
                                                                 ¿Cuanto vas a invertir?
                                                             </h4>
                                                         </strong>
