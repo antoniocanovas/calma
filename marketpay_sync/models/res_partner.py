@@ -3,9 +3,7 @@ from odoo.exceptions import ValidationError
 
 import tempfile
 import os
-import requests
 import base64
-import json
 import logging
 _logger = logging.getLogger(__name__)
 try:
@@ -106,36 +104,47 @@ class ResPartner(models.Model):
             record.x_dni_b_preview = record.x_dni_back
 
     @api.multi
-    def _kyc_docs(self):
-        file = base64.decodebytes(self.x_dni_front)
-        extension = os.path.splitext(self.x_name_dni_front)[1]
-        fobj = tempfile.NamedTemporaryFile(delete=False, suffix=extension)
-        fname = fobj.name
-        fobj.write(file)
-        fobj.close()
+    def _kyc_legal_docs(self, doc, doc_name, doc_type):
         user_id = self.x_marketpayuser_id
-        document = "USER_IDENTITY_PROOF"
-        apikyc = swagger_client.KycApi()
-        try:
-            apikyc.kyc_post_document(document, fname, user_id)
-            os.unlink(fname)
-        except ApiException as e:
-            raise ValidationError(
-                _('Error al sincronizar el DNI. Por favor intentelo de nuevo '
-                  'más tarde'))
-        file = base64.decodebytes(self.x_dni_back)
-        extension = os.path.splitext(self.x_name_dni_back)[1]
-        fobj = tempfile.NamedTemporaryFile(delete=False, suffix=extension)
-        fname = fobj.name
-        fobj.write(file)
-        fobj.close()
-        try:
-            apikyc.kyc_post_document(document, fname, user_id)
-            os.unlink(fname)
-        except ApiException as e:
-            raise ValidationError(
-                _('Error al sincronizar el DNI, por favor intentelo de nuevo '
-                  'más tarde'))
+
+        if doc:
+            file = base64.decodebytes(doc)
+            extension = os.path.splitext(doc_name)[1]
+            fobj = tempfile.NamedTemporaryFile(delete=False, suffix=extension)
+            fname = fobj.name
+            fobj.write(file)
+            fobj.close()
+            document = doc_type
+            apikyc = swagger_client.KycApi()
+            try:
+                api_response = apikyc.kyc_post_document(document, fname, user_id)
+                os.unlink(fname)
+            except Exception as e:
+                raise Warning(("MarketPay connection error: %s\n" % e))
+
+    @api.multi
+    def prepare_kyc_docs(self):
+        self.env.user.company_id._set_swagger_config()
+
+        if self.fiscal_doc:
+            doc_type = "FISCAL_ID"
+            self._kyc_legal_docs(self.fiscal_doc, self.fiscal_doc_name, doc_type)
+        if self.registration_proof:
+            doc_type = "REGISTRATION_PROOF"
+            self._kyc_legal_docs(self.registration_proof, self.registration_proof_name, doc_type)
+        if self.tax_register_declaration:
+            doc_type = "ARTICLES_OF_ASSOCIATION"
+            self._kyc_legal_docs(self.tax_register_declaration, self.tax_register_declaration_name, doc_type)
+        if self.shareholder_declaration:
+            doc_type = "SHAREHOLDER_DECLARATION"
+            self._kyc_legal_docs(self.shareholder_declaration, self.shareholder_declaration_name, doc_type)
+        if self.share_capital_increase:
+            doc_type = "SHARE_CAPITAL_INCREASE"
+            self._kyc_legal_docs(self.share_capital_increase, self.share_capital_increase_name, doc_type)
+        if self.x_dni_front:
+            doc_type = "USER_IDENTITY_PROOF"
+            self._kyc_legal_docs(self.fiscal_doc, self.fiscal_doc_name, doc_type)
+
 
     @api.multi
     def _kyc_validation(self):
@@ -164,6 +173,67 @@ class ResPartner(models.Model):
             raise ValidationError(
                 _('Error al validar Usuario, por favor intentelo de nuevo más '
                   'tarde'))
+
+    @api.multi
+    def _kyc_legal_validation(self):
+        self.ensure_one()
+        user_id = self.x_marketpayuser_id  # int | The Id of a user
+        apikyc = swagger_client.KycApi()
+        address = swagger_client.Address(address_line1=self.street,
+                                         address_line2=self.street2,
+                                         city=self.city, postal_code=self.zip,
+                                         country=self.x_codigopais_id,
+                                         region=self.x_nombreprovincia_id)
+
+        kyc_user_legal = swagger_client.KycUserLegalPut(fiscal_address=address)
+        kyc_user_legal.email = self.email
+        kyc_user_legal.name = self.name
+        kyc_user_legal.legal_representative_country_of_residence = self.x_codigopais_id
+        kyc_user_legal.legal_representative_nationality = self.x_codigopais_id
+        kyc_user_legal.fiscal_id = self.vat
+        try:
+            api_response = apikyc.kyc_post_legal(user_id, kyc_user_legal=kyc_user_legal)
+            self.x_inversor = True
+            self.validated_by = self.env.user.name
+        except ApiException as e:
+            print(e)
+            raise Warning(("MarketPay connection error: %s\n" % e))
+
+    @api.multi
+    def _get_legal_marketpay_id(self):
+
+        if not self.x_marketpayuser_id:
+            apiUser = swagger_client.UsersApi()
+            address = swagger_client.Address(
+                address_line1=self.street,
+                address_line2=self.street2,
+                city=self.city,
+                postal_code=self.zip,
+                country=self.x_codigopais_id,
+                region=self.x_nombreprovincia_id,
+            )
+
+            user_legal = swagger_client.UserLegalPost(headquarters_address=address)
+            user_legal.legal_representative_email = self.email
+            user_legal.email = self.email
+            user_legal.name = self.name
+            user_legal.legal_representative_country_of_residence = self.x_codigopais_id
+            user_legal.legal_representative_nationality = self.x_codigopais_id
+            user_legal.legal_person_type = "BUSINESS"
+
+            try:
+                api_response = apiUser.users_post_legal(
+                    user_legal=user_legal)
+                self.x_marketpayuser_id = api_response.id
+            except ApiException as e:
+                raise ValidationError(
+                    _('Error al Registrar Usuario, por favor intentelo de nuevo '
+                      'más tarde'))
+
+            self._kyc_legal_validation()
+
+        else:
+            self._kyc_legal_validation()
 
     @api.multi
     def _get_id(self):
@@ -213,24 +283,9 @@ class ResPartner(models.Model):
     def _updateuser(self):
         self.ensure_one()
         if self.name and self.x_marketpayuser_id:
-            marketpay_domain = self.company_id.marketpay_domain
-            token_url = self.company_id.token_url
-            key = self.company_id._prepare_marketpay_key()
-            data = {'grant_type': 'client_credentials'}
-            headers = {'Authorization': key,
-                       'Content-Type': 'application/x-www-form-urlencoded'}
-            r = requests.post(token_url, data=data, headers=headers)
-            rs = r.content.decode()
-            response = json.loads(rs)
-            token = response['access_token']
+            self.env.user.company_id._set_swagger_config()
 
-            config = swagger_client.Configuration()
-            config.host = marketpay_domain
-            config.access_token = token
-            swagger_client.ApiClient(configuration=config)
-            swagger_client.Configuration.set_default(config)
             apiUser = swagger_client.UsersApi()
-            print(self.x_codigopais_id)
             address = swagger_client.Address(address_line1=self.street,
                                              address_line2=self.street2,
                                              city=self.city,
@@ -249,7 +304,8 @@ class ResPartner(models.Model):
             try:
                 apiUser.users_put_natural(user_id, user_natural=user_natural)
             except ApiException as e:
-                print("Exception when calling UsersApi->users_put: %s\n" % e)
+                print(e)
+                raise Warning(("MarketPay connection error: %s\n" % e))
 
     @api.multi
     def marketpay_validate(self):
@@ -270,33 +326,22 @@ class ResPartner(models.Model):
             raise ValidationError(_('El campo C.P es obligatorio'))
         if not self.vat:
             raise ValidationError(_('El campo vat es obligatorio'))
-        if not self.x_dni_front:
-            raise ValidationError(_('El campo DNI Anverso es obligatorio'))
-        if not self.x_dni_back:
-            raise ValidationError(_('El campo DNI Reverso es obligatorio'))
-        marketpay_domain = self.company_id.marketpay_domain
-        token_url = self.company_id.token_url
-        key = self.company_id._prepare_marketpay_key()
-        data = {'grant_type': 'client_credentials'}
-        headers = {'Authorization': key,
-                   'Content-Type': 'application/x-www-form-urlencoded'}
-        r = requests.post(token_url, data=data, headers=headers)
-        rs = r.content.decode()
-        response = json.loads(rs)
-        token = response['access_token']
-        # Load Default Config for Swagger
-        config = swagger_client.Configuration()
-        config.host = marketpay_domain
-        config.access_token = token
-        swagger_client.ApiClient(configuration=config)
-        swagger_client.Configuration.set_default(config)
+        if not self.fiscal_doc:
+            raise ValidationError(_('Field Identity Document is mandatory'))
+
+
+        self.env.user.company_id._set_swagger_config()
 
         if not self.x_marketpayuser_id:
-            self._get_id()
+            if self.company_type != "company":
+                self._get_id()
+            else:
+                self._get_legal_marketpay_id()
         if not self.x_marketpaywallet_id:
             self._get_wallet()
         if not self.x_inversor:
-            self._kyc_validation()
-            self._kyc_docs()
-        else:
-            self._updateuser()
+            if self.company_type != "company":
+                self._kyc_validation()
+            else:
+                self._kyc_legal_validation()
+            self.prepare_kyc_docs()

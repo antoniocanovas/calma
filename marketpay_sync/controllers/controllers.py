@@ -7,8 +7,8 @@ import base64
 
 class CustomPortalDetails(CustomerPortal):
     MANDATORY_BILLING_FIELDS = CustomerPortal.MANDATORY_BILLING_FIELDS + \
-                               ["zipcode", "state_id", "vat", "x_dni_front",
-                                "x_dni_back"]
+                               ["zipcode", "state_id", "vat", "fiscal_doc",
+                                "company_type"]
 
     @route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
@@ -20,32 +20,22 @@ class CustomPortalDetails(CustomerPortal):
             'error_message': [],
         })
         if post:
-            dni_front = post.pop('x_dni_front')
-            dni_back = post.pop('x_dni_back')
+            dni_front = post.pop('fiscal_doc')
 
             error, error_message = self.details_form_validate(post)
-            if error.get('x_dni_front') and dni_front:
-                error.pop('x_dni_front')
+            if error.get('fiscal_doc') and dni_front:
+                error.pop('fiscal_doc')
                 if not error:
                     error_message = []
-            if error.get('x_dni_back') and dni_back:
-                error.pop('x_dni_back')
-                if not error:
-                    error_message = []
-            if error.get('x_dni_front'):
+            if error.get('fiscal_doc'):
                 error_message.append(
-                    _(' Please, upload an image for dni front field, and an '
-                      'spanish national identity card is needed to invest.'))
-            if error.get('x_dni_back'):
-                error_message.append(
-                    _(' Please, upload an image for dni back field, and an '
+                    _(' Please, upload an image for dni with both sides, and an '
                       'spanish national identity card is needed to invest.'))
             values.update({'error': error, 'error_message': error_message})
             values.update(post)
             if not error:
                 post.update({
-                    'x_dni_back': base64.encodebytes(dni_back.read()),
-                    'x_dni_front': base64.encodebytes(dni_front.read()),
+                    'fiscal_doc': base64.encodebytes(dni_front.read()),
                 })
                 values = {key: post[key] for key in
                           self.MANDATORY_BILLING_FIELDS}
@@ -53,13 +43,22 @@ class CustomPortalDetails(CustomerPortal):
                     {key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if
                      key in post})
                 values.update({'zip': values.pop('zipcode', ''),
-                               'x_name_dni_back': dni_back.filename,
-                               'x_name_dni_front': dni_front.filename,
+                               'fiscal_doc_name': dni_front.filename,
                                })
                 partner.sudo().write(values)
                 if redirect:
                     return request.redirect(redirect)
+                if not partner.x_inversor:
+                    if partner.company_type == "person":
+                        response = request.render("marketpay_sync.http_warning_signup", values)
+                        response.headers['X-Frame-Options'] = 'DENY'
+                        return response
+                    else:
+                        response = request.render("marketpay_sync.portal_company_docs_warning", values)
+                        response.headers['X-Frame-Options'] = 'DENY'
+                        return response
                 return request.redirect('/my/home')
+
         countries = request.env['res.country'].sudo().search([])
         states = request.env['res.country.state'].sudo().search([])
         values.update({
@@ -70,6 +69,6 @@ class CustomPortalDetails(CustomerPortal):
             'redirect': redirect,
             'page_name': 'my_details',
         })
-        response = request.render("marketpay_sync.http_warning_signup", values)
-        response.headers['X-Frame-Options'] = 'DENY'
+        response = request.render("marketpay_sync.portal_my_details_inh", values)
         return response
+

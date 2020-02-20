@@ -14,10 +14,10 @@
                 <div class="container oe_website_sale py-2">
                     <div class="row">
                         <div class="col-12 col-xl-8 oe_cart alert-info text-center"><p> </p>
-                        <p>Your registration as an investor is being processed. You will be notified in the next 24/48 hours in the email provided.</p>
-                        <a role="button" href="/my/home" class="btn btn-secondary mb32 d-none d-xl-inline-block">
-                            <span class="">Continue to your Account</span>
-                        </a>
+                            <p>Your registration as an investor is being processed. You will be notified in the next 24/48 hours in the email provided.</p>
+                            <a role="button" href="/my/home" class="btn btn-secondary mb32 d-none d-xl-inline-block">
+                                <span class="">Continue to your Account</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -52,12 +52,23 @@
         </xpath>
     </template>
 
-    <template id="marketpay_sync.portal_my_details_inh" inherit_id="portal.portal_my_details" customize_show="True" name="portal_my_details_inh" priority="9999">
+    <template id="portal_my_details_inh" inherit_id="portal.portal_my_details" customize_show="True" name="portal_my_details_inh" priority="9999">
         <xpath expr='//form' position='replace'>
             <form action="/my/account" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                 <div class="row o_portal_details">
                     <div class="col-lg-8">
+                        <div class="row">
+                            <div t-attf-class="form-group #{error.get('company_type') and 'o_has_error' or ''} col-xl-6">
+                                <label class="col-form-label"
+                                       for="company_type">User Type
+                                </label>
+                                <select name="company_type" t-attf-class="form-control #{error.get('company_type') and 'is-invalid' or ''}" t-att-readonly="'readonly' if x_inversor == True else ''">
+                                    <option value="person" t-att-readonly="'readonly' if x_inversor == True else ''"> Person </option>
+                                    <option value="company" t-att-readonly="'readonly' if x_inversor == True else ''"> Company </option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div t-if="error_message" class="alert alert-danger" role="alert">
@@ -127,32 +138,71 @@
                                     </t>
                                 </select>
                             </div>
-                            <div t-attf-class="form-group col-xl-6">
-                                <label class="col-form-label"
-                                       for="x_dni_front">Anverso
-                                    DNI</label>
-                                <input type="file" name="x_dni_front" class="file"
-                                       multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
-                            </div>
-                            <div t-attf-class="form-group col-xl-6">
+
+
+                            <!--<div t-attf-class="form-group col-xl-6">
                                 <label class="col-form-label"
                                        for="x_dni_back">Reverso
                                     DNI</label>
                                 <input type="file" name="x_dni_back" class="file" multiple="false" data-show-upload="true" data-show-caption="true"
                                        lass="file" data-show-preview="true"/>
-                            </div>
+                            </div>-->
                             <input type="hidden" name="redirect" t-att-value="redirect"/>
                         </div>
-                        <div class="clearfix">
+                        <div class="row">
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label"
+                                       for="fiscal_doc">Identity Proof Document or Company VAT
+                                </label>
+                                <input type="file" name="fiscal_doc" class="file"
+                                       multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary form-group col-xl-6 ">
+                                Confirm
+                                <span class="fa "/>
+                            </button>
+                        </div>
+                        <!--<div class="clearfix">
                             <button type="submit" class="btn btn-primary float-right mb32 ">
                                 Confirm
                                 <span class="fa fa-long-arrow-right"/>
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </form>
         </xpath>
+    </template>
+
+    <template id="portal_company_docs_warning">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+                        <div class="col-12 col-xl-8 oe_cart alert-info text-center"><p> </p>
+                            <p>In order to complete Company registrations you need to send us via email to mail@incalma.es the following documents:
+                                <li>
+                                    <lu>Shareholder Declaration</lu>
+                                </li>
+                                <li>
+                                    <lu>Tax Register Declaration</lu>
+                                </li>
+                                <li>
+                                      <lu>Registration Proof</lu>
+                                </li>
+                                All documents are mandatory for registrations as investor.
+                                You can access to this document uploader anytime in your profile menu.
+                                You will be notified in the next 24/48 hours in the email provided.</p>
+                            <a role="button" href="/my/home" class="btn btn-secondary mb32 d-none d-xl-inline-block">
+                                <span class="">Continue to your Account</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
     </template>
 
 </odoo>

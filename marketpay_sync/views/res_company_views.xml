@@ -15,7 +15,7 @@
                         <field name="marketpay_domain"/>
                         <field name="token_url"/>
                         <field name="marketpayuser_id" readonly="1"/>
-                        <button string="Generate Marketpay values" type="object" name="marketpay_validate" class="oe_highlight"/>
+                        <button string="Generate Marketpay values" type="object" name="get_marketpay_id" class="oe_highlight"/>
                     </group>
                 </page>
             </xpath>

@@ -1,6 +1,8 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 
+import tempfile
+import os
 import requests
 import base64
 import json
@@ -34,10 +36,10 @@ class ResCompany(models.Model):
         readonly=True,
     )
     marketpay_key = fields.Char(
-        string='Key',
+        string="Key",
     )
     marketpay_secret = fields.Char(
-        string='secret',
+        string="secret",
     )
     marketpay_domain = fields.Char(
         default='https://api-sandbox.marketpay.io',
@@ -82,32 +84,69 @@ class ResCompany(models.Model):
         return True
 
     @api.multi
-    def _get_wallet(self):
-        self._set_swagger_config()
-        apiUser = swagger_client.UsersApi()
-        address = swagger_client.Address(
-            address_line1=self.street,
-            address_line2=self.street2,
-            city=self.city,
-            postal_code=self.zip,
-            country=self.x_codigopais_id,
-            region=self.x_nombreprovincia_id,
-        )
+    def _kyc_legal_validation(self):
+        self.ensure_one()
+        user_id = self.marketpayuser_id  # int | The Id of a user
+        apikyc = swagger_client.KycApi()
+        address = swagger_client.Address(address_line1=self.street,
+                                         address_line2=self.street2,
+                                         city=self.city, postal_code=self.zip,
+                                         country=self.x_codigopais_id,
+                                         region=self.x_nombreprovincia_id)
 
-        user_natural = swagger_client.UserNaturalPost(address=address)
-        user_natural.email = self.email
-        user_natural.first_name = self.name
-        user_natural.country_of_residence = self.x_codigopais_id
-        user_natural.nationality = self.x_codigopais_id
+        kyc_user_legal = swagger_client.KycUserLegalPut(fiscal_address=address)
+        kyc_user_legal.email = self.email
+        kyc_user_legal.name = self.name
+        kyc_user_legal.legal_representative_country_of_residence = self.x_codigopais_id
+        kyc_user_legal.legal_representative_nationality = self.x_codigopais_id
+        kyc_user_legal.fiscal_id = self.vat
         try:
-            api_response = apiUser.users_post_natural(
-                user_natural=user_natural)
-            self.marketpayuser_id = api_response.id
+            api_response = apikyc.kyc_post_legal(user_id, kyc_user_legal=kyc_user_legal)
         except ApiException as e:
-            print("Exception when calling UsersApi->users_post: %s\n" % e)
+            print(e)
+            raise Warning(("MarketPay connection error: %s\n" % e))
 
     @api.multi
-    def marketpay_validate(self):
+    def get_marketpay_id(self):
+        self._marketpay_validate()
+        self._set_swagger_config()
+        if not self.marketpayuser_id:
+            apiUser = swagger_client.UsersApi()
+            address = swagger_client.Address(
+                address_line1=self.street,
+                address_line2=self.street2,
+                city=self.city,
+                postal_code=self.zip,
+                country=self.x_codigopais_id,
+                region=self.x_nombreprovincia_id,
+            )
+
+            user_legal = swagger_client.UserLegalPost(headquarters_address=address)
+            user_legal.legal_representative_email = self.email
+            user_legal.email = self.email
+            user_legal.name = self.name
+            user_legal.legal_representative_country_of_residence = self.x_codigopais_id
+            user_legal.legal_representative_nationality = self.x_codigopais_id
+            user_legal.legal_person_type = "BUSINESS"
+
+            try:
+                api_response = apiUser.users_post_legal(
+                    user_legal=user_legal)
+                self.marketpayuser_id = api_response.id
+                self.partner_id.x_marketpayuser_id = api_response.id
+                self.partner_id.x_inversor = True
+                self.partner_id.validated_by = self.env.user.name
+            except ApiException as e:
+                print(e)
+                raise Warning(("MarketPay connection error: %s\n" % e))
+
+            self._kyc_legal_validation()
+
+        else:
+            self._kyc_legal_validation()
+
+    @api.multi
+    def _marketpay_validate(self):
         if not self.x_codigopais_id:
             raise ValidationError(_('El campo pais es obligatorio'))
         if not self.x_nombreprovincia_id:
@@ -120,4 +159,8 @@ class ResCompany(models.Model):
             raise ValidationError(_('El campo calle es obligatorio'))
         if not self.zip:
             raise ValidationError(_('El campo C.P es obligatorio'))
-        self._get_wallet()
+        if not self.vat:
+            raise ValidationError(_('El Cif es obligatorio'))
+
+
+

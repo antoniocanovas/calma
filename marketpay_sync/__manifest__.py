@@ -12,6 +12,7 @@
     'depends': [
         'sale_management',
         'website_sale',
+        'acquirer_marketpay',
         'website_wallet',
         'contacts',
     ],
