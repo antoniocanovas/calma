@@ -470,7 +470,6 @@
                                                 <td colspan="4" align="center">
                                                     <p>Plazo: <span
                                                             t-esc="product.plazo_inversion"/> meses</p>
-                                                     <span t-esc="product.state"/>
                                                 </td>
                                             </tr>
                                             <tr style="padding-top:5px">
