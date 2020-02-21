@@ -123,9 +123,34 @@ class ResPartner(models.Model):
                 raise Warning(("MarketPay connection error: %s\n" % e))
 
     @api.multi
+    def _kyc_put_docs(self, doc, doc_name, doc_type):
+        user_id = self.x_marketpayuser_id
+
+        if doc:
+            file = base64.decodebytes(doc)
+            extension = os.path.splitext(doc_name)[1]
+            fobj = tempfile.NamedTemporaryFile(delete=False, suffix=extension)
+            fname = fobj.name
+            fobj.write(file)
+            fobj.close()
+            document = doc_type
+            apikyc = swagger_client.KycApi()
+            try:
+                api_response = apikyc.kyc_put_document(document, fname, user_id)
+                os.unlink(fname)
+            except Exception as e:
+                raise Warning(("MarketPay connection error: %s\n" % e))
+
+    @api.multi
     def prepare_kyc_docs(self):
         self.env.user.company_id._set_swagger_config()
 
+        if self.x_dni_front:
+            doc_type = "USER_IDENTITY_PROOF"
+            self._kyc_legal_docs(self.x_dni_front, self.x_name_dni_front, doc_type)
+        if self.x_dni_back:
+            doc_type = "USER_IDENTITY_PROOF"
+            self._kyc_put_docs(self.x_dni_back, self.x_name_dni_back, doc_type)
         if self.fiscal_doc:
             doc_type = "FISCAL_ID"
             self._kyc_legal_docs(self.fiscal_doc, self.fiscal_doc_name, doc_type)
@@ -141,9 +166,6 @@ class ResPartner(models.Model):
         if self.share_capital_increase:
             doc_type = "SHARE_CAPITAL_INCREASE"
             self._kyc_legal_docs(self.share_capital_increase, self.share_capital_increase_name, doc_type)
-        if self.x_dni_front:
-            doc_type = "USER_IDENTITY_PROOF"
-            self._kyc_legal_docs(self.fiscal_doc, self.fiscal_doc_name, doc_type)
 
 
     @api.multi
@@ -326,8 +348,14 @@ class ResPartner(models.Model):
             raise ValidationError(_('El campo C.P es obligatorio'))
         if not self.vat:
             raise ValidationError(_('El campo vat es obligatorio'))
-        if not self.fiscal_doc:
-            raise ValidationError(_('Field Identity Document is mandatory'))
+        if self.is_legal_representative or self.is_shareholder or self.company_type == 'company':
+            if not self.fiscal_doc:
+                raise ValidationError(_('Field Identity Document is mandatory'))
+        if not self.is_legal_representative and not self.is_shareholder and not self.company_type == 'company':
+            if not self.x_dni_front:
+                raise ValidationError(_('Field Identity Document side A'))
+            if not self.x_dni_back:
+                raise ValidationError(_('Field Identity Document side B'))
 
 
         self.env.user.company_id._set_swagger_config()

@@ -59,7 +59,7 @@
                 <div class="row o_portal_details">
                     <div class="col-lg-8">
                         <div class="row">
-                            <div t-attf-class="form-group #{error.get('company_type') and 'o_has_error' or ''} col-xl-6">
+                            <!--<div t-attf-class="form-group #{error.get('company_type') and 'o_has_error' or ''} col-xl-6">
                                 <label class="col-form-label"
                                        for="company_type">User Type
                                 </label>
@@ -67,7 +67,7 @@
                                     <option value="person" t-att-readonly="'readonly' if x_inversor == True else ''"> Person </option>
                                     <option value="company" t-att-readonly="'readonly' if x_inversor == True else ''"> Company </option>
                                 </select>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
@@ -152,9 +152,16 @@
                         <div class="row">
                             <div t-attf-class="form-group col-xl-6">
                                 <label class="col-form-label"
-                                       for="fiscal_doc">Identity Proof Document or Company VAT
+                                       for="x_dni_front">Identity Proof Ankward
                                 </label>
-                                <input type="file" name="fiscal_doc" class="file"
+                                <input type="file" name="x_dni_front" class="file"
+                                       multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
+                            </div>
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label"
+                                       for="x_dni_back">Identity Proof Backward
+                                </label>
+                                <input type="file" name="x_dni_back" class="file"
                                        multiple="false" data-show-upload="true" data-show-caption="true" lass="file" data-show-preview="true"/>
                             </div>
                         </div>
