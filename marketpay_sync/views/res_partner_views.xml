@@ -64,8 +64,17 @@
                             <p><strong><h5>MarketPay Documents</h5></strong></p>
                         </group>
                         <group>
+                            <field name="x_dni_front"
+                                   filename="x_name_dni_front" attrs="{'invisible': ['|',
+                                   ('is_legal_representative', '=', True),('is_shareholder', '=', True)]}"/>
+                            <field name="x_name_dni_front" invisible="1"/>
+                            <field name="x_dni_back"
+                                   filename="x_name_dni_back" attrs="{'invisible': ['|',
+                                   ('is_legal_representative', '=', True),('is_shareholder', '=', True)]}"/>
+                            <field name="x_name_dni_back" invisible="1"/>
                             <field name="fiscal_doc"
-                                   filename="fiscal_doc_name"/>
+                                   filename="fiscal_doc_name" attrs='{"invisible": [
+                                   ("is_legal_representative", "=", False),("is_shareholder", "=", False)]}'/>
                             <field name="fiscal_doc_name" invisible="1"/>
                             <field name="power_of_attorney"
                                    filename="power_of_attorney_name" attrs='{"invisible": [

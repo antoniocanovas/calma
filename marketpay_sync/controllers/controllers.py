@@ -7,8 +7,8 @@ import base64
 
 class CustomPortalDetails(CustomerPortal):
     MANDATORY_BILLING_FIELDS = CustomerPortal.MANDATORY_BILLING_FIELDS + \
-                               ["zipcode", "state_id", "vat", "fiscal_doc",
-                                "company_type"]
+                               ["zipcode", "state_id", "vat", "x_dni_front",
+                                "x_dni_back"]
 
     @route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
@@ -20,22 +20,32 @@ class CustomPortalDetails(CustomerPortal):
             'error_message': [],
         })
         if post:
-            dni_front = post.pop('fiscal_doc')
+            dni_front = post.pop('x_dni_front')
+            dni_back = post.pop('x_dni_back')
 
             error, error_message = self.details_form_validate(post)
-            if error.get('fiscal_doc') and dni_front:
-                error.pop('fiscal_doc')
+            if error.get('x_dni_front') and dni_front:
+                error.pop('x_dni_front')
                 if not error:
                     error_message = []
-            if error.get('fiscal_doc'):
+            if error.get('x_dni_back') and dni_back:
+                error.pop('x_dni_back')
+                if not error:
+                    error_message = []
+            if error.get('x_dni_front'):
                 error_message.append(
-                    _(' Please, upload an image for dni with both sides, and an '
+                    _(' Please, upload an image for dni front field, and an '
+                      'spanish national identity card is needed to invest.'))
+            if error.get('x_dni_back'):
+                error_message.append(
+                    _(' Please, upload an image for dni back field, and an '
                       'spanish national identity card is needed to invest.'))
             values.update({'error': error, 'error_message': error_message})
             values.update(post)
             if not error:
                 post.update({
-                    'fiscal_doc': base64.encodebytes(dni_front.read()),
+                    'x_dni_back': base64.encodebytes(dni_back.read()),
+                    'x_dni_front': base64.encodebytes(dni_front.read()),
                 })
                 values = {key: post[key] for key in
                           self.MANDATORY_BILLING_FIELDS}
@@ -43,9 +53,11 @@ class CustomPortalDetails(CustomerPortal):
                     {key: post[key] for key in self.OPTIONAL_BILLING_FIELDS if
                      key in post})
                 values.update({'zip': values.pop('zipcode', ''),
-                               'fiscal_doc_name': dni_front.filename,
+                               'x_name_dni_back': dni_back.filename,
+                               'x_name_dni_front': dni_front.filename,
                                })
                 partner.sudo().write(values)
+
                 if redirect:
                     return request.redirect(redirect)
                 if not partner.x_inversor:
